@@ -46,7 +46,12 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
-		</dependency>	    
+		</dependency>
+	    <!--4.13. Implementando content negotiation para retornar JSON ou XML - 3'40"  -->
+	    <dependency>
+	    	<groupId>com.fasterxml.jackson.dataformat</groupId>
+	    	<artifactId>jackson-dataformat-xml</artifactId>
+	    </dependency>
 	</dependencies>
 
 	<build>
