@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-//3.15. Conhecendo e usando o Lombok - 9'
-@Data
+
 @JsonRootName("cozinha") //4.15. Customizando as representações XML e JSON com @JsonIgnore, @JsonProperty e @JsonRootName - 7'
+@Data //3.15. Conhecendo e usando o Lombok - 9'
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Cozinha {
@@ -27,7 +27,7 @@ public class Cozinha {
 	
 	//4.15. Customizando as representações XML e JSON com @JsonIgnore, @JsonProperty e @JsonRootName - 3'30" - @JsonProperty muda o nome da representação que será devolvida para 'titulo', mas o nome no domínio continuará sendo 'nome'
 	//@JsonIgnore
-	@JsonProperty("titulo")
+	//@JsonProperty("titulo")
 	@Column(nullable = false)
 	private String nome;
 }

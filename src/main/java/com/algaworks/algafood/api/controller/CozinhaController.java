@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.model.CozinhasXmlWrapper;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 
@@ -24,14 +25,13 @@ public class CozinhaController {
 	//@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,  MediaType.APPLICATION_XML_VALUE})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) //pode ser colocado no escopo da classe '@RequestMapping'	
 	public List<Cozinha> listar() {
-		System.out.println("LISTAR 1");
 		return cozinhaRepository.listar();
 	}
-	
+
+	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-	public List<Cozinha> listar2() {
-		System.out.println("LISTAR 2");
-		return cozinhaRepository.listar();
+	public CozinhasXmlWrapper listarXml(){
+		return new CozinhasXmlWrapper(cozinhaRepository.listar());
 	}
 	
 	@GetMapping("/{cozinhaId}")
