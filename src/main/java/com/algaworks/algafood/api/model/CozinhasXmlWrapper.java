@@ -20,3 +20,5 @@ public class CozinhasXmlWrapper {
 	@NonNull //Essa anotação do Lombok gera um construtor para a classe CozinhasXmlWrapper que recebe cozinha como parâmetro
 	private List<Cozinha> cozinhas;
 }
+
+//*** Essa classe foi removida na aula 4.29. Desafio: modelando e implementando a consulta de recursos de restaurantes, mas eu mantive

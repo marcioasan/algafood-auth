@@ -48,6 +48,7 @@
 			<optional>true</optional>
 		</dependency>
 	    <!--4.13. Implementando content negotiation para retornar JSON ou XML - 3'40"  -->
+	    <!--Essa anotação foi removida na aula 4.29. Desafio: modelando e implementando a consulta de recursos de restaurantes, mas eu mantive  -->
 	    <dependency>
 	    	<groupId>com.fasterxml.jackson.dataformat</groupId>
 	    	<artifactId>jackson-dataformat-xml</artifactId>
