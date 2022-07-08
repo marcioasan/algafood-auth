@@ -75,7 +75,7 @@ public class CozinhaController {
 		
 		if (cozinhaAtual != null) {
 //			cozinhaAtual.setNome(cozinha.getNome());
-			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" ignora será ignorado no copyProperties 
+			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties 
 			
 			cozinhaAtual = cadastroCozinha.salvar(cozinhaAtual);
 			return ResponseEntity.ok(cozinhaAtual);
