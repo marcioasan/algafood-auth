@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -80,11 +83,33 @@ public class RestauranteController {
 	@PatchMapping("/{restauranteId}")
 	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
 		
-		campos.forEach((nomePropriedade, valorPropriedade) -> {
-			System.out.println("---> " + nomePropriedade + " = " + valorPropriedade);
-		});
+		Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
 		
-		return ResponseEntity.ok().build();
+		merge(campos, restauranteAtual);
+		
+		return atualizar(restauranteId, restauranteAtual);
+	}
+
+	//4.34. Finalizando a atualização parcial com a API de Reflections do Spring - 2'30", 5'50", 8'50" 
+	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
+		
+		System.out.println("********** " + restauranteOrigem);
+		
+		
+		
+		dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
+			Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
+			field.setAccessible(true);
+			
+			Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
+						
+			System.out.println("---> " + nomePropriedade + " = " + valorPropriedade + " = " + novoValor);
+			
+			ReflectionUtils.setField(field, restauranteDestino, novoValor);
+		});
 	}
 	
 	
