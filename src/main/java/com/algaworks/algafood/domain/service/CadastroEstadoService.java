@@ -17,13 +17,13 @@ public class CadastroEstadoService {
 	private EstadoRepository estadoRepository;
 	
 	public Estado salvar(Estado estado) {
-		return estadoRepository.salvar(estado);
+		return estadoRepository.save(estado);
 	}
 	
 	public void excluir(Long estadoId) {
 		System.out.println("***** DELETANDO ESTADO *****");
 		try {
-			estadoRepository.remover(estadoId);			
+			estadoRepository.deleteById(estadoId);			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(String.format("Não existe um estado com o id %d", estadoId));
 		} catch (DataIntegrityViolationException e) {

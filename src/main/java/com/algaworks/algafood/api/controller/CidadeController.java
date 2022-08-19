@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,15 @@ public class CidadeController {
 	
 	@GetMapping
 	public List<Cidade> listar() {
-		return cidadeRepository.listar();
+		return cidadeRepository.findAll();
 	}
 	
     @GetMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
-		Cidade cidade = cidadeRepository.buscar(cidadeId);
+		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
 		
-		if (cidade != null) {
-			return ResponseEntity.ok(cidade);
+		if (cidade.isEmpty()) {
+			return ResponseEntity.ok(cidade.get());
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -75,12 +76,12 @@ public class CidadeController {
 	@PutMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
 		System.out.println("***** ATUALIZANDO CIDADE *****");
-		Cidade cidadeAtual = cidadeRepository.buscar(cidadeId);
+		Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
 		
-		if (cidadeAtual != null) {
-			BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
-			cidadeAtual = cidadeService.salvar(cidadeAtual);
-			return ResponseEntity.ok(cidadeAtual);
+		if (cidadeAtual.isPresent()) {
+			BeanUtils.copyProperties(cidade, cidadeAtual.get(), "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
+			Cidade cidadeSalva = cidadeService.salvar(cidadeAtual.get());
+			return ResponseEntity.ok(cidadeSalva);
 		}
 		return ResponseEntity.notFound().build();
 	}

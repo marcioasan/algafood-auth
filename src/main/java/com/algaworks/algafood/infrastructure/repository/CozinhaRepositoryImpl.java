@@ -1,4 +1,4 @@
-////Classe excluída na aula - 5.3. Criando um repositório com Spring Data JPA (SDJ)
+//Classe excluída na aula - 5.3. Criando um repositório com Spring Data JPA (SDJ)
 //package com.algaworks.algafood.infrastructure.repository;
 //
 //import java.util.List;

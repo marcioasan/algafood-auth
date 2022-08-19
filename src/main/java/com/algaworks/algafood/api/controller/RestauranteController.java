@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +39,14 @@ public class RestauranteController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Restaurante> listar(){
-		return restauranteRepository.listar();
+		return restauranteRepository.findAll();
 	}
 	
 	@GetMapping("/{idRestaurante}")
 	public ResponseEntity<Restaurante> buscar(@PathVariable Long idRestaurante) {
-		Restaurante restaurante = restauranteRepository.buscar(idRestaurante);
-		if (restaurante != null) {
-			return ResponseEntity.ok(restaurante);
+		Optional<Restaurante> restaurante = restauranteRepository.findById(idRestaurante);
+		if (restaurante.isPresent()) {
+			return ResponseEntity.ok(restaurante.get());
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -66,12 +67,12 @@ public class RestauranteController {
 	@PutMapping("/{restauranteId}")	
 	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
 		try {
-			Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
+			Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 			
-			if (restauranteAtual != null) {
-				BeanUtils.copyProperties(restaurante, restauranteAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
-				restauranteAtual = cadastroRestaurante.salvar(restauranteAtual);
-				return ResponseEntity.ok(restauranteAtual);				
+			if (restauranteAtual.isPresent()) {
+				BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
+				Restaurante restauranteSalvo = cadastroRestaurante.salvar(restauranteAtual.get());
+				return ResponseEntity.ok(restauranteSalvo);				
 			}
 			return ResponseEntity.notFound().build();
 		} catch (EntidadeNaoEncontradaException e) {
@@ -83,11 +84,11 @@ public class RestauranteController {
 	@PatchMapping("/{restauranteId}")
 	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
 		
-		Restaurante restauranteAtual = restauranteRepository.buscar(restauranteId);
+		Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
 		
-		merge(campos, restauranteAtual);
+		merge(campos, restauranteAtual.get());
 		
-		return atualizar(restauranteId, restauranteAtual);
+		return atualizar(restauranteId, restauranteAtual.get());
 	}
 
 	//4.34. Finalizando a atualização parcial com a API de Reflections do Spring - 2'30", 5'50", 8'50" 
