@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import com.algaworks.algafood.domain.model.Restaurante;
 
+//5.11. Implementando um repositório SDJ customizado - 13'30"
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>{
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries{
 	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 	

@@ -1,43 +1,32 @@
-//Classe excluída na aula 5.5. Desafio: refatorando todos os repositórios para usar SDJ
-//package com.algaworks.algafood.infrastructure.repository;
-//
-//import java.util.List;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//
-//import org.springframework.stereotype.Component;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import com.algaworks.algafood.domain.model.Restaurante;
-//import com.algaworks.algafood.domain.repository.RestauranteRepository;
-//
-//@Component
-//public class RestauranteRepositoryImpl implements RestauranteRepository{
-//
-//	@PersistenceContext
-//	private EntityManager manager;
-//	
-//	@Override
-//	public List<Restaurante> listar() {
-//		return manager.createQuery("from Restaurante", Restaurante.class).getResultList();
-//	}
-//
-//	@Override
-//	public Restaurante buscar(Long id) {
-//		return manager.find(Restaurante.class, id); 
-//	}
-//
-//	@Transactional
-//	@Override
-//	public Restaurante salvar(Restaurante restaurante) {
-//		return manager.merge(restaurante);
-//	}
-//
-//	@Transactional
-//	@Override
-//	public void remover(Restaurante restaurante) {
-//		restaurante = buscar(restaurante.getId());
-//		manager.remove(restaurante);
-//	}
-//}
+package com.algaworks.algafood.infrastructure.repository;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.springframework.stereotype.Repository;
+
+import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.RestauranteRepositoryQueries;
+
+//5.11. Implementando um repositório SDJ customizado - 13'
+@Repository
+public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
+
+	@PersistenceContext
+	private EntityManager manager;
+	
+	@Override
+	public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+		var jpql = "from Restaurante where nome like :nome "
+				+ "and taxaFrete between :taxaInicial and :taxaFinal";
+		
+		return manager.createQuery(jpql, Restaurante.class)
+				.setParameter("nome", "%" + nome + "%")
+				.setParameter("taxaInicial", taxaFreteInicial)
+				.setParameter("taxaFinal", taxaFreteFinal)
+				.getResultList();
+	}
+}
