@@ -19,3 +19,7 @@ public class RestauranteSpecs {
 			builder.like(root.get("nome"), "%" + nome + "%");
 	}
 }
+
+
+//Substituição da função Lambda
+//https://app.algaworks.com/forum/topicos/82731/substituicao-da-funcao-lambda

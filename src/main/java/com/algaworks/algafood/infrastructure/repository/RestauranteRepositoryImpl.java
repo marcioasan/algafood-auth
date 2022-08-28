@@ -1,5 +1,8 @@
 package com.algaworks.algafood.infrastructure.repository;
 
+import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepositoryQueries;
 
 
@@ -20,6 +26,10 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	//5.19. Injetando o próprio repositório na implementação customizada e a anotação @Lazy - 7'
+	@Autowired @Lazy 
+	private RestauranteRepository restauranteRepository;
 
 	//5.15. Tornando a consulta com Criteria API com filtros dinâmicos
 	public List<Restaurante> find(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
@@ -46,6 +56,13 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		
 		var query = manager.createQuery(criteria);
 		return query.getResultList();
+	}
+
+	//5.19. Injetando o próprio repositório na implementação customizada e a anotação @Lazy
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		return restauranteRepository.findAll(comFreteGratis()
+				.and(comNomeSemelhante(nome)));
 	}
 	
 	//5.14. Adicionando restrições na cláusula where com Criteria API
