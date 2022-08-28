@@ -1,5 +1,8 @@
 package com.algaworks.algafood.api.controller;
 
+import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comFreteGratis;
+import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comNomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -72,5 +75,13 @@ public class TesteController {
 	@GetMapping("/restaurantes/count-por-cozinha")
 	public int restaurantesCountPorCozinha(Long cozinhaId) {
 		return restauranteRepository.countByCozinhaId(cozinhaId);
+	}
+	
+	//5.18. Criando uma fábrica de Specifications
+	@GetMapping("/restaurantes/com-frete-gratis")
+	public List<Restaurante> restaurantesComFreteGratis(String nome) {
+				
+		return restauranteRepository.findAll(comFreteGratis()
+				.and(comNomeSemelhante(nome)));
 	}
 }
