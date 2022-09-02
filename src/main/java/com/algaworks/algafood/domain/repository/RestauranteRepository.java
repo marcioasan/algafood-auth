@@ -13,8 +13,9 @@ import org.springframework.stereotype.Repository;
 import com.algaworks.algafood.domain.model.Restaurante;
 
 //5.11. Implementando um repositório SDJ customizado - 13'30", 5.17. Implementando Specifications com SDJ - 6' fala sobre JpaSpecificationExecutor
+//5.20. Estendendo o JpaRepository para customizar o repositório base - 6'14" - extends CustomJpaRepository
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante>{
+public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante>{
 	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 	

@@ -45,6 +45,12 @@ public class TesteController {
 		return cozinhaRepository.existsByNome(nome);
 	}
 	
+	//5.20. Estendendo o JpaRepository para customizar o repositório base - 15'40"
+	@GetMapping("/cozinhas/primeira")
+	public Optional<Cozinha> cozinhaPrimeiro() {
+		return cozinhaRepository.buscarPrimeiro();
+	}
+	
 	@GetMapping("/restaurantes/por-taxa-frete")
 	public List<Restaurante> restaurantesPorTaxaFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
 		return restauranteRepository.queryByTaxaFreteBetween(taxaInicial, taxaFinal);
@@ -82,5 +88,11 @@ public class TesteController {
 	public List<Restaurante> restaurantesComFreteGratis(String nome) {
 				
 		return restauranteRepository.findComFreteGratis(nome);
+	}
+	
+	//5.20. Estendendo o JpaRepository para customizar o repositório base - 14'
+	@GetMapping("/restaurantes/primeiro")
+	public Optional<Restaurante> restaurantePrimeiro() {
+		return restauranteRepository.buscarPrimeiro();
 	}
 }

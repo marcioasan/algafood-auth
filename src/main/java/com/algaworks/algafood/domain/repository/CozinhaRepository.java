@@ -10,7 +10,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 
 //5.3. Criando um repositório com Spring Data JPA (SDJ)
 @Repository
-public interface CozinhaRepository extends JpaRepository<Cozinha, Long>{
+public interface CozinhaRepository extends CustomJpaRepository<Cozinha, Long>{
 
 	List<Cozinha> findTodasByNomeContaining(String nome);
 	
