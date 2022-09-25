@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import com.algaworks.algafood.domain.repository.CustomJpaRepository;
 
-//5.20. Estendendo o JpaRepository para customizar o repositório base - 7'15", 15'50", 12'
+//5.20. Estendendo o JpaRepository para customizar o repositório base - 7'15", 8'10", 15'50", 12'
 public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomJpaRepository<T, ID> {
 	
 	private EntityManager manager;

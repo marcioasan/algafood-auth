@@ -1,5 +1,6 @@
 package com.algaworks.algafood.infrastructure.repository;
 
+//5.18. Criando uma fábrica de Specifications - 2'30" - fala como fazer imports estáticos pelo eclipse.
 import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comFreteGratis;
 import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
@@ -27,7 +28,7 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	@PersistenceContext
 	private EntityManager manager;
 	
-	//5.19. Injetando o próprio repositório na implementação customizada e a anotação @Lazy - 7'
+	//5.19. Injetando o próprio repositório na implementação customizada e a anotação @Lazy - 5', 7'
 	@Autowired @Lazy 
 	private RestauranteRepository restauranteRepository;
 

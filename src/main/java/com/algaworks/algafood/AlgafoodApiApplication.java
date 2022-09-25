@@ -14,5 +14,17 @@ public class AlgafoodApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AlgafoodApiApplication.class, args);
 	}
+	
+	//*** Para saber quantos beans gerenciados tem na aplicação
+	//https://app.algaworks.com/forum/topicos/85840/specification-classe-restaurantespecs-uso-metodos-static
+//	public static void main(String[] args) {
+//		ApplicationContext applicationContext = SpringApplication.run(AlgafoodApiApplication.class, args);
+//		String[] allBeanNames = applicationContext.getBeanDefinitionNames();
+//		Arrays.stream(allBeanNames).forEach(System.out::println); //nomes
+//
+//                System.out.println(allBeanNames.length); //quantidade
+//                System.out.println(applicationContext.getBeanDefinitionCount()); // quantidade
+//    
+//	}	
 
 }

@@ -16,5 +16,6 @@ public interface CozinhaRepository extends CustomJpaRepository<Cozinha, Long>{
 	
 	Optional<Cozinha> findByNome(String nome);
 	
+	//5.8. Conhecendo os prefixos de query methods - 8'30"
 	boolean existsByNome(String nome);
 }

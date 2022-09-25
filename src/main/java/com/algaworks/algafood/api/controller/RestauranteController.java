@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.model.CozinhasXmlWrapper;
+import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
@@ -40,6 +42,12 @@ public class RestauranteController {
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Restaurante> listar(){
 		return restauranteRepository.findAll();
+	}
+	
+	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
+	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+	public RestauranteXmlWrapper listarXml(){
+		return new RestauranteXmlWrapper(restauranteRepository.findAll());
 	}
 	
 	@GetMapping("/{idRestaurante}")

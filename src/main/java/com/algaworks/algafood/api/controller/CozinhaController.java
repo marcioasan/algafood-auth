@@ -38,7 +38,7 @@ public class CozinhaController {
 	private CadastroCozinhaService cadastroCozinha;
 	
 	//4.13. Implementando content negotiation para retornar JSON ou XML - 6'
-	//@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,  MediaType.APPLICATION_XML_VALUE})
+	//@GetMapping(produces = {MediaType.APPLICATION_XML_VALUE})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) //pode ser colocado no escopo da classe '@RequestMapping'	
 	public List<Cozinha> listar() {
 		return cozinhaRepository.findAll();
@@ -68,7 +68,8 @@ public class CozinhaController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-		return cadastroCozinha.salvar(cozinha);
+		Cozinha cozinhaSalva = cadastroCozinha.salvar(cozinha);
+		return cozinhaSalva;
 	}
 	
 	@PutMapping("/{cozinhaId}")
