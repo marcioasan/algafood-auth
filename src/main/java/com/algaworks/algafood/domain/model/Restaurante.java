@@ -42,12 +42,12 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
 	
+	@JsonIgnore //6.5. Testando e analisando o impacto da incorporação de classe na REST API - 5'
 	@Embedded //6.4. Mapeando classes incorporáveis com @Embedded e @Embeddable - 6'50"
 	private Endereco endereco;
 	
-	//6.2. Mapeando relacionamento muitos-para-muitos com @ManyToMany - 4'50", 6'20", 6'50"
-	@JsonIgnore
-	@ManyToMany
+	@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50"	
+	@ManyToMany //6.2. Mapeando relacionamento muitos-para-muitos com @ManyToMany - 4'50", 6'20", 6'50"
 	@JoinTable(name = "restaurante_forma_pagamento", 
 		joinColumns = @JoinColumn(name = "restaurante_id"),
 		inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
