@@ -7,3 +7,19 @@ https://github.com/cadugr/cep-rest-example
 
 Consumindo REST API com Spring WebClient
 https://www.youtube.com/watch?v=Q1BjCuAQRrQ
+
+Salvar UTC usando postgres
+https://app.algaworks.com/forum/topicos/85251/salvar-utc-usando-postgres
+
+Auditoria no sistema
+https://app.algaworks.com/forum/topicos/84914/auditoria-no-sistema
+https://github.com/cadugr/audit
+
+JSON Formatter & Validator
+https://jsonformatter.curiousconcept.com/
+
+boas práticas para data/hora em REST APIs
+https://www.youtube.com/watch?v=aAUopejsqIc&ab_channel=AlgaWorks
+
+Salvar UTC usando postgres
+https://app.algaworks.com/forum/topicos/85251/salvar-utc-usando-postgres
