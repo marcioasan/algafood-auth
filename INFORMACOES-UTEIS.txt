@@ -1,0 +1,9 @@
+https://app.algaworks.com/forum/topicos/81557/import-sql-com-multiplas-linhas
+spring.jpa.properties.hibernate.hbm2ddl.import_files_sql_extractor=org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+
+Consumo de api externa para endereços
+https://app.algaworks.com/forum/topicos/85008/consumo-de-api-externa-para-enderecos
+https://github.com/cadugr/cep-rest-example
+
+Consumindo REST API com Spring WebClient
+https://www.youtube.com/watch?v=Q1BjCuAQRrQ
