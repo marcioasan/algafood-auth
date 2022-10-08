@@ -23,3 +23,6 @@ https://www.youtube.com/watch?v=aAUopejsqIc&ab_channel=AlgaWorks
 
 Salvar UTC usando postgres
 https://app.algaworks.com/forum/topicos/85251/salvar-utc-usando-postgres
+
+6.12. Alterando a estratégia de fetching para Lazy Loading - 9'30"
+Explicação sobre carregamento lazy que o hibernate cria um proxy do objeto para carregar as informações quando chamar um get do objeto.

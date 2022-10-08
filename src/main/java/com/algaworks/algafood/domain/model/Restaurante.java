@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,7 +45,8 @@ public class Restaurante {
 	private BigDecimal taxaFrete;
 
 	//@JsonIgnore
-	@ManyToOne
+	@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false) //6.10. Entendendo o Eager Loading - 13' - Explicação sobre a consulta gerar um inner join com cozinha
 	private Cozinha cozinha;
 	
@@ -61,7 +64,7 @@ public class Restaurante {
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataAtualizacao;
 	
-	//@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50"	
+	@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50"	
 	@ManyToMany //6.2. Mapeando relacionamento muitos-para-muitos com @ManyToMany - 4'50", 6'20", 6'50"
 	@JoinTable(name = "restaurante_forma_pagamento", 
 		joinColumns = @JoinColumn(name = "restaurante_id"),
