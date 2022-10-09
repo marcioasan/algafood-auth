@@ -41,12 +41,7 @@ public class RestauranteController {
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Restaurante> listar(){
-		List<Restaurante> restaurantes = restauranteRepository.findAll();
-		
-		System.out.println("O nome da cozinha é:");
-		System.out.println(restaurantes.get(0).getCozinha().getNome());
-		
-		return restaurantes;
+		return restauranteRepository.findAll();
 	}
 	
 	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
