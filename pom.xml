@@ -53,6 +53,16 @@
 	    	<groupId>com.fasterxml.jackson.dataformat</groupId>
 	    	<artifactId>jackson-dataformat-xml</artifactId>
 	    </dependency>
+	    <!--7.6. Adicionando o Flyway no projeto e criando a primeira migracao - 2'  -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<!--https://app.algaworks.com/aulas/1913/adicionando-o-flyway-no-projeto-e-criando-a-primeira-migracao?pagina=0  -->
+		<dependency>
+		  <groupId>org.flywaydb</groupId>
+		  <artifactId>flyway-mysql</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
