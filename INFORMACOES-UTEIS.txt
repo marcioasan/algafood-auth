@@ -26,3 +26,10 @@ https://app.algaworks.com/forum/topicos/85251/salvar-utc-usando-postgres
 
 6.12. Alterando a estratégia de fetching para Lazy Loading - 9'30"
 Explicação sobre carregamento lazy que o hibernate cria um proxy do objeto para carregar as informações quando chamar um get do objeto.
+
+7.8. Criando migrações complexas com remanejamento de dados
+Para fazer um dump (backup dos dados) do database "algafood" no MySQL, use o seguinte comando:
+mysqldump --host localhost --user root --password --databases algafood > dump.sql
+Para criar o database "algafood" a partir do dump, execute o comando:
+mysql --host localhost --user root --password < dump.sql
+
