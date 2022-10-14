@@ -18,7 +18,11 @@ import com.algaworks.algafood.domain.model.Restaurante;
 public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante>{
 	
 	//6.14. Resolvendo o Problema do N+1 com fetch join na JPQL - 1'50", 2'30", 4', 4'55" tem uma errata sobre LEFT JOIN FETCH
-	@Query("from Restaurante r join fetch r.cozinha join fetch r.formasPagamento")
+//	@Query("from Restaurante r join fetch r.cozinha join fetch r.formasPagamento")
+//	List<Restaurante> findAll();
+
+	//7.10. Adicionando dados de testes com callback do Flyway - 20'
+	@Query("from Restaurante r join fetch r.cozinha")
 	List<Restaurante> findAll();
 	
 	List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
