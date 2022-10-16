@@ -33,3 +33,8 @@ mysqldump --host localhost --user root --password --databases algafood > dump.sq
 Para criar o database "algafood" a partir do dump, execute o comando:
 mysql --host localhost --user root --password < dump.sql
 
+
+7.10. Adicionando dados de testes com callback do Flyway
+Pergunta de aluno: adicionar dados no banco
+https://app.algaworks.com/forum/topicos/85880/adicionando-dados-no-banco-de-producao
+https://www.loom.com/share/15b2167a455746a7a97d0f26ffccf9d9
