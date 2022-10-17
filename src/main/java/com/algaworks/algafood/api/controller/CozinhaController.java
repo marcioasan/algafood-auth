@@ -86,7 +86,7 @@ public class CozinhaController {
 		
 		return ResponseEntity.notFound().build();
 	}
-	
+	/*
 	//4.26. Modelando e implementando a exclusão de recursos com DELETE
 	@DeleteMapping("/{cozinhaId}")
 	public ResponseEntity<?> remover(@PathVariable Long cozinhaId) {
@@ -95,10 +95,20 @@ public class CozinhaController {
 			return ResponseEntity.noContent().build();
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado");
 		} catch (EntidadeEmUsoException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 	}
+	*/
+	
+	//8.2. Lançando exceções customizadas anotadas com @ResponseStatus - 7', 7'40"
+	@DeleteMapping("/{cozinhaId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long cozinhaId) {	
+		cadastroCozinha.excluir(cozinhaId);			
+	}
+	
 }
 
 /* Requests
