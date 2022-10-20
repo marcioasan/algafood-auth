@@ -4,6 +4,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+//8.5. Simplificando o código com o uso de @ResponseStatus em exceptions
+@ResponseStatus(value = HttpStatus.NOT_FOUND) //8.2. Lançando exceções customizadas anotadas com @ResponseStatus - 3', 4', 4'50"
+public class EntidadeNaoEncontradaException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+	
+	public EntidadeNaoEncontradaException(String mensagem) {
+		super(mensagem);
+	}
+}
+
+
+/*
 //@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Entidade não encontrada")
 //@ResponseStatus(value = HttpStatus.NOT_FOUND) //8.2. Lançando exceções customizadas anotadas com @ResponseStatus - 3', 4', 4'50"
 public class EntidadeNaoEncontradaException extends ResponseStatusException { //8.4. Estendendo ResponseStatusException - 1'30"
@@ -20,3 +33,4 @@ public class EntidadeNaoEncontradaException extends ResponseStatusException { //
 	}
 	
 }
+*/

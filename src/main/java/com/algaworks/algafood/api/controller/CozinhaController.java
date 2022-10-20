@@ -51,9 +51,16 @@ public class CozinhaController {
 	public CozinhasXmlWrapper listarXml(){
 		return new CozinhasXmlWrapper(cozinhaRepository.findAll());
 	}
+
+	//8.5. Simplificando o código com o uso de @ResponseStatus em exceptions - 2'20"
+	@GetMapping("/{cozinhaId}")
+	public Cozinha buscar(@PathVariable Long cozinhaId) {
+		return cadastroCozinha.buscarOuFalhar(cozinhaId);
+	}
 	
-	//4.20. Manipulando a resposta HTTP com ResponseEntity - 1'
+	/*
 	//5.4. Refatorando o código do projeto para usar o repositório do SDJ
+	//4.20. Manipulando a resposta HTTP com ResponseEntity - 1'
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
 		Optional<Cozinha> cozinha =  cozinhaRepository.findById(cozinhaId);
@@ -66,6 +73,7 @@ public class CozinhaController {
 		//ou
 		return ResponseEntity.notFound().build();
 	}
+	*/
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -74,6 +82,15 @@ public class CozinhaController {
 		return cozinhaSalva;
 	}
 	
+	//8.5. Simplificando o código com o uso de @ResponseStatus em exceptions - 9'20"
+	@PutMapping("/{cozinhaId}")
+	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
+		Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
+		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties 
+		return cadastroCozinha.salvar(cozinhaAtual);
+	}
+	
+	/*
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
 		Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
@@ -88,6 +105,7 @@ public class CozinhaController {
 		
 		return ResponseEntity.notFound().build();
 	}
+	*/
 	
 	//8.4. Estendendo ResponseStatusException - 6'20"
 	@DeleteMapping("/{cozinhaId}")
