@@ -88,6 +88,14 @@ public class CozinhaController {
 		
 		return ResponseEntity.notFound().build();
 	}
+	
+	//8.4. Estendendo ResponseStatusException - 6'20"
+	@DeleteMapping("/{cozinhaId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long cozinhaId) {	
+		cadastroCozinha.excluir(cozinhaId);
+	}
+	
 	/*
 	//4.26. Modelando e implementando a exclusão de recursos com DELETE
 	@DeleteMapping("/{cozinhaId}")
@@ -103,7 +111,7 @@ public class CozinhaController {
 		}
 	}
 	*/
-	
+	/*
 	//8.2. Lançando exceções customizadas anotadas com @ResponseStatus - 7', 7'40"
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -115,7 +123,7 @@ public class CozinhaController {
 			//throw new ServerWebInputException(e.getMessage()); //8.3. Lançando exceções do tipo ResponseStatusException - 5'
 		}
 	}
-	
+	*/
 }
 
 /* Requests
