@@ -50,6 +50,19 @@ public class RestauranteController {
 		return new RestauranteXmlWrapper(restauranteRepository.findAll());
 	}
 	
+	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@GetMapping("/{idRestaurante}")
+	public Restaurante buscar(@PathVariable Long idRestaurante) {
+		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(idRestaurante);
+		return restauranteAtual;
+	}
+	
+	/*
 	@GetMapping("/{idRestaurante}")
 	public ResponseEntity<Restaurante> buscar(@PathVariable Long idRestaurante) {
 		Optional<Restaurante> restaurante = restauranteRepository.findById(idRestaurante);
@@ -59,7 +72,20 @@ public class RestauranteController {
 		
 		return ResponseEntity.notFound().build();
 	}
+	*/
 	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
+	    return cadastroRestaurante.salvar(restaurante);
+	}
+	
+	/*
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante){//4.30. Modelando e implementando a inclusão de recursos de restaurantes - 21' ResponseEntity<?> 
@@ -71,7 +97,22 @@ public class RestauranteController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	*/
 	
+	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@PutMapping("/{restauranteId}")
+	public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
+	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
+	    BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties, 6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 7'30", incluir no copyProperties "formasPagamento" e "endereco" para ignorar essas propriedades que estão vindo vazias do request, 6.5 - 7'
+	    return cadastroRestaurante.salvar(restauranteAtual);
+	}
+	
+	/*
 	@PutMapping("/{restauranteId}")	
 	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId, @RequestBody Restaurante restaurante) {
 		try {
@@ -87,7 +128,26 @@ public class RestauranteController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	*/
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@PatchMapping("/{restauranteId}")
+	public Restaurante atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
+	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
+	    merge(campos, restauranteAtual);
+	    return atualizar(restauranteId, restauranteAtual);
+	}
+	
+	/*
 	//4.33. Analisando solução para atualização parcial de recursos com PATCH
 	@PatchMapping("/{restauranteId}")
 	public ResponseEntity<?> atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos) {
@@ -98,7 +158,9 @@ public class RestauranteController {
 		
 		return atualizar(restauranteId, restauranteAtual.get());
 	}
-
+	*/
+	
+	
 	//4.34. Finalizando a atualização parcial com a API de Reflections do Spring - 2'30", 5'50", 8'50" 
 	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino) {
 		

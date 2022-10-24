@@ -38,6 +38,16 @@ public class EstadoController {
 		return estadoRepository.findAll();
 	}
 	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@GetMapping("/{estadoId}")
+	public Estado buscar(@PathVariable Long estadoId) {
+		return estadoService.buscarOuFalhar(estadoId);
+	}
+	
+	/*
     @GetMapping("/{estadoId}")
 	public ResponseEntity<Estado> buscar(@PathVariable Long estadoId) {
 		Optional<Estado> estado = estadoRepository.findById(estadoId);
@@ -48,6 +58,11 @@ public class EstadoController {
 		
 		return ResponseEntity.notFound().build();
 	}
+	*/
+	
+	
+	
+	
     
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -56,6 +71,16 @@ public class EstadoController {
 		return estado;
 	}
 	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@PutMapping("/{estadoId}")
+	public Estado atualizar(@PathVariable Long estadoId, @RequestBody Estado estado) {
+		Estado estadoAtual = estadoService.buscarOuFalhar(estadoId);
+		BeanUtils.copyProperties(estado, estadoAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
+		return estadoService.salvar(estadoAtual);
+	}
+	
+	/*
 	@PutMapping("/{estadoId}")
 	public ResponseEntity<Estado> atualizar(@PathVariable Long estadoId, @RequestBody Estado estado) {
 		System.out.println("***** ATUALIZANDO ESTADO *****");
@@ -68,7 +93,18 @@ public class EstadoController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+	*/
 	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@DeleteMapping("/{estadoId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void excluir(@PathVariable Long estadoId) {
+		estadoService.excluir(estadoId);
+	}
+	
+	/*
 	@DeleteMapping("/{estadoId}")
 	public ResponseEntity<?> excluir(@PathVariable Long estadoId) {
 		System.out.println("***** ACESSANDO O CONTROLLER DE ESTADO *****");
@@ -81,4 +117,5 @@ public class EstadoController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 	}
+	*/
 }

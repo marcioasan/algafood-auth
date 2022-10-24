@@ -38,6 +38,17 @@ public class CidadeController {
 		return cidadeRepository.findAll();
 	}
 	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+	@GetMapping("/{cidadeId}")
+	public Cidade buscar(@PathVariable Long cidadeId) {
+		return cidadeService.buscarOuFalhar(cidadeId);
+	}
+	
+	/*
     @GetMapping("/{cidadeId}")
 	public ResponseEntity<Cidade> buscar(@PathVariable Long cidadeId) {
 		Optional<Cidade> cidade = cidadeRepository.findById(cidadeId);
@@ -48,7 +59,21 @@ public class CidadeController {
 		
 		return ResponseEntity.notFound().build();
 	}
-    
+    */
+	
+	
+	
+	
+	
+	
+	//8.6. Desafio: refatorando os serviços REST
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+	public Cidade adicionar(@RequestBody Cidade cidade) {
+    	Cidade cidadeSalva = cidadeService.salvar(cidade);
+    	return cidadeSalva;
+    }
+	
 //	@PostMapping
 //	@ResponseStatus(HttpStatus.CREATED)
 //	public Cidade adicionar(@RequestBody Cidade cidade) {		
@@ -62,6 +87,7 @@ public class CidadeController {
      2 - no retorno do método
      */
     
+	/*
     @PostMapping
 	public ResponseEntity<?> adicionar(@RequestBody Cidade cidade) {
 		try {
@@ -72,10 +98,25 @@ public class CidadeController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+    */
+	
     
+    
+    
+    
+    
+    
+    //8.6. Desafio: refatorando os serviços REST
+    @PutMapping("/{cidadeId}")
+    public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
+    	Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
+    	BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
+    	return cidadeService.salvar(cidadeAtual);
+    }
+        
+    /*
 	@PutMapping("/{cidadeId}")
-	public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
-		System.out.println("***** ATUALIZANDO CIDADE *****");
+	public ResponseEntity<Cidade> atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {		
 		Optional<Cidade> cidadeAtual = cidadeRepository.findById(cidadeId);
 		
 		if (cidadeAtual.isPresent()) {
@@ -85,10 +126,23 @@ public class CidadeController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-	
+	*/
+    
+    
+    
+    
+    
+    
+    //8.6. Desafio: refatorando os serviços REST
+    @DeleteMapping("/{cidadeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long cidadeId) {
+    	cidadeService.excluir(cidadeId);
+    }    
+    
+    /*
 	@DeleteMapping("/{cidadeId}")
-	public ResponseEntity<?> remover(@PathVariable Long cidadeId) {
-		System.out.println("***** ACESSANDO O CONTROLLER DE CIDADE *****");
+	public ResponseEntity<?> remover(@PathVariable Long cidadeId) {		
 		try {
 			cidadeService.excluir(cidadeId);
 			return ResponseEntity.noContent().build();
@@ -98,4 +152,5 @@ public class CidadeController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 		}
 	}
+    */
 }
