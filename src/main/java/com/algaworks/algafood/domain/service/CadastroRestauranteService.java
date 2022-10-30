@@ -19,9 +19,6 @@ public class CadastroRestauranteService {
 	private RestauranteRepository restauranteRepository;
 	
 	@Autowired
-	private CozinhaRepository cozinhaRepository;
-	
-	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 	
 	//5.4. Refatorando o código do projeto para usar o repositório do SDJ - 7'40"

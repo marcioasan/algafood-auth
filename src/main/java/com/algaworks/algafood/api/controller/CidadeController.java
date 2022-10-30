@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
@@ -70,8 +71,12 @@ public class CidadeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 	public Cidade adicionar(@RequestBody Cidade cidade) {
-    	Cidade cidadeSalva = cidadeService.salvar(cidade);
-    	return cidadeSalva;
+    	try {
+    		Cidade cidadeSalva = cidadeService.salvar(cidade);
+    		return cidadeSalva;
+		} catch (EntidadeNaoEncontradaException e) { //8.8. Criando a exception NegocioException - 10'
+			throw new NegocioException(e.getMessage());
+		}
     }
 	
 //	@PostMapping
@@ -111,7 +116,12 @@ public class CidadeController {
     public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
     	Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
     	BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
-    	return cidadeService.salvar(cidadeAtual);
+    	
+    	try {
+    		return cidadeService.salvar(cidadeAtual);			
+		} catch (EntidadeNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
     }
         
     /*

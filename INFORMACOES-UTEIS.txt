@@ -38,3 +38,9 @@ mysql --host localhost --user root --password < dump.sql
 Pergunta de aluno: adicionar dados no banco
 https://app.algaworks.com/forum/topicos/85880/adicionando-dados-no-banco-de-producao
 https://www.loom.com/share/15b2167a455746a7a97d0f26ffccf9d9
+
+8.8. Criando a exception NegocioException
+Contribuição de aluno sobre HTTPStatus
+https://app.algaworks.com/forum/topicos/82934/qual-status-code-retornar-quando-um-subrecurso-nao-for-encontrado-400-ou-422
+https://docs.github.com/pt/rest#client-errors
+https://www.rfc-editor.org/rfc/rfc4918#section-11.2
