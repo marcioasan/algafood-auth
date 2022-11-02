@@ -2,11 +2,10 @@ package com.algaworks.algafood.domain.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 //8.5. Simplificando o código com o uso de @ResponseStatus em exceptions
 @ResponseStatus(value = HttpStatus.NOT_FOUND) //8.2. Lançando exceções customizadas anotadas com @ResponseStatus - 3', 4', 4'50"
-public class EntidadeNaoEncontradaException extends NegocioException {
+public abstract class EntidadeNaoEncontradaException extends NegocioException { //8.11. Desafio: lançando exceptions de granularidade fina
 
 	private static final long serialVersionUID = 1L;
 	

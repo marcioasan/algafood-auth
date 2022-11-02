@@ -44,3 +44,9 @@ Contribuição de aluno sobre HTTPStatus
 https://app.algaworks.com/forum/topicos/82934/qual-status-code-retornar-quando-um-subrecurso-nao-for-encontrado-400-ou-422
 https://docs.github.com/pt/rest#client-errors
 https://www.rfc-editor.org/rfc/rfc4918#section-11.2
+
+8.10. Afinando a granularidade e definindo a hierarquia das exceptions de negócios
+https://app.algaworks.com/forum/topicos/86710/nao-pega-mensagem-da-exception
+Insomnia - Testes de API REST com o Insomnia
+https://blog.cod3r.com.br/testes-de-api-rest-com-o-insomnia/
+
