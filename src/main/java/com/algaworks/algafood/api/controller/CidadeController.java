@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
@@ -74,8 +75,8 @@ public class CidadeController {
     	try {
     		Cidade cidadeSalva = cidadeService.salvar(cidade);
     		return cidadeSalva;
-		} catch (EntidadeNaoEncontradaException e) { //8.8. Criando a exception NegocioException - 10'
-			throw new NegocioException(e.getMessage());
+		} catch (EstadoNaoEncontradoException e) { //8.8. Criando a exception NegocioException - 10'
+			throw new NegocioException(e.getMessage(), e);//8.10. Afinando a granularidade e definindo a hierarquia das exceptions de negócios - 16', 17'10"
 		}
     }
 	
@@ -114,13 +115,14 @@ public class CidadeController {
     //8.6. Desafio: refatorando os serviços REST
     @PutMapping("/{cidadeId}")
     public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
-    	Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
-    	BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
     	
     	try {
-    		return cidadeService.salvar(cidadeAtual);			
-		} catch (EntidadeNaoEncontradaException e) {
-			throw new NegocioException(e.getMessage());
+    		Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
+    		BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
+    		
+    		return cidadeService.salvar(cidadeAtual);
+		} catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
 		}
     }
         
