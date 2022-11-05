@@ -9,6 +9,7 @@ import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
@@ -30,7 +31,7 @@ public class ApiExceptionHandler {
     }
     
     @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> tratarNegocioException(EntidadeNaoEncontradaException e) {
+    public ResponseEntity<?> tratarNegocioException(NegocioException e) {
     	
     	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler - 9'
     	Problema problema = Problema.builder()
@@ -63,6 +64,19 @@ public class ApiExceptionHandler {
     			.mensagem("Content type 'application/json' not supported").build();
     	
     	return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    			.body(problema);
+    }
+    
+    //8.14. Desafio: implementando exception handler
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException e) {
+    	
+    	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler - 9'
+    	Problema problema = Problema.builder()
+    			.dataHora(LocalDateTime.now())
+    			.mensagem("Cidade de código 1 não pode ser removida, pois está em uso").build();
+    	
+    	return ResponseEntity.status(HttpStatus.CONFLICT)
     			.body(problema);
     }
 }
