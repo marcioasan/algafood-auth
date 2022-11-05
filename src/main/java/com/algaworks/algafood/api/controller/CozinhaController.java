@@ -33,7 +33,7 @@ public class CozinhaController {
 	private CadastroCozinhaService cadastroCozinha;
 	
 	//4.13. Implementando content negotiation para retornar JSON ou XML - 6'
-	//@GetMapping(produces = {MediaType.APPLICATION_XML_VALUE})
+	//@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) //pode ser colocado no escopo da classe '@RequestMapping'	
 	public List<Cozinha> listar() {
 		return cozinhaRepository.findAll();
@@ -68,6 +68,10 @@ public class CozinhaController {
 	}
 	*/
 	
+	//https://app.algaworks.com/forum/topicos/80843/propriedade-consumes-da-annotation-postmapping
+	//https://app.algaworks.com/forum/topicos/82285/nao-entendi-o-que-faz-a-classe-ser-capaz-de-responder-xml-mesmo-sem-eu-definir-ou-import-sobre-xml
+	//@PostMapping(produces = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método irá devolver em XML, se não especificar nada, irá devolver o que foi colocado no Accept o header da requisição
+	//@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método estará configurado para receber conteúdo apenas em XML, se mandar qualquer outro formato, será lançado o status 415 "Unsupported Media Type" - HttpMediaTypeNotSupportedException
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
@@ -134,8 +138,12 @@ public class CozinhaController {
 			//throw new ServerWebInputException(e.getMessage()); //8.3. Lançando exceções do tipo ResponseStatusException - 5'
 		}
 	}
-	*/
+	*/		
 }
+
+//4.24. Negociando o media type do payload do POST com Content-Type - 1'10"
+//Content-Type é o cabeçalho http colocado no header indicando qual o formato da representação que a requisição está enviando para o servidor
+//Accept é o cabeçalho http colocado no header para indicar ao servidor o que aceita como resposta
 
 /* Requests
 Post com json - Content-Type - application/json

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -40,7 +41,7 @@ public class ApiExceptionHandler {
     			.body(problema);
     }
     
-    //Se descomentar o método listarXml() de RestauranteController, ao executar o request listar no Postman será lançado HttpMediaTypeNotAcceptableException que será capturado aqui  
+    //Se comentar o método listarXml() de RestauranteController, ao executar o request listar no Postman será lançado HttpMediaTypeNotAcceptableException que será capturado aqui  
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
     public ResponseEntity<?> tratarHttpMediaTypeNotAcceptableException() {
     	
@@ -50,6 +51,18 @@ public class ApiExceptionHandler {
     			.mensagem("Could not find acceptable representation").build();
     	
     	return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+    			.body(problema);
+    }
+    
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<?> tratarHttpMediaTypeNotSupportedException() {
+    	
+    	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler - 9'
+    	Problema problema = Problema.builder()
+    			.dataHora(LocalDateTime.now())
+    			.mensagem("Content type 'application/json' not supported").build();
+    	
+    	return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     			.body(problema);
     }
 }

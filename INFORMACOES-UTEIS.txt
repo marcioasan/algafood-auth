@@ -24,6 +24,11 @@ https://www.youtube.com/watch?v=aAUopejsqIc&ab_channel=AlgaWorks
 Salvar UTC usando postgres
 https://app.algaworks.com/forum/topicos/85251/salvar-utc-usando-postgres
 
+4.24. Negociando o media type do payload do POST com Content-Type
+Explicações sobre Content-Type e Accept, ver também anotações no método adicionar de CozinhaController
+https://app.algaworks.com/forum/topicos/80843/propriedade-consumes-da-annotation-postmapping
+https://app.algaworks.com/forum/topicos/82285/nao-entendi-o-que-faz-a-classe-ser-capaz-de-responder-xml-mesmo-sem-eu-definir-ou-import-sobre-xml
+
 6.12. Alterando a estratégia de fetching para Lazy Loading - 9'30"
 Explicação sobre carregamento lazy que o hibernate cria um proxy do objeto para carregar as informações quando chamar um get do objeto.
 
