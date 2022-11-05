@@ -50,3 +50,8 @@ https://app.algaworks.com/forum/topicos/86710/nao-pega-mensagem-da-exception
 Insomnia - Testes de API REST com o Insomnia
 https://blog.cod3r.com.br/testes-de-api-rest-com-o-insomnia/
 
+8.12. Tratando exceções em nível de controlador com @ExceptionHandler
+Fala sobre o design pattern Builder
+https://app.algaworks.com/forum/topicos/83666/duvida-na-anotacao-builder
+https://projectlombok.org/features/Builder
+
