@@ -57,15 +57,28 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     @ExceptionHandler(EntidadeEmUsoException.class)
     public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request) {
     	
+    	HttpStatus status = HttpStatus.CONFLICT;
+    	ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
+    	String detail = ex.getMessage();
+    	
+    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	
+    	
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
-    	return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+    	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
     
     @ExceptionHandler(NegocioException.class)
     public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
+    	
+    	HttpStatus status = HttpStatus.BAD_REQUEST;
+    	ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+    	String detail = ex.getMessage();
+    	
+    	Problem problem = createProblemBuilder(status, problemType, detail).build();
 
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
-    	return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
     
     //8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler
