@@ -71,8 +71,8 @@ public class CozinhaController {
 	//https://app.algaworks.com/forum/topicos/80843/propriedade-consumes-da-annotation-postmapping
 	//https://app.algaworks.com/forum/topicos/82285/nao-entendi-o-que-faz-a-classe-ser-capaz-de-responder-xml-mesmo-sem-eu-definir-ou-import-sobre-xml
 	//@PostMapping(produces = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método irá devolver em XML, se não especificar nada, irá devolver o que foi colocado no Accept o header da requisição
-	//@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método estará configurado para receber conteúdo apenas em XML, se mandar qualquer outro formato, será lançado o status 415 "Unsupported Media Type" - HttpMediaTypeNotSupportedException
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método estará configurado para receber conteúdo apenas em XML, se mandar qualquer outro formato, será lançado o status 415 "Unsupported Media Type" - HttpMediaTypeNotSupportedException
+	//@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
 		Cozinha cozinhaSalva = cadastroCozinha.salvar(cozinha);

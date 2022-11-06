@@ -1,12 +1,8 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
-import java.time.LocalDateTime;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -22,10 +18,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 
     //8.12. Tratando exceções em nível de controlador com @ExceptionHandler
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
-    public ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
+    public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
+    	
+    	//8.18. Padronizando o formato de problemas no corpo de respostas com a RFC 7807 - 19'40"
+    	HttpStatus status = HttpStatus.NOT_FOUND;
+    	ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+    	String detail = ex.getMessage();
+    	
+    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	
+    	
+    	//8.18. Padronizando o formato de problemas no corpo de respostas com a RFC 7807 - 7'
+    	/*
+    	HttpStatus status = HttpStatus.NOT_FOUND;
+    	
+    	Problem problem = Problem.builder()
+    			.status(status.value())
+    			.type("https://algafood.com.br/entidade-nao-encontrada")
+    			.title("Entidade não encontrada")
+    			.detail(ex.getMessage())
+    			.build();
+    	*/
     	
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
-    	return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     	
     	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler - 9'
     	/*
@@ -39,14 +55,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     
   //8.14. Desafio: implementando exception handler
     @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> tratarEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request) {
+    public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request) {
     	
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
     	return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
     
     @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> tratarNegocioException(NegocioException ex, WebRequest request) {
+    public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
 
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
     	return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
@@ -57,24 +73,36 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		if (body == null) { //8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 9'
-			body = Problema.builder()
-					.dataHora(LocalDateTime.now())
-					.mensagem(status.getReasonPhrase())
+			body = Problem.builder()
+					.title(status.getReasonPhrase())
+					.status(status.value())
 					.build();			
 		} else if(body instanceof String) {
-			body = Problema.builder()
-					.dataHora(LocalDateTime.now())
-					.mensagem((String) body)
+			body = Problem.builder()
+					.title((String) body)
+					.status(status.value())
 					.build();
 		}
     	
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
     
+    //8.18. Padronizando o formato de problemas no corpo de respostas com a RFC 7807 - 16'40"
+    private Problem.ProblemBuilder createProblemBuilder(HttpStatus status, ProblemType problemType, String detail){
+    	
+    	return Problem.builder()
+    			.status(status.value())
+    			.type(problemType.getUri())
+    			.title(problemType.getTitle())
+    			.detail(detail);
+    }
+    
+    
+    
     /*após estender ResponseEntityExceptionHandler, não precisa dessa implementação - //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
     //Se comentar o método listarXml() de RestauranteController, ao executar o request listar no Postman será lançado HttpMediaTypeNotAcceptableException que será capturado aqui  
     @ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-    public ResponseEntity<?> tratarHttpMediaTypeNotAcceptableException() {
+    public ResponseEntity<?> handleHttpMediaTypeNotAcceptableException() {
     	
     	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler - 9'
     	Problema problema = Problema.builder()
