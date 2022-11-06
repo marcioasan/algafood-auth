@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.exceptionhandler;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -16,6 +17,19 @@ import com.algaworks.algafood.domain.exception.NegocioException;
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
+	//8.20. Customizando exception handlers de ResponseEntityExceptionHandler
+	@Override
+	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+    	
+    	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+    	String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
+    	
+    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	
+    	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
     //8.12. Tratando exceções em nível de controlador com @ExceptionHandler
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
