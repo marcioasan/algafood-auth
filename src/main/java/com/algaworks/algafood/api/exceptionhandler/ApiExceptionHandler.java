@@ -1,5 +1,10 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 //8.13. Tratando exceções globais com @ExceptionHandler e @ControllerAdvice - 1'28"
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
@@ -22,6 +29,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
     	
+		//8.21. Tratando a exception InvalidFormatException na desserialização - 2', 3' (tem que adicionar a dependencia commons-lang3 no pom.xml), 6'
+		Throwable rootCause = ExceptionUtils.getRootCause(ex);
+		
+		if (rootCause instanceof InvalidFormatException) {
+			return handleInvalidFormatException((InvalidFormatException) rootCause, headers, status, request);
+		}
+		
+		
     	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
     	String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
     	
@@ -30,7 +45,38 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     	return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
-    //8.12. Tratando exceções em nível de controlador com @ExceptionHandler
+	//8.21. Tratando a exception InvalidFormatException na desserialização - 4'30", 12'
+    private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+		
+    	//8.21. Tratando a exception InvalidFormatException na desserialização - 13'		  
+    	//for do Java 8
+    	/*
+    	ex.getPath().forEach(ref -> System.out.println(ref.getFieldName()));
+  
+    	//for no Java 5
+    	List<Reference> path1 = ex.getPath(); 
+    	for (Reference ref : path1) {
+    		System.out.println(ref.getFieldName()); 
+    	}
+		*/
+    	
+		//8.21. Tratando a exception InvalidFormatException na desserialização - 15'
+    	String path = ex.getPath().stream()
+    			.map(ref -> ref.getFieldName())
+    			.collect(Collectors.joining("."));
+    	
+    	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+    	String detail = String.format("A propriedade '%s' recebeu o valor '%s',  que é de um tipo inválido."
+    			+ " Corrija e informe um valor compatível com o tipo '%s'.", 
+    			path, ex.getValue(), ex.getTargetType().getSimpleName());
+    	
+    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	
+	return handleExceptionInternal(ex, problem, headers, status, request);
+}
+
+	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
     	
