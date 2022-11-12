@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +18,7 @@ import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 //8.13. Tratando exceções globais com @ExceptionHandler e @ControllerAdvice - 1'28"
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
@@ -34,8 +34,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 		
 		if (rootCause instanceof InvalidFormatException) {
 			return handleInvalidFormatException((InvalidFormatException) rootCause, headers, status, request);
+		} else if(rootCause instanceof PropertyBindingException) {
+			return handlePropertyBindingException((PropertyBindingException) rootCause, headers, status, request);
 		}
-		
 		
     	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
     	String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe.";
@@ -60,11 +61,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     		System.out.println(ref.getFieldName()); 
     	}
 		*/
-    	
-		//8.21. Tratando a exception InvalidFormatException na desserialização - 15'
-    	String path = ex.getPath().stream()
-    			.map(ref -> ref.getFieldName())
-    			.collect(Collectors.joining("."));
+    	String path = joinPath(ex.getPath());    	
     	
     	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
     	String detail = String.format("A propriedade '%s' recebeu o valor '%s',  que é de um tipo inválido."
@@ -76,6 +73,30 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 	return handleExceptionInternal(ex, problem, headers, status, request);
 }
 
+    //8.23. Desafio: tratando a PropertyBindingException na desserialização
+    private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        // Criei o método joinPath para reaproveitar em todos os métodos que precisam
+        // concatenar os nomes das propriedades (separando por ".")
+        String path = joinPath(ex.getPath());
+        
+        ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
+        String detail = String.format("A propriedade '%s' não existe. "
+                + "Corrija ou remova essa propriedade e tente novamente.", path);
+
+        Problem problem = createProblemBuilder(status, problemType, detail).build();
+        
+        return handleExceptionInternal(ex, problem, headers, status, request);
+    } 
+    
+    private String joinPath(List<Reference> references) {
+    	//8.21. Tratando a exception InvalidFormatException na desserialização - 15'
+    	return references.stream()
+            .map(ref -> ref.getFieldName())
+            .collect(Collectors.joining("."));
+    } 
+    
 	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
     public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
