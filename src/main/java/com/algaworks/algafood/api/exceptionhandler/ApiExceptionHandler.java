@@ -27,6 +27,26 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
+	//8.27. Desafio: tratando outras exceções não capturadas
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+	    HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;		
+	    ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+	    String detail = "Ocorreu um erro interno inesperado no sistema. "
+	            + "Tente novamente e se o problema persistir, entre em contato "
+	            + "com o administrador do sistema.";
+
+	    // Importante colocar o printStackTrace (pelo menos por enquanto, que não estamos
+	    // fazendo logging) para mostrar a stacktrace no console
+	    // Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam importantes
+	    // para você durante, especialmente na fase de desenvolvimento
+	    ex.printStackTrace();
+	    
+	    Problem problem = createProblemBuilder(status, problemType, detail).build();
+
+	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
 	//8.26. Desafio: tratando a exceção NoHandlerFoundException
 	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 	    ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
