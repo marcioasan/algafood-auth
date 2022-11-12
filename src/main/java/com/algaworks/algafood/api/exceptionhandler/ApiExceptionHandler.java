@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -24,6 +26,31 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
+	//8.25. Desafio: tratando exception de parâmetro de URL inválido
+	@Override
+	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	    
+	    if (ex instanceof MethodArgumentTypeMismatchException) {
+	        return handleMethodArgumentTypeMismatch((MethodArgumentTypeMismatchException) ex, headers, status, request);
+	    }
+
+	    return super.handleTypeMismatch(ex, headers, status, request);
+	}
+	
+	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers, 
+			HttpStatus status, WebRequest request) {
+
+	    ProblemType problemType = ProblemType.PARAMETRO_INVALIDO;
+
+	    String detail = String.format("O parâmetro de URL '%s' recebeu o valor '%s', "
+	            + "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s.",
+	            ex.getName(), ex.getValue(), ex.getRequiredType().getSimpleName());
+
+	    Problem problem = createProblemBuilder(status, problemType, detail).build();
+
+	    return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+	
 	//8.20. Customizando exception handlers de ResponseEntityExceptionHandler
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
@@ -33,9 +60,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 		Throwable rootCause = ExceptionUtils.getRootCause(ex);
 		
 		if (rootCause instanceof InvalidFormatException) {
-			return handleInvalidFormatException((InvalidFormatException) rootCause, headers, status, request);
+			return handleInvalidFormat((InvalidFormatException) rootCause, headers, status, request);
 		} else if(rootCause instanceof PropertyBindingException) {
-			return handlePropertyBindingException((PropertyBindingException) rootCause, headers, status, request);
+			return handlePropertyBinding((PropertyBindingException) rootCause, headers, status, request);
 		}
 		
     	ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
@@ -47,7 +74,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 	}
 	
 	//8.21. Tratando a exception InvalidFormatException na desserialização - 4'30", 12'
-    private ResponseEntity<Object> handleInvalidFormatException(InvalidFormatException ex,
+    private ResponseEntity<Object> handleInvalidFormat(InvalidFormatException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		
     	//8.21. Tratando a exception InvalidFormatException na desserialização - 13'		  
@@ -74,7 +101,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
 }
 
     //8.23. Desafio: tratando a PropertyBindingException na desserialização
-    private ResponseEntity<Object> handlePropertyBindingException(PropertyBindingException ex,
+    private ResponseEntity<Object> handlePropertyBinding(PropertyBindingException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
 
         // Criei o método joinPath para reaproveitar em todos os métodos que precisam
@@ -99,7 +126,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     
 	//8.12. Tratando exceções em nível de controlador com @ExceptionHandler
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
-    public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException ex, WebRequest request) {
+    public ResponseEntity<?> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request) {
     	
     	//8.18. Padronizando o formato de problemas no corpo de respostas com a RFC 7807 - 19'40"
     	HttpStatus status = HttpStatus.NOT_FOUND;
@@ -136,7 +163,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     
   //8.14. Desafio: implementando exception handler
     @ExceptionHandler(EntidadeEmUsoException.class)
-    public ResponseEntity<?> handleEntidadeEmUsoException(EntidadeEmUsoException ex, WebRequest request) {
+    public ResponseEntity<?> handleEntidadeEmUso(EntidadeEmUsoException ex, WebRequest request) {
     	
     	HttpStatus status = HttpStatus.CONFLICT;
     	ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
@@ -150,7 +177,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     }
     
     @ExceptionHandler(NegocioException.class)
-    public ResponseEntity<?> handleNegocioException(NegocioException ex, WebRequest request) {
+    public ResponseEntity<?> handleNegocio(NegocioException ex, WebRequest request) {
     	
     	HttpStatus status = HttpStatus.BAD_REQUEST;
     	ProblemType problemType = ProblemType.ERRO_NEGOCIO;
