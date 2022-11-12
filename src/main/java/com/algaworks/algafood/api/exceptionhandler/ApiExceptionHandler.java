@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
@@ -26,6 +27,16 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
+	//8.26. Desafio: tratando a exceção NoHandlerFoundException
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+	    ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+	    String detail = String.format("O recurso %s, que você tentou acessar, é inexistente.", ex.getRequestURL());
+	    
+	    Problem problem = createProblemBuilder(status, problemType, detail).build();
+	    
+	    return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+	
 	//8.25. Desafio: tratando exception de parâmetro de URL inválido
 	@Override
 	protected ResponseEntity<Object> handleTypeMismatch(TypeMismatchException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -130,7 +141,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     	
     	//8.18. Padronizando o formato de problemas no corpo de respostas com a RFC 7807 - 19'40"
     	HttpStatus status = HttpStatus.NOT_FOUND;
-    	ProblemType problemType = ProblemType.ENTIDADE_NAO_ENCONTRADA;
+    	ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
     	String detail = ex.getMessage();
     	
     	Problem problem = createProblemBuilder(status, problemType, detail).build();
