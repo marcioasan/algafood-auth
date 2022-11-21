@@ -1,5 +1,7 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -18,6 +20,7 @@ public class Problem {
 	private String title;
 	private String detail;
 	
-	private String userMessage;
+	private String userMessage; //8.28. Estendendo o formato do problema para adicionar novas propriedades
+	private LocalDateTime timestamp; //8.29. Desafio: estendendo o formato do problema
 	
 }
