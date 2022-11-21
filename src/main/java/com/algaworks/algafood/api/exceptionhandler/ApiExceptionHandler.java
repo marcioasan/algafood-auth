@@ -25,16 +25,19 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
 //8.13. Tratando exceções globais com @ExceptionHandler e @ControllerAdvice - 1'28"
 @ControllerAdvice //as exceções de todos os controllers serão tratadas aqui
-public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
+public class ApiExceptionHandler extends ResponseEntityExceptionHandler { 
+	
+	private static final String MSG_ERRO_GENERICA_USUARIO_FINAL = "Ocorreu um erro interno inesperado no sistema. "
+	+ "Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.";
+
+//8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
 	//8.27. Desafio: tratando outras exceções não capturadas
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
 	    HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;		
 	    ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
-	    String detail = "Ocorreu um erro interno inesperado no sistema. "
-	            + "Tente novamente e se o problema persistir, entre em contato "
-	            + "com o administrador do sistema.";
+	    String detail = MSG_ERRO_GENERICA_USUARIO_FINAL;
 
 	    // Importante colocar o printStackTrace (pelo menos por enquanto, que não estamos
 	    // fazendo logging) para mostrar a stacktrace no console
@@ -126,7 +129,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     			+ " Corrija e informe um valor compatível com o tipo '%s'.", 
     			path, ex.getValue(), ex.getTargetType().getSimpleName());
     	
-    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	Problem problem = createProblemBuilder(status, problemType, detail)
+    			.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL) //8.28. Estendendo o formato do problema para adicionar novas propriedades - 6'30"
+    			.build();
     	
 	return handleExceptionInternal(ex, problem, headers, status, request);
 }
@@ -143,7 +148,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
         String detail = String.format("A propriedade '%s' não existe. "
                 + "Corrija ou remova essa propriedade e tente novamente.", path);
 
-        Problem problem = createProblemBuilder(status, problemType, detail).build();
+        Problem problem = createProblemBuilder(status, problemType, detail)
+        		.userMessage(MSG_ERRO_GENERICA_USUARIO_FINAL) //8.28. Estendendo o formato do problema para adicionar novas propriedades - 6'30"
+        		.build();
         
         return handleExceptionInternal(ex, problem, headers, status, request);
     } 
@@ -200,7 +207,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler { //8.15
     	ProblemType problemType = ProblemType.ENTIDADE_EM_USO;
     	String detail = ex.getMessage();
     	
-    	Problem problem = createProblemBuilder(status, problemType, detail).build();
+    	Problem problem = createProblemBuilder(status, problemType, detail)
+    			.userMessage(detail) //8.28. Estendendo o formato do problema para adicionar novas propriedades - 9'30"
+    			.build();
     	
     	
     	//8.16. Customizando o corpo da resposta padrão de ResponseEntityExceptionHandler - 5'
