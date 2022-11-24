@@ -17,7 +17,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -39,10 +43,14 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull //9.2. Adicionando constraints e validando no controller com @Valid - 2'30"
+	@NotBlank //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 5'
+	//@NotEmpty //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 3'40"
+	//@NotNull //9.2. Adicionando constraints e validando no controller com @Valid - 2'30"
 	@Column(nullable = false)
 	private String nome;
 	
+	@PositiveOrZero //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2'
+	//@DecimalMin("1") //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 30"
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
