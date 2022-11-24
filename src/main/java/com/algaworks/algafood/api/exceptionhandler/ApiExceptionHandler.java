@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,12 +55,24 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
+	//9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 2'50", 3'30", 4'30"
+	//9.3. Desafio: tratando exception de violação de constraints de validação
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 		String detail = String.format("Um ou mais campos são inválidos. Faça o preenchimento correto e tente novamente", ex.getFieldError());
 		
+		BindingResult bindingResult = ex.getBindingResult();
+		
+		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
+				.map(fieldError -> Problem.Field.builder()
+						.name(fieldError.getField())
+						.userMessage(fieldError.getDefaultMessage())
+						.build())
+				.collect(Collectors.toList());
+		
 		Problem problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(detail)
+				.fields(problemFields)
 				.build();
 		
 		return handleExceptionInternal(ex, problem, headers, status, request);

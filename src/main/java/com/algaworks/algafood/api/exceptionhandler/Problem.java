@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,4 +24,13 @@ public class Problem {
 	private String userMessage; //8.28. Estendendo o formato do problema para adicionar novas propriedades
 	private LocalDateTime timestamp; //8.29. Desafio: estendendo o formato do problema
 	
+	//9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 1'
+	private List<Field> fields;
+	
+	@Getter
+	@Builder
+	public static class Field {
+		private String name;
+		private String userMessage;
+	}
 }
