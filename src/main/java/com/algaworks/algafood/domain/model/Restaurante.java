@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -54,11 +55,13 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
+	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
+	@NotNull
 	//@JsonIgnore
 	@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cozinha_id", nullable = false) //6.10. Entendendo o Eager Loading - 13' - Explicação sobre a consulta gerar um inner join com cozinha
-	private Cozinha cozinha;
+	private Cozinha cozinha; 
 	
 	@JsonIgnore //6.5. Testando e analisando o impacto da incorporação de classe na REST API - 5'
 	@Embedded //6.4. Mapeando classes incorporáveis com @Embedded e @Embeddable - 6'50"

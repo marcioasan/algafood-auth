@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,6 +25,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
+	@NotNull //9.6. Validando as associações de uma entidade em cascata - 2'30"
 	@EqualsAndHashCode.Include //3.15. Conhecendo e usando o Lombok - 8'50" - só gera o Equals e HashCode se deixar explícito - 9'30" - cria um Equals e HashCode usando apenas o id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
