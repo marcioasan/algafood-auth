@@ -27,6 +27,7 @@ import javax.validation.constraints.PositiveOrZero;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.algaworks.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -44,19 +45,20 @@ public class Restaurante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 5'
+	//@NotBlank //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 5'
 	//@NotEmpty //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 3'40"
 	//@NotNull //9.2. Adicionando constraints e validando no controller com @Valid - 2'30"
+	@NotBlank(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	@Column(nullable = false)
 	private String nome;
 	
-	@PositiveOrZero //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2'
+	@PositiveOrZero(groups = Groups.CadastroRestaurante.class) //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2' | 9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	//@DecimalMin("1") //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 30"
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
 	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
-	@NotNull
+	@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	//@JsonIgnore
 	@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
 	@ManyToOne(fetch = FetchType.LAZY)
