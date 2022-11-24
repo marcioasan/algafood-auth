@@ -68,6 +68,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
+		<!--9.1. Validação do modelo com Bean Validation -->		
+		<dependency>
+		    <groupId>org.springframework.boot</groupId> 
+		    <artifactId>spring-boot-starter-validation</artifactId> 
+		</dependency>		
 	</dependencies>
 
 	<build>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -85,7 +86,7 @@ public class RestauranteController {
 	//8.6. Desafio: refatorando os serviços REST
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
+	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {  //9.2. Adicionando constraints e validando no controller com @Valid - 6'30"
 		try {
 			return cadastroRestaurante.salvar(restaurante);			
 		} catch (CozinhaNaoEncontradaException e) {
