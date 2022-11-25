@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,7 +69,7 @@ public class CidadeController {
 	//8.6. Desafio: refatorando os serviços REST
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-	public Cidade adicionar(@RequestBody Cidade cidade) {
+	public Cidade adicionar(@RequestBody @Valid Cidade cidade) { //9.9. Desafio: adicionando constraints de validação no modelo - @Valid ver anotações na classe RestauranteController.java
     	try {
     		Cidade cidadeSalva = cidadeService.salvar(cidade);
     		return cidadeSalva;
@@ -110,7 +112,7 @@ public class CidadeController {
     
     //8.6. Desafio: refatorando os serviços REST
     @PutMapping("/{cidadeId}")
-    public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade) {
+    public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody @Valid Cidade cidade) {
     	
     	try {
     		Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
