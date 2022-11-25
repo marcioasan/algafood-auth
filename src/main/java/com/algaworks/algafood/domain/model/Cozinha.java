@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Cozinha {
 
-	@NotNull(groups = Groups.CadastroRestaurante.class)  //9.6. Validando as associações de uma entidade em cascata - 2'30", //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	@NotNull(groups = Groups.CozinhaId.class)  //9.6. Validando as associações de uma entidade em cascata - 2'30", //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5' | 9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 5'30" - Renomeou de Groups.CadastroRestaurante para Groups.CozinhaId  
 	@EqualsAndHashCode.Include //3.15. Conhecendo e usando o Lombok - 8'50" - só gera o Equals e HashCode se deixar explícito - 9'30" - cria um Equals e HashCode usando apenas o id
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

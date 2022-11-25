@@ -23,6 +23,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -48,17 +50,21 @@ public class Restaurante {
 	//@NotBlank //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 5'
 	//@NotEmpty //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 3'40"
 	//@NotNull //9.2. Adicionando constraints e validando no controller com @Valid - 2'30"
-	@NotBlank(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	//@NotBlank(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
-	@PositiveOrZero(groups = Groups.CadastroRestaurante.class) //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2' | 9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	//@PositiveOrZero(groups = Groups.CadastroRestaurante.class) //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2' | 9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	//@DecimalMin("1") //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 30"
+	@PositiveOrZero
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
+	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class) //9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 3'40"
 	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
-	@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	//@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
+	@NotNull
 	//@JsonIgnore
 	@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -89,7 +89,8 @@ public class RestauranteController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	//public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {  //9.2. Adicionando constraints e validando no controller com @Valid - 6'30"
-	public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 10'
+	//public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 10'
+	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
 		try {
 			return cadastroRestaurante.salvar(restaurante);			
 		} catch (CozinhaNaoEncontradaException e) {
