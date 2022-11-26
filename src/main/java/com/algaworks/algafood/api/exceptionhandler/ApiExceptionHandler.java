@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final String MSG_ERRO_GENERICA_USUARIO_FINAL = "Ocorreu um erro interno inesperado no sistema. "
 	+ "Tente novamente e se o problema persistir, entre em contato com o administrador do sistema.";
 
+	//9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 3'40"
+	@Autowired
+	private MessageSource messageSource;
+	
 //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
 
 	//8.27. Desafio: tratando outras exceções não capturadas
@@ -64,10 +71,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		BindingResult bindingResult = ex.getBindingResult();
 		
 		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
-				.map(fieldError -> Problem.Field.builder()
-						.name(fieldError.getField())
-						.userMessage(fieldError.getDefaultMessage())
-						.build())
+				.map(fieldError -> { //9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 2'50"
+					String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
+					return Problem.Field.builder()
+					.name(fieldError.getField())
+					.userMessage(message)
+					.build();
+				})
 				.collect(Collectors.toList());
 		
 		Problem problem = createProblemBuilder(status, problemType, detail)
