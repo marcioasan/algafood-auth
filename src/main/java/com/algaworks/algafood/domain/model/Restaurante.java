@@ -29,7 +29,7 @@ import javax.validation.groups.Default;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algaworks.algafood.Groups;
+import com.algaworks.algafood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -58,7 +58,8 @@ public class Restaurante {
 	//@PositiveOrZero(groups = Groups.CadastroRestaurante.class) //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2' | 9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	//@DecimalMin("1") //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 30"
 	@NotNull
-	@PositiveOrZero(message = "{TaxaFrete.invalida}")
+	//@PositiveOrZero(message = "{TaxaFrete.invalida}") //9.14. Usando o Resource Bundle do Spring como Resource Bundle do Bean Validation - 6'40"
+	@PositiveOrZero
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
