@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -70,6 +71,44 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		
 		BindingResult bindingResult = ex.getBindingResult();
 		
+		//9.18. Ajustando Exception Handler para adicionar mensagens de validação em nível de classe - 7'20"
+		List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
+				.map(objectError -> { //9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 2'50"
+					String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
+					
+					String name = objectError.getObjectName();
+					
+					if (objectError instanceof FieldError) {
+						name = ((FieldError) objectError).getField();
+					}
+					
+					return Problem.Object.builder()
+					.name(name)
+					.userMessage(message)
+					.build();
+				})
+				.collect(Collectors.toList());
+		
+		//9.18. Ajustando Exception Handler para adicionar mensagens de validação em nível de classe - 1'30"
+		/*
+		List<Problem.Field> problemFields = bindingResult.getAllErrors().stream()
+				.map(objectError -> { //9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 2'50"
+					String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
+					
+					String name = objectError.getObjectName();
+					
+					if (objectError instanceof FieldError) {
+						name = ((FieldError) objectError).getField();
+					}
+					
+					return Problem.Field.builder()
+					.name(name)
+					.userMessage(message)
+					.build();
+				})
+				.collect(Collectors.toList());		
+		*/
+		/*
 		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream()
 				.map(fieldError -> { //9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 2'50"
 					String message = messageSource.getMessage(fieldError, LocaleContextHolder.getLocale());
@@ -79,10 +118,11 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 					.build();
 				})
 				.collect(Collectors.toList());
+		*/
 		
 		Problem problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(detail)
-				.fields(problemFields)
+				.objects(problemObjects)
 				.build();
 		
 		return handleExceptionInternal(ex, problem, headers, status, request);

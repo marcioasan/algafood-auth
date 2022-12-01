@@ -23,13 +23,13 @@ public class Problem {
 	
 	private String userMessage; //8.28. Estendendo o formato do problema para adicionar novas propriedades
 	private LocalDateTime timestamp; //8.29. Desafio: estendendo o formato do problema
-	
-	//9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 1'
-	private List<Field> fields;
+		
+	//private List<Field> fields; //9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 1'
+	private List<Object> objects; //9.18. Ajustando Exception Handler para adicionar mensagens de validação em nível de classe - 6'30"
 	
 	@Getter
 	@Builder
-	public static class Field {
+	public static class Object {
 		private String name;
 		private String userMessage;
 	}
