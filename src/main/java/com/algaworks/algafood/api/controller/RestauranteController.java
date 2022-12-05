@@ -15,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
 import com.algaworks.algafood.core.validation.Groups;
+import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Restaurante;
@@ -45,6 +48,9 @@ public class RestauranteController {
 	
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
+	
+	@Autowired
+	private SmartValidator validator; //9.19. Executando processo de validação programaticamente - 4'40"
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Restaurante> listar(){
@@ -162,9 +168,22 @@ public class RestauranteController {
 	public Restaurante atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos, HttpServletRequest request) { //8.24. Lançando exception de desserialização na atualização parcial (PATCH) - 10'20"
 	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 	    merge(campos, restauranteAtual, request);
+	    
+	    //9.19. Executando processo de validação programaticamente - 2'50"
+	    validate(restauranteAtual, "restaurante");
+	    
 	    return atualizar(restauranteId, restauranteAtual);
 	}
 	
+	private void validate(Restaurante restaurante, String objectName) {
+		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
+		validator.validate(restaurante, bindingResult);
+		
+		if (bindingResult.hasErrors()) {
+			throw new ValidacaoException(bindingResult);
+		}
+	}
+
 	/*
 	//4.33. Analisando solução para atualização parcial de recursos com PATCH
 	@PatchMapping("/{restauranteId}")

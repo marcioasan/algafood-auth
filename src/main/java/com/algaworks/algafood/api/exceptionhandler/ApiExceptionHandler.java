@@ -23,6 +23,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -66,6 +67,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	//9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 2'50", 3'30", 4'30"
 	//9.3. Desafio: tratando exception de violação de constraints de validação
 	public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		
+		//9.20. Desafio: tratando a exception customizada de validações programáticas
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
+		
+		
+		/*
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
 		String detail = String.format("Um ou mais campos são inválidos. Faça o preenchimento correto e tente novamente", ex.getFieldError());
 		
@@ -88,6 +95,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 					.build();
 				})
 				.collect(Collectors.toList());
+		*/
 		
 		//9.18. Ajustando Exception Handler para adicionar mensagens de validação em nível de classe - 1'30"
 		/*
@@ -120,12 +128,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.collect(Collectors.toList());
 		*/
 		
+		/*
 		Problem problem = createProblemBuilder(status, problemType, detail)
 				.userMessage(detail)
 				.objects(problemObjects)
 				.build();
 		
 		return handleExceptionInternal(ex, problem, headers, status, request);
+		*/
 	}
 	
 	//8.26. Desafio: tratando a exceção NoHandlerFoundException
@@ -349,7 +359,43 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     			.detail(detail);
     }
     
+    //9.20. Desafio: tratando a exception customizada de validações programáticas
     
+    @ExceptionHandler({ ValidacaoException.class })
+    public ResponseEntity<Object> handleValidacaoException(ValidacaoException ex, WebRequest request) {
+        return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+    
+    private ResponseEntity<Object> handleValidationInternal(Exception ex, BindingResult bindingResult, HttpHeaders headers,
+    		HttpStatus status, WebRequest request) {
+    	        
+    	    ProblemType problemType = ProblemType.DADOS_INVALIDOS;
+    	    String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+    	    
+    	    List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
+    	            .map(objectError -> {
+    	                String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
+    	                
+    	                String name = objectError.getObjectName();
+    	                
+    	                if (objectError instanceof FieldError) {
+    	                    name = ((FieldError) objectError).getField();
+    	                }
+    	                
+    	                return Problem.Object.builder()
+    	                    .name(name)
+    	                    .userMessage(message)
+    	                    .build();
+    	            })
+    	            .collect(Collectors.toList());
+    	    
+    	    Problem problem = createProblemBuilder(status, problemType, detail)
+    	        .userMessage(detail)
+    	        .objects(problemObjects)
+    	        .build();
+    	    
+    	    return handleExceptionInternal(ex, problem, headers, status, request);
+    	}
     
     /*após estender ResponseEntityExceptionHandler, não precisa dessa implementação - //8.15. Criando um exception handler global com ResponseEntityExceptionHandler
     //Se comentar o método listarXml() de RestauranteController, ao executar o request listar no Postman será lançado HttpMediaTypeNotAcceptableException que será capturado aqui  
