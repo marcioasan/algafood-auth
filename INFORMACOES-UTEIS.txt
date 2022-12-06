@@ -62,3 +62,9 @@ https://projectlombok.org/features/Builder
 
 9.11. Customizando e resolvendo mensagens de validação globais em Resource Bundle - 9'
 Fala sobre acentuação no properties, Content-Type
+
+10.1. Introdução aos Testes de Integração e Testes de APIs
+https://app.algaworks.com/forum/topicos/82460/vamos-aprender-como-usar-o-mockito-para-criar-testes
+
+#Referência sobre mockito
+https://www.baeldung.com/mockito-series
