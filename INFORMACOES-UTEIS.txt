@@ -68,3 +68,7 @@ https://app.algaworks.com/forum/topicos/82460/vamos-aprender-como-usar-o-mockito
 
 #Referência sobre mockito
 https://www.baeldung.com/mockito-series
+
+#Apache Maven para programadores Java iniciantes
+10.6. Rodando os testes pelo Maven
+https://www.youtube.com/watch?v=ZQICkNszEuI

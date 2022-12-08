@@ -15,9 +15,9 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
 //10.3. Criando e rodando um teste de integração com Spring Boot, JUnit e AssertJ
-
+//10.7. Configurando Maven Failsafe Plugin no projeto - 3'10" - Renomeado o nome da classe para sufixo IT (Integration test)
 @SpringBootTest
-class CadastroCozinhaIntegrationTests {
+class CadastroCozinhaIntegrationIT {
 
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
