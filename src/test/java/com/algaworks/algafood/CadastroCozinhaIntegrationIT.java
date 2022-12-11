@@ -1,6 +1,8 @@
 package com.algaworks.algafood;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.hasSize;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.validation.ConstraintViolationException;
@@ -43,6 +45,21 @@ class CadastroCozinhaIntegrationIT {
 			.statusCode(HttpStatus.OK.value());
 	}
 	
+	//10.9. Validando o corpo da resposta HTTP
+	@Test
+	public void deveConter4Cozinhas_QuandoConsultarCozinhas() {
+		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+		
+		given()
+			.basePath("/cozinhas")
+			.port(port)
+			.accept(ContentType.JSON)
+		.when()
+			.get()
+		.then()
+			.body("", hasSize(4))
+			.body("nome", hasItems("Indiana", "Tailandesa"));
+	}
 	
 	
 	
