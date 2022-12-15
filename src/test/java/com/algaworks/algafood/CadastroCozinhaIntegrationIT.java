@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import javax.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,13 +32,17 @@ class CadastroCozinhaIntegrationIT {
 	@LocalServerPort
 	private int port;
 	
-	@Test
-	public void deveRetornarStatus200_QuandoConsultarCozinhas() {
+	//10.10. Criando um método para fazer setup dos testes
+	@BeforeEach
+	public void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-		
+		RestAssured.port = port;
+		RestAssured.basePath = "/cozinhas";
+	}
+	
+	@Test
+	public void deveRetornarStatus200_QuandoConsultarCozinhas() {				
 		given()
-			.basePath("/cozinhas")
-			.port(port)
 			.accept(ContentType.JSON)
 		.when()
 			.get()
@@ -48,11 +53,7 @@ class CadastroCozinhaIntegrationIT {
 	//10.9. Validando o corpo da resposta HTTP
 	@Test
 	public void deveConter4Cozinhas_QuandoConsultarCozinhas() {
-		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-		
 		given()
-			.basePath("/cozinhas")
-			.port(port)
 			.accept(ContentType.JSON)
 		.when()
 			.get()
