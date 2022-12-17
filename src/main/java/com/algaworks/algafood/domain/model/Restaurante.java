@@ -68,13 +68,14 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
+	@JsonIgnoreProperties(value = "nome", allowGetters = true) //11.2. Refinando o payload de cadastro com @JsonIgnoreProperties - 4'10", 5'10", 6'30" - para passar mais de 1 propriedade --> @JsonIgnoreProperties({ "propriedade1", "propriedade2" })
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class) //9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 3'40"
 	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
 	//@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	@NotNull
 	//@JsonIgnore
-	@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
-	@ManyToOne(fetch = FetchType.LAZY)
+	//@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
+	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false) //6.10. Entendendo o Eager Loading - 13' - Explicação sobre a consulta gerar um inner join com cozinha
 	private Cozinha cozinha; 
 	
