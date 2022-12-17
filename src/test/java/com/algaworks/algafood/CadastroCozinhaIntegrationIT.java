@@ -4,13 +4,17 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 
-import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
+
+import com.algaworks.algafood.domain.model.Cozinha;
+import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.util.DatabaseCleaner;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -18,6 +22,7 @@ import io.restassured.http.ContentType;
 //10.3. Criando e rodando um teste de integração com Spring Boot, JUnit e AssertJ
 //10.7. Configurando Maven Failsafe Plugin no projeto - 3'10" - Renomeado o nome da classe para sufixo IT (Integration test)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("/application-test.properties") //10.13. Configurando um banco de testes e usando @TestPropertySource - 5'30"
 class CadastroCozinhaIntegrationIT {
 
 	//10.8. Implementando Testes de API com REST Assured e validando o código de status HTTP - 1'50", 9'30", 10'30" (importação estática)	
@@ -25,7 +30,13 @@ class CadastroCozinhaIntegrationIT {
 	private int port;
 	
 	@Autowired
-	private Flyway flyway;
+	private DatabaseCleaner databaseCleaner; //10.14. Limpando e populando o banco de dados de teste - 3'10"
+	
+	@Autowired
+	private CozinhaRepository cozinhaRepository;
+	
+//	@Autowired
+//	private Flyway flyway; //retirado na aula 10.14. Limpando e populando o banco de dados de teste
 	
 	//10.10. Criando um método para fazer setup dos testes
 	@BeforeEach
@@ -34,7 +45,10 @@ class CadastroCozinhaIntegrationIT {
 		RestAssured.port = port;
 		RestAssured.basePath = "/cozinhas";
 		
-		flyway.migrate(); //10.12. Voltando o estado inicial do banco de dados para cada execução de teste com callback do Flyway
+		databaseCleaner.clearTables();
+		prepararDados();
+		
+		//flyway.migrate(); //10.12. Voltando o estado inicial do banco de dados para cada execução de teste com callback do Flyway
 	}
 	
 	@Test
@@ -49,14 +63,14 @@ class CadastroCozinhaIntegrationIT {
 	
 	//10.9. Validando o corpo da resposta HTTP
 	@Test
-	public void deveConter4Cozinhas_QuandoConsultarCozinhas() {
+	public void deveConter2Cozinhas_QuandoConsultarCozinhas() {
 		given()
 			.accept(ContentType.JSON)
 		.when()
 			.get()
 		.then()
-			.body("", hasSize(4))
-			.body("nome", hasItems("Indiana", "Tailandesa"));
+			.body("", hasSize(2));
+//			.body("nome", hasItems("Indiana", "Tailandesa"));
 	}
 	
 	//10.11. Entendendo o problema da ordem de execução dos testes
@@ -72,7 +86,16 @@ class CadastroCozinhaIntegrationIT {
 			.statusCode(HttpStatus.CREATED.value());
 	}
 	
-	
+	//10.14. Limpando e populando o banco de dados de teste - 4'
+	private void prepararDados() {
+		Cozinha cozinha1 = new Cozinha();
+		cozinha1.setNome("Tailandesa");
+		cozinhaRepository.save(cozinha1);
+
+		Cozinha cozinha2 = new Cozinha();
+		cozinha2.setNome("Americana");
+		cozinhaRepository.save(cozinha2);
+	}
 	
 	
 	
