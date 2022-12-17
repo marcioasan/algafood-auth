@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
@@ -17,11 +18,13 @@ public class CadastroEstadoService {
 	
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
+	@Transactional //11.1. Analisando e definindo melhor o escopo das transações - 3'30"
 	public Estado salvar(Estado estado) {
 		return estadoRepository.save(estado);
 	}
 	
+	@Transactional //11.1. Analisando e definindo melhor o escopo das transações - 3'30"
 	public void excluir(Long estadoId) {
 		System.out.println("***** DELETANDO ESTADO *****");
 		try {
