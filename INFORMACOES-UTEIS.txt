@@ -72,3 +72,8 @@ https://www.baeldung.com/mockito-series
 #Apache Maven para programadores Java iniciantes
 10.6. Rodando os testes pelo Maven
 https://www.youtube.com/watch?v=ZQICkNszEuI
+
+10.15. Testando endpoint passando parâmetro de URL
+https://app.algaworks.com/forum/topicos/84612/diferenca-entre-os-testes-integrados-x-teste-de-api
+#The different types of software testing
+https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing

@@ -24,7 +24,7 @@ import io.restassured.http.ContentType;
 //10.7. Configurando Maven Failsafe Plugin no projeto - 3'10" - Renomeado o nome da classe para sufixo IT (Integration test)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource("/application-test.properties") //10.13. Configurando um banco de testes e usando @TestPropertySource - 5'30"
-class CadastroCozinhaIntegrationIT {
+public class CadastroCozinhaIntegrationIT_ANTES_DA_REFATORACAO {
 
 	//10.8. Implementando Testes de API com REST Assured e validando o código de status HTTP - 1'50", 9'30", 10'30" (importação estática)	
 	@LocalServerPort
