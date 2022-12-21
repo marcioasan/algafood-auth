@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+//import estático pelo eclipse 5.18. Criando uma fábrica de Specifications - 2'40"
 import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comFreteGratis;
 import static com.algaworks.algafood.domain.repository.spec.RestauranteSpecs.comNomeSemelhante;
 
