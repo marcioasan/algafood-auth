@@ -41,7 +41,7 @@ public class Cozinha {
 	private String nome;
 	
 	//6.1. Mapeando relacionamento bidirecional com @OneToMany - 5', 10'10"
-	@JsonIgnore
+	//@JsonIgnore - anotação movida para a classe CidadeMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes = new ArrayList<>();
 }

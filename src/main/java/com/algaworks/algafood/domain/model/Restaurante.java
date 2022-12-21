@@ -62,7 +62,7 @@ public class Restaurante {
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
 
-	//@JsonIgnoreProperties(value = "nome", allowGetters = true) //11.2. Refinando o payload de cadastro com @JsonIgnoreProperties - 4'10", 5'10", 6'30" - para passar mais de 1 propriedade --> @JsonIgnoreProperties({ "propriedade1", "propriedade2" }) | anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
+	//@JsonIgnoreProperties(value = "nome", allowGetters = true) //11.2. Refinando o payload de cadastro com @JsonIgnoreProperties - 4'10", 5'10", 6'30" - para passar mais de 1 propriedade --> @JsonIgnoreProperties({ "propriedade1", "propriedade2" }) | anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class) //9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 3'40"
 	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
 	//@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
@@ -73,21 +73,21 @@ public class Restaurante {
 	@JoinColumn(name = "cozinha_id", nullable = false) //6.10. Entendendo o Eager Loading - 13' - Explicação sobre a consulta gerar um inner join com cozinha
 	private Cozinha cozinha; 
 	
-	//@JsonIgnore //6.5. Testando e analisando o impacto da incorporação de classe na REST API - 5' | anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
+	//@JsonIgnore //6.5. Testando e analisando o impacto da incorporação de classe na REST API - 5' | anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@Embedded //6.4. Mapeando classes incorporáveis com @Embedded e @Embeddable - 6'50"
 	private Endereco endereco;
 	
-	//@JsonIgnore anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
+	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@CreationTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 3', 8'40", 11'50" - essa anotação atribui uma data/hora para a propriedade dataCadastro quando ela for salva pela primeira vez 
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataCadastro; //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 1'
 
-	//@JsonIgnore anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
+	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@UpdateTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 4'20"
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataAtualizacao;
 	
-	//@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50" | anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"	
+	//@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50" | anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"	
 	@ManyToMany //6.2. Mapeando relacionamento muitos-para-muitos com @ManyToMany - 4'50", 6'20", 6'50"
 	//@ManyToMany(fetch = FetchType.EAGER) aula 6.14
 	@JoinTable(name = "restaurante_forma_pagamento", 
@@ -95,7 +95,7 @@ public class Restaurante {
 		inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private List<FormaPagamento> formasPagamento = new ArrayList<>();
 	
-	//@JsonIgnore anotação movidas para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
+	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos =  new ArrayList<>(); //6.8. Desafio: mapeando relacionamento um-para-muitos
 }
