@@ -2,6 +2,7 @@ package com.algaworks.algafood.domain.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,12 +81,14 @@ public class Restaurante {
 	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@CreationTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 3', 8'40", 11'50" - essa anotação atribui uma data/hora para a propriedade dataCadastro quando ela for salva pela primeira vez 
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataCadastro; //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 1'
-
+	//private LocalDateTime dataCadastro; //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 1'
+	private OffsetDateTime dataCadastro; //11.7. Configurando e refatorando o projeto para usar UTC - 6'20"
+		
 	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@UpdateTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 4'20"
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataAtualizacao;
+	//private LocalDateTime dataAtualizacao;
+	private OffsetDateTime dataAtualizacao; //11.7. Configurando e refatorando o projeto para usar UTC - 6'20"
 	
 	//@JsonIgnore //6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 4'50" | anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"	
 	@ManyToMany //6.2. Mapeando relacionamento muitos-para-muitos com @ManyToMany - 4'50", 6'20", 6'50"

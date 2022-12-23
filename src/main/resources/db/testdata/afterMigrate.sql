@@ -1,3 +1,4 @@
+#11.7. Configurando e refatorando o projeto para usar UTC - 1'
 #7.10. Adicionando dados de testes com callback do Flyway
 set foreign_key_checks = 0;
 
