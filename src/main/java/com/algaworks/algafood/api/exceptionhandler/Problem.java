@@ -1,6 +1,6 @@
 package com.algaworks.algafood.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,7 +22,8 @@ public class Problem {
 	private String detail;
 	
 	private String userMessage; //8.28. Estendendo o formato do problema para adicionar novas propriedades
-	private LocalDateTime timestamp; //8.29. Desafio: estendendo o formato do problema
+	//private LocalDateTime timestamp; //8.29. Desafio: estendendo o formato do problema
+	private OffsetDateTime timestamp; //11.8. Desafio: refatorando o código para usar OffsetDateTime
 		
 	//private List<Field> fields; //9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 1'
 	private List<Object> objects; //9.18. Ajustando Exception Handler para adicionar mensagens de validação em nível de classe - 6'30"

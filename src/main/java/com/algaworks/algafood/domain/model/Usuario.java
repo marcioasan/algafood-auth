@@ -1,6 +1,6 @@
 package com.algaworks.algafood.domain.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,8 @@ public class Usuario {
 	
 	@CreationTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 3', 8'40", 11'50" - essa anotação atribui uma data/hora para a propriedade dataCadastro quando ela for salva pela primeira vez
 	@Column(nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataCadastro; //6.9. Desafio: mapeando relacionamentos muitos-para-muitos
+	//private LocalDateTime dataCadastro; //6.9. Desafio: mapeando relacionamentos muitos-para-muitos
+	private OffsetDateTime dataCadastro; //11.8. Desafio: refatorando o código para usar OffsetDateTime
 	
 	@ManyToMany
 	@JoinTable(name = "usuario_grupo",
