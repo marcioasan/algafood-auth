@@ -31,9 +31,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
+import com.algaworks.algafood.api.model.input.CozinhaIdInput;
+import com.algaworks.algafood.api.model.input.RestauranteInput;
 import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
@@ -98,8 +101,9 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.CREATED)
 	//public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {  //9.2. Adicionando constraints e validando no controller com @Valid - 6'30"
 	//public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 10'
-	public RestauranteModel adicionar(@RequestBody @Valid Restaurante restaurante) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
+	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
 		try {
+			Restaurante restaurante = toDomainObject(restauranteInput); //11.11. Criando DTOs para entrada de dados na API - 13'
 			return toModel(cadastroRestaurante.salvar(restaurante)); //11.10. Implementando a conversão de entidade para DTO - 7'10"
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
@@ -127,8 +131,9 @@ public class RestauranteController {
 	
 	//8.6. Desafio: refatorando os serviços REST
 	@PutMapping("/{restauranteId}")
-	public RestauranteModel atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
-	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
+	public RestauranteModel atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput) {
+		Restaurante restaurante = toDomainObject(restauranteInput); ////11.11. Criando DTOs para entrada de dados na API - 13'
+		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 	    BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties, 6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 7'30", incluir no copyProperties "formasPagamento" e "endereco" para ignorar essas propriedades que estão vindo vazias do request, 6.5 - 7'
 
 	    try {
@@ -174,7 +179,10 @@ public class RestauranteController {
 	    //9.19. Executando processo de validação programaticamente - 2'50"
 	    validate(restauranteAtual, "restaurante");
 	    
-	    return atualizar(restauranteId, restauranteAtual);
+	    //Esse método atualizarParcial foi retirado do curso, mas eu mantive e devido a criação do RestauranteInput, precisei criar o toRestauranteInput para o método funcionar.
+	    toRestauranteInput(restauranteAtual);
+	    return atualizar(restauranteId, toRestauranteInput(restauranteAtual));
+	    //return atualizar(restauranteId, restauranteAtual);
 	}
 	
 	private void validate(Restaurante restaurante, String objectName) {
@@ -253,4 +261,31 @@ public class RestauranteController {
 				.collect(Collectors.toList());
 	}
 	
+	//11.11. Criando DTOs para entrada de dados na API - 13'
+	private Restaurante toDomainObject(RestauranteInput restauranteInput) {
+		Restaurante restaurante = new Restaurante();
+		restaurante.setNome(restauranteInput.getNome());
+		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
+		
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(restauranteInput.getCozinha().getId());
+		
+		restaurante.setCozinha(cozinha);
+		
+		return restaurante;
+	}
+	
+	private RestauranteInput toRestauranteInput(Restaurante restaurante) {
+		RestauranteInput restauranteInput = new RestauranteInput();
+		restauranteInput.setNome(restaurante.getNome());
+		restauranteInput.setTaxaFrete(restaurante.getTaxaFrete());
+		restauranteInput.setCozinha(toCozinhaInput(restaurante.getCozinha()));
+		return restauranteInput;
+	}
+	
+	private CozinhaIdInput toCozinhaInput(Cozinha cozinha) {
+		CozinhaIdInput cozinhaIdInput =  new CozinhaIdInput();
+		cozinhaIdInput.setId(cozinha.getId());
+		return cozinhaIdInput;
+	}
 }

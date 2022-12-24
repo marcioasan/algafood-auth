@@ -49,15 +49,15 @@ public class Restaurante {
 	//@NotEmpty //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 3'40"
 	//@NotNull //9.2. Adicionando constraints e validando no controller com @Valid - 2'30"
 	//@NotBlank(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
-	@NotBlank
+	//@NotBlank //está sendo validado no RestauranteInput
 	@Column(nullable = false)
 	private String nome;
 	
 	//@PositiveOrZero(groups = Groups.CadastroRestaurante.class) //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 2' | 9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
 	//@DecimalMin("1") //9.5. Conhecendo e adicionando mais constraints de validação no modelo - 30"
-	@NotNull
+	//@NotNull //está sendo validado no RestauranteInput
 	//@PositiveOrZero(message = "{TaxaFrete.invalida}") //9.14. Usando o Resource Bundle do Spring como Resource Bundle do Bean Validation - 6'40"
-	@PositiveOrZero
+	//@PositiveOrZero //está sendo validado no RestauranteInput
 	@Multiplo(numero = 5)
 	//@TaxaFrete
 	@Column(name = "taxa_frete", nullable = false)
@@ -67,7 +67,7 @@ public class Restaurante {
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class) //9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 3'40"
 	@Valid //***OBS: O Bean Validation não valida o @NotNull em cascata, ou seja, não vai validar o id nulo da entidade cozinha, para validar em cascata, tem que usar o @Valid - 9.6. Validando as associações de uma entidade em cascata - 3'20"
 	//@NotNull(groups = Groups.CadastroRestaurante.class)  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 5'
-	@NotNull
+	//@NotNull //está sendo validado no RestauranteInput
 	//@JsonIgnore
 	//@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
 	@ManyToOne
