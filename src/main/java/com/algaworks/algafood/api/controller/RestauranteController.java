@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -17,7 +18,6 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +28,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.model.CozinhaModel;
+import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
-import com.algaworks.algafood.core.validation.Groups;
 import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -53,8 +54,8 @@ public class RestauranteController {
 	private SmartValidator validator; //9.19. Executando processo de validação programaticamente - 4'40"
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Restaurante> listar(){
-		return restauranteRepository.findAll();
+	public List<RestauranteModel> listar(){
+		return toCollectionModel(restauranteRepository.findAll());
 	}
 	
 	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
@@ -70,9 +71,10 @@ public class RestauranteController {
 	
 	//8.6. Desafio: refatorando os serviços REST
 	@GetMapping("/{idRestaurante}")
-	public Restaurante buscar(@PathVariable Long idRestaurante) {
-		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(idRestaurante);
-		return restauranteAtual;
+	public RestauranteModel buscar(@PathVariable Long idRestaurante) {
+		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(idRestaurante);
+		
+		return toModel(restaurante);
 	}
 	
 	/*
@@ -96,9 +98,9 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.CREATED)
 	//public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {  //9.2. Adicionando constraints e validando no controller com @Valid - 6'30"
 	//public Restaurante adicionar(@RequestBody @Validated(Groups.CadastroRestaurante.class) Restaurante restaurante) {  //9.7. Agrupando e restringindo constraints que devem ser usadas na validação - 10'
-	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
+	public RestauranteModel adicionar(@RequestBody @Valid Restaurante restaurante) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
 		try {
-			return cadastroRestaurante.salvar(restaurante);			
+			return toModel(cadastroRestaurante.salvar(restaurante)); //11.10. Implementando a conversão de entidade para DTO - 7'10"
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
@@ -125,12 +127,12 @@ public class RestauranteController {
 	
 	//8.6. Desafio: refatorando os serviços REST
 	@PutMapping("/{restauranteId}")
-	public Restaurante atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
+	public RestauranteModel atualizar(@PathVariable Long restauranteId, @RequestBody @Valid Restaurante restaurante) {
 	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 	    BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties, 6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 7'30", incluir no copyProperties "formasPagamento" e "endereco" para ignorar essas propriedades que estão vindo vazias do request, 6.5 - 7'
 
 	    try {
-	    	return cadastroRestaurante.salvar(restauranteAtual);			
+	    	return toModel(cadastroRestaurante.salvar(restauranteAtual));
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
@@ -165,7 +167,7 @@ public class RestauranteController {
 	
 	//8.6. Desafio: refatorando os serviços REST
 	@PatchMapping("/{restauranteId}")
-	public Restaurante atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos, HttpServletRequest request) { //8.24. Lançando exception de desserialização na atualização parcial (PATCH) - 10'20"
+	public RestauranteModel atualizarParcial(@PathVariable Long restauranteId, @RequestBody Map<String, Object> campos, HttpServletRequest request) { //8.24. Lançando exception de desserialização na atualização parcial (PATCH) - 10'20"
 	    Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 	    merge(campos, restauranteAtual, request);
 	    
@@ -231,25 +233,24 @@ public class RestauranteController {
 		}
 	}
 	
+	//11.10. Implementando a conversão de entidade para DTO
+	private RestauranteModel toModel(Restaurante restaurante) {
+		CozinhaModel cozinhaModel = new CozinhaModel();
+		cozinhaModel.setId(restaurante.getCozinha().getId());
+		cozinhaModel.setNome(restaurante.getCozinha().getNome());
+		
+		RestauranteModel restauranteModel = new RestauranteModel();
+		restauranteModel.setId(restaurante.getId());
+		restauranteModel.setNome(restaurante.getNome());
+		restauranteModel.setTaxaFrete(restaurante.getTaxaFrete());
+		restauranteModel.setCozinha(cozinhaModel);
+		return restauranteModel;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {
+		return restaurantes.stream()
+				.map(restaurante -> toModel(restaurante))
+				.collect(Collectors.toList());
+	}
 	
 }
