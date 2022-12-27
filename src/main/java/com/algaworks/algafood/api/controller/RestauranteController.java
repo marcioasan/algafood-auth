@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.assembler.RestauranteModelAssembler;
 import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
@@ -56,9 +57,12 @@ public class RestauranteController {
 	@Autowired
 	private SmartValidator validator; //9.19. Executando processo de validação programaticamente - 4'40"
 	
+	@Autowired
+	private RestauranteModelAssembler restauranteModelAssembler;
+	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RestauranteModel> listar(){
-		return toCollectionModel(restauranteRepository.findAll());
+		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
 	
 	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
@@ -77,7 +81,7 @@ public class RestauranteController {
 	public RestauranteModel buscar(@PathVariable Long idRestaurante) {
 		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(idRestaurante);
 		
-		return toModel(restaurante);
+		return restauranteModelAssembler.toModel(restaurante);
 	}
 	
 	/*
@@ -104,7 +108,7 @@ public class RestauranteController {
 	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {	//9.8. Convertendo grupos de constraints para validação em cascata com @ConvertGroup - 2'40"
 		try {
 			Restaurante restaurante = toDomainObject(restauranteInput); //11.11. Criando DTOs para entrada de dados na API - 13'
-			return toModel(cadastroRestaurante.salvar(restaurante)); //11.10. Implementando a conversão de entidade para DTO - 7'10"
+			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante)); //11.10. Implementando a conversão de entidade para DTO - 7'10"
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
@@ -137,7 +141,7 @@ public class RestauranteController {
 	    BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties, 6.3. Analisando o impacto do relacionamento muitos-para-muitos na REST API - 7'30", incluir no copyProperties "formasPagamento" e "endereco" para ignorar essas propriedades que estão vindo vazias do request, 6.5 - 7'
 
 	    try {
-	    	return toModel(cadastroRestaurante.salvar(restauranteAtual));
+	    	return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		} catch (CozinhaNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
@@ -241,25 +245,6 @@ public class RestauranteController {
 		}
 	}
 	
-	//11.10. Implementando a conversão de entidade para DTO
-	private RestauranteModel toModel(Restaurante restaurante) {
-		CozinhaModel cozinhaModel = new CozinhaModel();
-		cozinhaModel.setId(restaurante.getCozinha().getId());
-		cozinhaModel.setNome(restaurante.getCozinha().getNome());
-		
-		RestauranteModel restauranteModel = new RestauranteModel();
-		restauranteModel.setId(restaurante.getId());
-		restauranteModel.setNome(restaurante.getNome());
-		restauranteModel.setTaxaFrete(restaurante.getTaxaFrete());
-		restauranteModel.setCozinha(cozinhaModel);
-		return restauranteModel;
-	}
-	
-	private List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {
-		return restaurantes.stream()
-				.map(restaurante -> toModel(restaurante))
-				.collect(Collectors.toList());
-	}
 	
 	//11.11. Criando DTOs para entrada de dados na API - 13'
 	private Restaurante toDomainObject(RestauranteInput restauranteInput) {

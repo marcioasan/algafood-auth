@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 //11.3. Criando classes de mixin para usar as anotações do Jackson 3', 5' (foi criada a classe RestauranteMixin.java)
-public abstract class RestauranteMixin {
+public abstract class RestauranteMixin_EXCLUIDA {
 
 	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	private Cozinha cozinha;
