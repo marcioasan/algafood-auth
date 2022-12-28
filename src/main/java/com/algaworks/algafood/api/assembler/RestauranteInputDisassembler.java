@@ -25,6 +25,7 @@ public class RestauranteInputDisassembler {
 	public void copyToDomainObject(RestauranteInput restauranteInput, Restaurante restaurante) {
 		// Para evitar org.hibernate.HibernateException: identifier of an instance of 
 		// com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2
+		//*** Comentário interessante de um aluno sobre essa solução --> https://app.algaworks.com/forum/topicos/87944/sobre-a-solucao-do-new-cozinha  Open-Session-In-View
 		restaurante.setCozinha(new Cozinha());
 		
 		modelMapper.map(restauranteInput, restaurante);

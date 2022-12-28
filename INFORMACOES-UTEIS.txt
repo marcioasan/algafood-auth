@@ -77,3 +77,7 @@ https://www.youtube.com/watch?v=ZQICkNszEuI
 https://app.algaworks.com/forum/topicos/84612/diferenca-entre-os-testes-integrados-x-teste-de-api
 #The different types of software testing
 https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing
+
+11.17. Mapeando para uma instância destino (e não um tipo) com ModelMapper
+https://app.algaworks.com/forum/topicos/87944/sobre-a-solucao-do-new-cozinha
+Open-Session-In-View
