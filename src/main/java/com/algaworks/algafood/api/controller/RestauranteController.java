@@ -130,12 +130,26 @@ public class RestauranteController {
 	}
 	*/
 	
-	
+	//11.17. Mapeando para uma instância destino (e não um tipo) com ModelMapper
+	@PutMapping("/{restauranteId}")
+	public RestauranteModel atualizar(@PathVariable Long restauranteId,
+			@RequestBody @Valid RestauranteInput restauranteInput) {
+		try {
+			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
+			
+			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
+			
+			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
+		} catch (CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
+	}
 	
 	
 	
 	
 	//8.6. Desafio: refatorando os serviços REST
+	/*
 	@PutMapping("/{restauranteId}")
 	public RestauranteModel atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput) {
 		Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); ////11.11. Criando DTOs para entrada de dados na API - 13'
@@ -148,6 +162,7 @@ public class RestauranteController {
 			throw new NegocioException(e.getMessage());
 		}
 	}
+	*/
 	
 	/*
 	@PutMapping("/{restauranteId}")	
