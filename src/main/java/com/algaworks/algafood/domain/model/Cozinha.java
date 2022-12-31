@@ -33,7 +33,7 @@ public class Cozinha {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
+	//@NotBlank //valicação sendo feita no CozinhaInput.java
 	//4.15. Customizando as representações XML e JSON com @JsonIgnore, @JsonProperty e @JsonRootName - 3'30" - @JsonProperty muda o nome da representação que será devolvida para 'titulo', mas o nome no domínio continuará sendo 'nome'
 	//@JsonIgnore
 	//@JsonProperty("titulo")

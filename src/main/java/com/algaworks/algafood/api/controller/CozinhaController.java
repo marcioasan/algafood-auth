@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.assembler.CozinhaInputDisassembler;
+import com.algaworks.algafood.api.assembler.CozinhaModelAssembler;
+import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.CozinhasXmlWrapper;
+import com.algaworks.algafood.api.model.input.CozinhaInput;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
@@ -34,11 +38,19 @@ public class CozinhaController {
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
 	
+	@Autowired
+	private CozinhaModelAssembler cozinhaModelAssembler;
+
+	@Autowired
+	private CozinhaInputDisassembler cozinhaInputDisassembler;
+	
 	//4.13. Implementando content negotiation para retornar JSON ou XML - 6'
 	//@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE) //pode ser colocado no escopo da classe '@RequestMapping'	
-	public List<Cozinha> listar() {
-		return cozinhaRepository.findAll();
+	public List<CozinhaModel> listar() {
+	    List<Cozinha> todasCozinhas = cozinhaRepository.findAll();
+	    
+	    return cozinhaModelAssembler.toCollectionModel(todasCozinhas);
 	}
 
 	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
@@ -49,8 +61,10 @@ public class CozinhaController {
 
 	//8.5. Simplificando o código com o uso de @ResponseStatus em exceptions - 2'20"
 	@GetMapping("/{cozinhaId}")
-	public Cozinha buscar(@PathVariable Long cozinhaId) {
-		return cadastroCozinha.buscarOuFalhar(cozinhaId);
+	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
+	    Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+	    
+	    return cozinhaModelAssembler.toModel(cozinha);
 	}
 	
 	/*
@@ -74,20 +88,45 @@ public class CozinhaController {
 	//https://app.algaworks.com/forum/topicos/82285/nao-entendi-o-que-faz-a-classe-ser-capaz-de-responder-xml-mesmo-sem-eu-definir-ou-import-sobre-xml
 	//@PostMapping(produces = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método irá devolver em XML, se não especificar nada, irá devolver o que foi colocado no Accept o header da requisição
 	//@PostMapping(consumes = MediaType.APPLICATION_XML_VALUE) //nesse caso, o método estará configurado para receber conteúdo apenas em XML, se mandar qualquer outro formato, será lançado o status 415 "Unsupported Media Type" - HttpMediaTypeNotSupportedException
+	/*
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) {
 		Cozinha cozinhaSalva = cadastroCozinha.salvar(cozinha);
 		return cozinhaSalva;
 	}
+	*/
+	
+	//11.20. Desafio: usando DTOs como representation model
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {
+	    Cozinha cozinha = cozinhaInputDisassembler.toDomainObject(cozinhaInput);
+	    cozinha = cadastroCozinha.salvar(cozinha);
+	    
+	    return cozinhaModelAssembler.toModel(cozinha);
+	}
+	
+	//11.20. Desafio: usando DTOs como representation model
+	@PutMapping("/{cozinhaId}")
+	public CozinhaModel atualizar(@PathVariable Long cozinhaId,
+	        @RequestBody @Valid CozinhaInput cozinhaInput) {
+	    Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
+	    cozinhaInputDisassembler.copyToDomainObject(cozinhaInput, cozinhaAtual);
+	    cozinhaAtual = cadastroCozinha.salvar(cozinhaAtual);
+	    
+	    return cozinhaModelAssembler.toModel(cozinhaAtual);
+	}
 	
 	//8.5. Simplificando o código com o uso de @ResponseStatus em exceptions - 9'20"
+	/*
 	@PutMapping("/{cozinhaId}")
 	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha) {
 		Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties 
 		return cadastroCozinha.salvar(cozinhaAtual);
 	}
+	*/
 	
 	/*
 	@PutMapping("/{cozinhaId}")

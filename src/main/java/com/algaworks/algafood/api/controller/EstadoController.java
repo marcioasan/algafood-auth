@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.assembler.EstadoInputDisassembler;
+import com.algaworks.algafood.api.assembler.EstadoModelAssembler;
+import com.algaworks.algafood.api.model.EstadoModel;
+import com.algaworks.algafood.api.model.input.EstadoInput;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
 import com.algaworks.algafood.domain.service.CadastroEstadoService;
@@ -31,9 +35,17 @@ public class EstadoController {
 	@Autowired
 	private CadastroEstadoService estadoService;
 	
+	@Autowired
+	private EstadoModelAssembler estadoModelAssembler;
+
+	@Autowired
+	private EstadoInputDisassembler estadoInputDisassembler;
+	
 	@GetMapping
-	public List<Estado> listar() {
-		return estadoRepository.findAll();
+	public List<EstadoModel> listar() {
+	    List<Estado> todosEstados = estadoRepository.findAll();
+	    
+	    return estadoModelAssembler.toCollectionModel(todosEstados);
 	}
 	
 	
@@ -41,8 +53,10 @@ public class EstadoController {
 	
 	//8.6. Desafio: refatorando os serviços REST
 	@GetMapping("/{estadoId}")
-	public Estado buscar(@PathVariable Long estadoId) {
-		return estadoService.buscarOuFalhar(estadoId);
+	public EstadoModel buscar(@PathVariable Long estadoId) {
+	    Estado estado = estadoService.buscarOuFalhar(estadoId);
+	    
+	    return estadoModelAssembler.toModel(estado);
 	}
 	
 	/*
@@ -59,24 +73,49 @@ public class EstadoController {
 	*/
 	
 	
+	//11.20. Desafio: usando DTOs como representation model
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public EstadoModel adicionar(@RequestBody @Valid EstadoInput estadoInput) {
+	    Estado estado = estadoInputDisassembler.toDomainObject(estadoInput);
+	    
+	    estado = estadoService.salvar(estado);
+	    
+	    return estadoModelAssembler.toModel(estado);
+	}
 	
-	
-    
+    /*
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Estado adicionar(@RequestBody @Valid Estado estado) { //9.9. Desafio: adicionando constraints de validação no modelo - @Valid ver anotações na classe RestauranteController.java		
 		estado = estadoService.salvar(estado);
 		return estado;
 	}
+	*/
+	
+	//11.20. Desafio: usando DTOs como representation model
+	@PutMapping("/{estadoId}")
+	public EstadoModel atualizar(@PathVariable Long estadoId,
+	        @RequestBody @Valid EstadoInput estadoInput) {
+	    Estado estadoAtual = estadoService.buscarOuFalhar(estadoId);
+	    
+	    estadoInputDisassembler.copyToDomainObject(estadoInput, estadoAtual);
+	    
+	    estadoAtual = estadoService.salvar(estadoAtual);
+	    
+	    return estadoModelAssembler.toModel(estadoAtual);
+	}
 	
 	
 	//8.6. Desafio: refatorando os serviços REST
+	/*
 	@PutMapping("/{estadoId}")
 	public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado) {
 		Estado estadoAtual = estadoService.buscarOuFalhar(estadoId);
 		BeanUtils.copyProperties(estado, estadoAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
 		return estadoService.salvar(estadoAtual);
 	}
+	*/
 	
 	/*
 	@PutMapping("/{estadoId}")
