@@ -30,7 +30,10 @@ public class CadastroCozinhaService {
 	@Transactional //11.1. Analisando e definindo melhor o escopo das transações - 3'30"
 	public void excluir(Long cozinhaId) {
 		try {
-			cozinhaRepository.deleteById(cozinhaId);			
+			cozinhaRepository.deleteById(cozinhaId);
+			
+			cozinhaRepository.flush();//11.21. Corrigindo bug de tratamento de exception de integridade de dados com flush do JPA - 6'45" - para corrigir o erro DataIntegrityViolationException
+			
 		} catch (EmptyResultDataAccessException e) {
 			throw new CozinhaNaoEncontradaException(cozinhaId);
 		} catch (DataIntegrityViolationException e) {

@@ -35,7 +35,8 @@ public class CadastroCidadeService {
 	public void excluir(Long cidadeId) {
 		System.out.println("***** DELETANDO CIDADE *****");
 		try {
-			cidadeRepository.deleteById(cidadeId);			
+			cidadeRepository.deleteById(cidadeId);
+			cidadeRepository.flush(); //11.21. Corrigindo bug de tratamento de exception de integridade de dados com flush do JPA - 6'45" - para corrigir o erro DataIntegrityViolationException
 		} catch (EmptyResultDataAccessException e) {
 			throw new CidadeNaoEncontradaException(cidadeId);
 		} catch (DataIntegrityViolationException e) {
