@@ -29,6 +29,20 @@ public class CadastroRestauranteService {
 		return restauranteRepository.save(restaurante);
 	}
 
+	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 7'20"
+	@Transactional
+	public void ativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+		restauranteAtual.ativar();
+	}
+	
+	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 10'
+	@Transactional
+	public void inativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+		restauranteAtual.inativar();
+	}
+	
 	public Restaurante buscarOuFalhar(Long idRestaurante) {
 		return restauranteRepository.findById(idRestaurante)
 			.orElseThrow(() -> new RestauranteNaoEncontradoException(idRestaurante));		

@@ -1,0 +1,3 @@
+--12.4. Implementando os endpoints de ativacao e inativacao de restaurantes - 3'30", inclusao da coluna ativo
+V008__cria-coluna-ativo-restaurante.sql
+

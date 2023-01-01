@@ -78,6 +78,8 @@ public class Restaurante {
 	@Embedded //6.4. Mapeando classes incorporáveis com @Embedded e @Embeddable - 6'50"
 	private Endereco endereco;
 	
+	private Boolean ativo = Boolean.TRUE; //12.4. Implementando os endpoints de ativação e inativação de restaurantes - 5'30"
+	
 	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@CreationTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 3', 8'40", 11'50" - essa anotação atribui uma data/hora para a propriedade dataCadastro quando ela for salva pela primeira vez 
 	@Column(nullable = false, columnDefinition = "datetime")
@@ -101,6 +103,15 @@ public class Restaurante {
 	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos =  new ArrayList<>(); //6.8. Desafio: mapeando relacionamento um-para-muitos
+	
+	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 10'25"
+	public void ativar() {
+		setAtivo(true);
+	}
+	
+	public void inativar() {
+		setAtivo(false);
+	}
 }
 
 

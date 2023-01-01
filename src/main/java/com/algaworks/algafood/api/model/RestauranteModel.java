@@ -16,5 +16,6 @@ public class RestauranteModel {
 	private String nome;
 	private BigDecimal taxaFrete;
 	private CozinhaModel cozinha;
+	private Boolean ativo; //12.4. Implementando os endpoints de ativação e inativação de restaurantes - 6'20"
 	
 }
