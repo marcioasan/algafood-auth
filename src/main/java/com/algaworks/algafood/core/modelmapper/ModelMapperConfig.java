@@ -4,6 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.algaworks.algafood.api.model.EnderecoModel;
+import com.algaworks.algafood.domain.model.Endereco;
+
 //11.14. Adicionando e usando o ModelMapper - 4'15"
 
 @Configuration
@@ -11,7 +14,16 @@ public class ModelMapperConfig {
 
 	@Bean
 	public ModelMapper modelMapper() {
-		return new ModelMapper();
+		
+		//12.6. Adicionando endereço no modelo da representação do recurso de restaurante - 7'30"
+		var modelMapper = new ModelMapper();
+		var enderecoToEnderecoModelTypeMap = modelMapper.createTypeMap(Endereco.class, EnderecoModel.class);
+		
+		enderecoToEnderecoModelTypeMap.<String>addMapping(
+				enderecoSrc -> enderecoSrc.getCidade().getEstado().getNome(), 
+				(enderecoModelDest, value) -> enderecoModelDest.getCidade().setEstado(value)); 
+		
+		return modelMapper;
 	}
 	
 	//11.16. Customizando o mapeamento de propriedades com ModelMapper - 1'10"

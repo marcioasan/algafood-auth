@@ -17,5 +17,6 @@ public class RestauranteModel {
 	private BigDecimal taxaFrete;
 	private CozinhaModel cozinha;
 	private Boolean ativo; //12.4. Implementando os endpoints de ativação e inativação de restaurantes - 6'20"
+	private EnderecoModel endereco; //12.6. Adicionando endereço no modelo da representação do recurso de restaurante - 2'10"
 	
 }
