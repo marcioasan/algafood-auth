@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.api.model.input.RestauranteInput;
+import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 
@@ -27,6 +28,11 @@ public class RestauranteInputDisassembler {
 		// com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2
 		//*** Comentário interessante de um aluno sobre essa solução --> https://app.algaworks.com/forum/topicos/87944/sobre-a-solucao-do-new-cozinha  Open-Session-In-View
 		restaurante.setCozinha(new Cozinha());
+		
+		//Endereco - 12.7. Refatorando servico de cadastro de restaurante para incluir endereco - 11'10"
+		if (restaurante.getEndereco() != null) {
+			restaurante.getEndereco().setCidade(new Cidade());
+		}
 		
 		modelMapper.map(restauranteInput, restaurante);
 	}

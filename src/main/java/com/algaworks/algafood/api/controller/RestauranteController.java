@@ -35,6 +35,7 @@ import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
 import com.algaworks.algafood.api.model.input.CozinhaIdInput;
 import com.algaworks.algafood.api.model.input.RestauranteInput;
 import com.algaworks.algafood.core.validation.ValidacaoException;
+import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cozinha;
@@ -112,7 +113,7 @@ public class RestauranteController {
 		try {
 			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput); //11.11. Criando DTOs para entrada de dados na API - 13'
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante)); //11.10. Implementando a conversão de entidade para DTO - 7'10"
-		} catch (CozinhaNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException  e) { //12.7. Refatorando serviço de cadastro de restaurante para incluir endereço - 16'
 			throw new NegocioException(e.getMessage());
 		}
 	}
@@ -141,7 +142,7 @@ public class RestauranteController {
 			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
-		} catch (CozinhaNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) { //12.7. Refatorando serviço de cadastro de restaurante para incluir endereço - 16'
 			throw new NegocioException(e.getMessage());
 		}
 	}

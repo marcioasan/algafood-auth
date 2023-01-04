@@ -25,4 +25,9 @@ public class RestauranteInput {
 	@Valid
 	@NotNull
 	private CozinhaIdInput cozinha;
+	
+	//12.7. Refatorando serviço de cadastro de restaurante para incluir endereço - 6'30"
+	@Valid
+	@NotNull
+	private EnderecoInput endereco;
 }
