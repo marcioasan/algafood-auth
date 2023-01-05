@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 //5.20. Estendendo o JpaRepository para customizar o repositório base - 3'30"
 
-@NoRepositoryBean
+@NoRepositoryBean //Essa anotação diz para o Spring Data JPA não instanciar uma implementação para essa interface
 public interface CustomJpaRepository<T, ID> extends JpaRepository<T, ID>{
 
 	Optional<T> buscarPrimeiro();
