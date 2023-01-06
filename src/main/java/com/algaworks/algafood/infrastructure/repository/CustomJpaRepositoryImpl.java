@@ -30,4 +30,11 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> i
 		return Optional.ofNullable(entity);
 	}
 
+	//12.11. Implementando regra de negócio para evitar usuários com e-mails duplicados - 12'30"
+	@Override
+	public void detach(T entity) {
+		manager.detach(entity);
+		
+	}
+
 }

@@ -84,3 +84,8 @@ Open-Session-In-View
 
 #@Transational - Aula importante sobre contexto de persitência do JPA
 12.10. Um pouco mais sobre JPA: objeto alterado fora da transação é sincronizado com o banco de dados
+
+#Discussão interessante
+https://app.algaworks.com/forum/topicos/77041/spring-jpa-open-in-view
+spring.jpa.open-in-view
+https://github.com/spring-projects/spring-boot/issues/7107

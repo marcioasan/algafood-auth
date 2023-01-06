@@ -11,4 +11,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface CustomJpaRepository<T, ID> extends JpaRepository<T, ID>{
 
 	Optional<T> buscarPrimeiro();
+	
+	//12.11. Implementando regra de negócio para evitar usuários com e-mails duplicados - 12'30"
+	void detach(T entity);
 }
