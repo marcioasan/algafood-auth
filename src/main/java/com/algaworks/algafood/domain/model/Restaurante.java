@@ -82,6 +82,8 @@ public class Restaurante {
 	
 	private Boolean ativo = Boolean.TRUE; //12.4. Implementando os endpoints de ativação e inativação de restaurantes - 5'30"
 	
+	private Boolean aberto = Boolean.FALSE; //12.14. Desafio: Implementando os endpoints de abertura e fechamento de restaurantes
+	
 	//@JsonIgnore anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@CreationTimestamp //6.6. Mapeando propriedades com @CreationTimestamp e @UpdateTimestamp - 3', 8'40", 11'50" - essa anotação atribui uma data/hora para a propriedade dataCadastro quando ela for salva pela primeira vez 
 	@Column(nullable = false, columnDefinition = "datetime")
@@ -115,6 +117,14 @@ public class Restaurante {
 	public void inativar() {
 		setAtivo(false);
 	}
+	
+	public void abrir() {
+	    setAberto(true);
+	}
+
+	public void fechar() {
+	    setAberto(false);
+	} 
 	
 	//12.12. Implementando os endpoints de associação de formas de pagamento em restaurantes - 11', 16'20"
 	public boolean removerFormaPagamento(FormaPagamento formaPagamento) {

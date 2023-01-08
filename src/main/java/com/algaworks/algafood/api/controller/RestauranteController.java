@@ -277,6 +277,19 @@ public class RestauranteController {
 		cozinhaIdInput.setId(cozinha.getId());
 		return cozinhaIdInput;
 	}
+
+	//12.14. Desafio: Implementando os endpoints de abertura e fechamento de restaurantes
+	@PutMapping("/{restauranteId}/abertura")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void abrir(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.abrir(restauranteId);
+	}
+
+	@PutMapping("/{restauranteId}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void fechar(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.fechar(restauranteId);
+	} 
 	
 	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 12'30"
 	@PutMapping("/{restauranteId}/ativo")

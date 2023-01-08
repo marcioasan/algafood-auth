@@ -57,6 +57,21 @@ public class CadastroRestauranteService {
 		restauranteAtual.inativar();
 	}
 	
+	//12.14. Desafio: Implementando os endpoints de abertura e fechamento de restaurantes
+	@Transactional
+	public void abrir(Long restauranteId) {
+	    Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+	    
+	    restauranteAtual.abrir();
+	}
+
+	@Transactional
+	public void fechar(Long restauranteId) {
+	    Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+	    
+	    restauranteAtual.fechar();
+	} 
+	
 	//12.12. Implementando os endpoints de associação de formas de pagamento em restaurantes - 7'30"
 	@Transactional
 	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
