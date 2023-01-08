@@ -74,7 +74,7 @@ public class Restaurante {
 	//@JsonIgnoreProperties("hibernateLazyInitializer") //6.12. Alterando a estratégia de fetching para Lazy Loading 13'10" - ignora a propriedade do proxy da cozinha que foi criada em tempo de execução
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false) //6.10. Entendendo o Eager Loading - 13' - Explicação sobre a consulta gerar um inner join com cozinha
-	private Cozinha cozinha; 
+	private Cozinha cozinha;
 	
 	//@JsonIgnore //6.5. Testando e analisando o impacto da incorporação de classe na REST API - 5' | anotação movida para a classe RestauranteMixin.java - 11.3. Criando classes de mixin para usar as anotações do Jackson - 3'40"
 	@Embedded //6.4. Mapeando classes incorporáveis com @Embedded e @Embeddable - 6'50"
@@ -109,6 +109,13 @@ public class Restaurante {
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos =  new ArrayList<>(); //6.8. Desafio: mapeando relacionamento um-para-muitos
 	
+	//12.17. Desafio: implementando endpoints de associação de usuários responsáveis com restaurantes
+	@ManyToMany
+	@JoinTable(name = "restaurante_usuario_responsavel",
+	        joinColumns = @JoinColumn(name = "restaurante_id"),
+	        inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<Usuario> responsaveis = new HashSet<>();
+	
 	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 10'25"
 	public void ativar() {
 		setAtivo(true);
@@ -133,6 +140,15 @@ public class Restaurante {
 	
 	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
 		return getFormasPagamento().add(formaPagamento);
+	}
+	
+	//12.17. Desafio: implementando endpoints de associação de usuários responsáveis com restaurantes
+	public boolean removerResponsavel(Usuario usuario) {
+	    return getResponsaveis().remove(usuario);
+	}
+
+	public boolean adicionarResponsavel(Usuario usuario) {
+	    return getResponsaveis().add(usuario);
 	}
 }
 
