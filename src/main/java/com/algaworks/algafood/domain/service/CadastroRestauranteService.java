@@ -1,5 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,6 +61,17 @@ public class CadastroRestauranteService {
 	public void inativar(Long restauranteId) {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
 		restauranteAtual.inativar();
+	}
+	
+	//12.18. Implementando ativação e inativação em massa de restaurantes
+	@Transactional
+	public void ativar(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::ativar);
+	}
+	
+	@Transactional
+	public void inativar(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::inativar);
 	}
 	
 	//12.14. Desafio: Implementando os endpoints de abertura e fechamento de restaurantes

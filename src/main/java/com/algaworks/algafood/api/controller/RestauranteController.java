@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,6 +37,7 @@ import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
@@ -302,5 +302,26 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
+	}
+	
+	//12.18. Implementando ativação e inativação em massa de restaurantes
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			cadastroRestaurante.ativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@DeleteMapping("/desativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+			cadastroRestaurante.inativar(restauranteIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 }

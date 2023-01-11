@@ -60,7 +60,7 @@ public class Restaurante {
 	//@NotNull //está sendo validado no RestauranteInput
 	//@PositiveOrZero(message = "{TaxaFrete.invalida}") //9.14. Usando o Resource Bundle do Spring como Resource Bundle do Bean Validation - 6'40"
 	//@PositiveOrZero //está sendo validado no RestauranteInput
-	@Multiplo(numero = 5)
+	//@Multiplo(numero = 5) *** precisei comentar essa anotação pq dava erro na aula 12.18. Implementando ativação e inativação em massa de restaurantes aos 6'30", depois estudar porque deu o erro de constraint
 	//@TaxaFrete
 	@Column(name = "taxa_frete", nullable = false)
 	private BigDecimal taxaFrete;
