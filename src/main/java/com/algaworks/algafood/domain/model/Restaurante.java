@@ -150,6 +150,15 @@ public class Restaurante {
 	public boolean adicionarResponsavel(Usuario usuario) {
 	    return getResponsaveis().add(usuario);
 	}
+	
+	//12.19. Desafio: Implementando os endpoints de consulta de pedidos
+	public boolean aceitaFormaPagamento(FormaPagamento formaPagamento) {
+	    return getFormasPagamento().contains(formaPagamento);
+	}
+
+	public boolean naoAceitaFormaPagamento(FormaPagamento formaPagamento) {
+	    return !aceitaFormaPagamento(formaPagamento);
+	}
 }
 
 

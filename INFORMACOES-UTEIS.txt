@@ -89,3 +89,7 @@ Open-Session-In-View
 https://app.algaworks.com/forum/topicos/77041/spring-jpa-open-in-view
 spring.jpa.open-in-view
 https://github.com/spring-projects/spring-boot/issues/7107
+
+#12.19. Desafio: Implementando os endpoints de consulta de pedidos
+https://app.algaworks.com/forum/topicos/79366/mais-esclarecimentos
+*** Explicação sobre lambda e reduce
