@@ -9,6 +9,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +52,7 @@ public class Pedido {
 	private OffsetDateTime dataCancelamento;
 	private OffsetDateTime dataEntrega;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY) //12.20. Otimizando a query de pedidos e retornando model resumido na listagem - 10'10" - 
 	@JoinColumn(nullable = false)
 	private FormaPagamento formaPagamento;
 	
