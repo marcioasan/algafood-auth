@@ -36,5 +36,20 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Produto produto;
-	
+
+	//12.21. Desafio: Implementando o endpoint de emissão de pedidos
+	public void calcularPrecoTotal() {
+	    BigDecimal precoUnitario = this.getPrecoUnitario();
+	    Integer quantidade = this.getQuantidade();
+
+	    if (precoUnitario == null) {
+	        precoUnitario = BigDecimal.ZERO;
+	    }
+
+	    if (quantidade == null) {
+	        quantidade = 0;
+	    }
+
+	    this.setPrecoTotal(precoUnitario.multiply(new BigDecimal(quantidade)));
+	}
 }

@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.algaworks.algafood.api.model.EnderecoModel;
+import com.algaworks.algafood.api.model.input.ItemPedidoInput;
 import com.algaworks.algafood.domain.model.Endereco;
+import com.algaworks.algafood.domain.model.ItemPedido;
 
 //11.14. Adicionando e usando o ModelMapper - 4'15"
 
@@ -21,7 +23,11 @@ public class ModelMapperConfig {
 		
 		enderecoToEnderecoModelTypeMap.<String>addMapping(
 				enderecoSrc -> enderecoSrc.getCidade().getEstado().getNome(), 
-				(enderecoModelDest, value) -> enderecoModelDest.getCidade().setEstado(value)); 
+				(enderecoModelDest, value) -> enderecoModelDest.getCidade().setEstado(value));
+		
+		//12.21. Desafio: Implementando o endpoint de emissão de pedidos - 11'
+		modelMapper.createTypeMap(ItemPedidoInput.class, ItemPedido.class)
+	    .addMappings(mapper -> mapper.skip(ItemPedido::setId));
 		
 		return modelMapper;
 	}

@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,8 +45,8 @@ public class Pedido {
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status = StatusPedido.CRIADO; //12.19. Desafio: Implementando os endpoints de consulta de pedidos
 	
-//	@CreationTimestamp
-//	private OffsetDateTime timestamp;
+	@CreationTimestamp
+	private OffsetDateTime dataCriacao;
 	
 	private OffsetDateTime dataConfirmacao;
 	private OffsetDateTime dataCancelamento;
@@ -64,10 +64,22 @@ public class Pedido {
     @JoinColumn(name = "usuario_cliente_id", nullable = false)
     private Usuario cliente;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL) //12.21. Desafio: Implementando o endpoint de emissão de pedidos - 7'
 	private List<ItemPedido> itens = new ArrayList<>();
 
+	//12.21. Desafio: Implementando o endpoint de emissão de pedidos
+	public void calcularValorTotal() {
+	    getItens().forEach(ItemPedido::calcularPrecoTotal);
+	    
+	    this.subtotal = getItens().stream()
+	        .map(item -> item.getPrecoTotal())
+	        .reduce(BigDecimal.ZERO, BigDecimal::add);
+	    
+	    this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
+	
 	//12.19. Desafio: Implementando os endpoints de consulta de pedidos
+	/*
 	public void calcularValorTotal() {
 	    
 	      BigDecimal soma = BigDecimal.ZERO;
@@ -83,7 +95,9 @@ public class Pedido {
 	    
 	    this.valorTotal = this.subtotal.add(this.taxaFrete);
 	}
-
+   */
+	
+	/* Retirado na aula 12.21. Desafio: Implementando o endpoint de emissão de pedidos
 	public void definirFrete() {
 	    setTaxaFrete(getRestaurante().getTaxaFrete());
 	}
@@ -91,4 +105,5 @@ public class Pedido {
 	public void atribuirPedidoAosItens() {
 	    getItens().forEach(item -> item.setPedido(this));
 	}
+	*/
 }
