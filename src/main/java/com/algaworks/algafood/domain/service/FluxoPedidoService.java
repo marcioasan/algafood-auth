@@ -1,22 +1,41 @@
 package com.algaworks.algafood.domain.service;
 
-import java.time.OffsetDateTime;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Pedido;
-import com.algaworks.algafood.domain.model.StatusPedido;
 
-//12.22. Implementando endpoint de transição de status de pedidos - 8'30", 17'20"
+
 @Service
 public class FluxoPedidoService {
 
+	//12.24. Refatorando o código de regras para transição de status de pedidos
 	@Autowired
 	private EmissaoPedidoService emissaoPedido;
 	
+	
+	@Transactional
+	public void confirmar(Long pedidoId) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(pedidoId);
+		pedido.confirmar();
+	}
+	
+	@Transactional
+	public void cancelar(Long pedidoId) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(pedidoId);
+		pedido.cancelar();
+	}
+	
+	@Transactional
+	public void entregar(Long pedidoId) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(pedidoId);
+		pedido.entregar();
+	}
+	
+	
+	
+	/* //12.22. Implementando endpoint de transição de status de pedidos - 8'30", 17'20"
 	@Transactional
 	public void confirmar(Long pedidoId) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(pedidoId);
@@ -62,4 +81,5 @@ public class FluxoPedidoService {
 	    pedido.setStatus(StatusPedido.ENTREGUE);
 	    pedido.setDataEntrega(OffsetDateTime.now());
 	}
+	*/
 }

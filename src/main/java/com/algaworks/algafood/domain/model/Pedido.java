@@ -20,6 +20,8 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.algaworks.algafood.domain.exception.NegocioException;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -76,6 +78,33 @@ public class Pedido {
 	        .reduce(BigDecimal.ZERO, BigDecimal::add);
 	    
 	    this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
+	
+	//12.24. Refatorando o código de regras para transição de status de pedidos - 1', 2', 3'50"
+	public void confirmar() {
+		setStatus(StatusPedido.CONFIRMADO);
+		setDataConfirmacao(OffsetDateTime.now());
+	}
+	
+	public void entregar() {
+		setStatus(StatusPedido.ENTREGUE);
+		setDataEntrega(OffsetDateTime.now());
+	}
+	
+	public void cancelar() {
+		setStatus(StatusPedido.CANCELADO);
+		setDataCancelamento(OffsetDateTime.now());
+	}
+	
+	private void setStatus(StatusPedido novoStatus) {
+		if (getStatus().naoPodeAlterarPara(novoStatus)) {
+			throw new NegocioException(
+					String.format("Status do pedido %d não pode ser alterado de %s para %s",
+							getId(), getStatus().getDescricao(), 
+							novoStatus.getDescricao()));
+		}
+		
+		this.status = novoStatus;
 	}
 	
 	//12.19. Desafio: Implementando os endpoints de consulta de pedidos
