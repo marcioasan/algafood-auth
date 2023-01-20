@@ -1,4 +1,4 @@
-https://app.algaworks.com/forum/topicos/81557/import-sql-com-multiplas-linhas
+://app.algaworks.com/forum/topicos/81557/import-sql-com-multiplas-linhas
 spring.jpa.properties.hibernate.hbm2ddl.import_files_sql_extractor=org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
 
 Consumo de api externa para endereços
@@ -93,3 +93,9 @@ https://github.com/spring-projects/spring-boot/issues/7107
 #12.19. Desafio: Implementando os endpoints de consulta de pedidos
 https://app.algaworks.com/forum/topicos/79366/mais-esclarecimentos
 *** Explicação sobre lambda e reduce
+
+#12.21. Desafio: Implementando o endpoint de emissão de pedidos
+#Comentários sobre lentidão no debug
+https://www.jpa-buddy.com/blog/lombok-and-jpa-what-may-go-wrong/
+https://www.jetbrains.com/help/idea/increasing-memory-heap.html#toolbox
+https://app.algaworks.com/forum/topicos/87222/debuggar-demora-muito-intellij

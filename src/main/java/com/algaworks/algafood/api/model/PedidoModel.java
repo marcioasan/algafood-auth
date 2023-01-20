@@ -12,7 +12,8 @@ import lombok.Setter;
 @Getter
 public class PedidoModel {
 
-    private Long id;
+//    private Long id;
+	private String codigo; //12.25. Usando IDs vs UUIDs nas URIs de recursos - 12'50"
     private BigDecimal subtotal;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;

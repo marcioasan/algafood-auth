@@ -35,9 +35,10 @@ public class EmissaoPedidoService {
     @Autowired
     private CadastroFormaPagamentoService cadastroFormaPagamento;
     
-    public Pedido buscarOuFalhar(Long pedidoId) {
-        return pedidoRepository.findById(pedidoId)
-            .orElseThrow(() -> new PedidoNaoEncontradoException(pedidoId));
+    //12.25. Usando IDs vs UUIDs nas URIs de recursos - 15'
+    public Pedido buscarOuFalhar(String codigoPedido) {
+        return pedidoRepository.findByCodigo(codigoPedido)
+            .orElseThrow(() -> new PedidoNaoEncontradoException(codigoPedido));
     }
     
     //12.21. Desafio: Implementando o endpoint de emissão de pedidos
