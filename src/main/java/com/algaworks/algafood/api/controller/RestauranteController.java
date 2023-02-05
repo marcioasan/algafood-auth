@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,7 +45,6 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -66,20 +67,20 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
 
-	@JsonView(RestauranteView.Resumo.class)
-	@GetMapping
-	public List<RestauranteModel> listar() {
-		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
-	}
-	
-	@JsonView(RestauranteView.ApenasNome.class)
-	@GetMapping(params = "projecao=apenas-nome")
-	public List<RestauranteModel> listarApenasNomes() {
-		return listar();
-	}
+//	@JsonView(RestauranteView.Resumo.class)
+//	@GetMapping
+//	public List<RestauranteModel> listar() {
+//		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+//	}
+//	
+//	@JsonView(RestauranteView.ApenasNome.class)
+//	@GetMapping(params = "projecao=apenas-nome")
+//	public List<RestauranteModel> listarApenasNomes() {
+//		return listar();
+//	}
 	
 	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 9'50", 13'20"(@RequestParam)
-	/*
+	
 	@GetMapping
 	public MappingJacksonValue listar(@RequestParam(required = false) String projecao) { //MappingJacksonValue é um wrapper (envelopador) que vai envelopar o retorno da lista de RestauranteModel.
 		List<Restaurante> restaurantes = restauranteRepository.findAll();
@@ -97,7 +98,7 @@ public class RestauranteController {
 		
 		return restaurantesWrapper;
 	}
-	*/
+	
 	
 	/*
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

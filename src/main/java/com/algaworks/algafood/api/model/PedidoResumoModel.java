@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 import lombok.Getter;
 import lombok.Setter;
 
 //12.20. Otimizando a query de pedidos e retornando model resumido na listagem
+@JsonFilter("pedidoFilter") //13.2. Limitando os campos retornados pela API com @JsonFilter do Jackson - 3'
 @Setter
 @Getter
 public class PedidoResumoModel {
