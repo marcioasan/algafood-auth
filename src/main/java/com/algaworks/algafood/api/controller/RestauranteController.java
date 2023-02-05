@@ -33,6 +33,7 @@ import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
 import com.algaworks.algafood.api.model.input.CozinhaIdInput;
 import com.algaworks.algafood.api.model.input.RestauranteInput;
+import com.algaworks.algafood.api.model.view.RestauranteView;
 import com.algaworks.algafood.core.validation.ValidacaoException;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
@@ -42,6 +43,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -63,11 +65,60 @@ public class RestauranteController {
 	
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
+
+	@JsonView(RestauranteView.Resumo.class)
+	@GetMapping
+	public List<RestauranteModel> listar() {
+		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+	}
 	
+	@JsonView(RestauranteView.ApenasNome.class)
+	@GetMapping(params = "projecao=apenas-nome")
+	public List<RestauranteModel> listarApenasNomes() {
+		return listar();
+	}
+	
+	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 9'50", 13'20"(@RequestParam)
+	/*
+	@GetMapping
+	public MappingJacksonValue listar(@RequestParam(required = false) String projecao) { //MappingJacksonValue é um wrapper (envelopador) que vai envelopar o retorno da lista de RestauranteModel.
+		List<Restaurante> restaurantes = restauranteRepository.findAll();
+		List<RestauranteModel> restaurantesModel = restauranteModelAssembler.toCollectionModel(restaurantes);
+		
+		MappingJacksonValue restaurantesWrapper = new MappingJacksonValue(restaurantesModel);
+		
+		restaurantesWrapper.setSerializationView(RestauranteView.Resumo.class);
+		
+		if ("apenas-nome".equals(projecao)) {
+			restaurantesWrapper.setSerializationView(RestauranteView.ApenasNome.class);
+		} else if ("completo".equals(projecao)) {
+			restaurantesWrapper.setSerializationView(null);
+		}
+		
+		return restaurantesWrapper;
+	}
+	*/
+	
+	/*
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RestauranteModel> listar(){
 		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
+	
+	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 3'40", 5'30", 6'50"
+	@JsonView(RestauranteView.Resumo.class)
+	@GetMapping(params = "projecao=resumo")
+	public List<RestauranteModel> listarResumido(){
+		return listar();
+	}
+
+	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 3'40", 5'30", 6'50", 8'
+	@JsonView(RestauranteView.ApenasNome.class)
+	@GetMapping(params = "projecao=apenas-nome")
+	public List<RestauranteModel> listarApenasNomes(){
+		return listar();
+	}
+	*/
 	
 	//4.16. Customizando a representação em XML com Wrapper e anotações do Jackson - 5'
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
