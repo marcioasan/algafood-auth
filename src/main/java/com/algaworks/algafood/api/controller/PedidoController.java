@@ -52,6 +52,14 @@ public class PedidoController {
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
     
+	@GetMapping
+	public List<PedidoResumoModel> listar() {
+		List<Pedido> todosPedidos = pedidoRepository.findAll();
+		
+		return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
+	}
+    
+    /* Nessa aula, foi feito esse método configurando os filtros programaticamente, precisa usar a anotação @JsonFilter("pedidoFilter") em PedidoResumoModel
     //13.2. Limitando os campos retornados pela API com @JsonFilter do Jackson - 4', 8'20", 9'30"
 	@GetMapping
 	public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
@@ -72,13 +80,7 @@ public class PedidoController {
 		
 		return pedidosWrapper;
 	}
-    
-//    @GetMapping
-//    public List<PedidoResumoModel> listar() {
-//        List<Pedido> todosPedidos = pedidoRepository.findAll();
-//        
-//        return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
-//    }
+	*/    
     
     @GetMapping("/{codigoPedido}") //12.25. Usando IDs vs UUIDs nas URIs de recursos - 16'20"
     public PedidoModel buscar(@PathVariable String codigoPedido) {
