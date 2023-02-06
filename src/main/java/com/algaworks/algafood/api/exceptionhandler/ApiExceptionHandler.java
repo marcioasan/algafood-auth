@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -63,6 +64,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    		.build();
 
 	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
+	//13.7. Tratando BindException ao enviar parâmetros de URL inválidos - 2'
+	@Override
+	protected ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status,
+			WebRequest request) {
+		
+		return handleValidationInternal(ex, ex.getBindingResult(), headers, status, request);
 	}
 	
 	//9.4. Estendendo o Problem Details para adicionar as propriedades com constraints violadas - 2'50", 3'30", 4'30"
