@@ -28,6 +28,8 @@ import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Pedido;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.PedidoRepository;
+import com.algaworks.algafood.domain.repository.filter.PedidoFilter;
+import com.algaworks.algafood.domain.repository.spec.PedidoSpecs;
 import com.algaworks.algafood.domain.service.EmissaoPedidoService;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -53,8 +55,8 @@ public class PedidoController {
     private PedidoInputDisassembler pedidoInputDisassembler;
     
 	@GetMapping
-	public List<PedidoResumoModel> listar() {
-		List<Pedido> todosPedidos = pedidoRepository.findAll();
+	public List<PedidoResumoModel> pesquisar(PedidoFilter filtro) { //13.6. Implementando pesquisas complexas na API - 7'50", mudou o nome do método de listar() para pesquisar
+		List<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro)); //13.6. Implementando pesquisas complexas na API - 9'
 		
 		return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
 	}
