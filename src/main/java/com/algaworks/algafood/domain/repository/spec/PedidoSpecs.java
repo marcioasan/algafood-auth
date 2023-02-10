@@ -15,8 +15,10 @@ public class PedidoSpecs {
 
 	public static Specification<Pedido> usandoFiltro(PedidoFilter filtro) {
 		return (root, query, builder) -> {
-			root.fetch("restaurante").fetch("cozinha");
-			root.fetch("cliente");
+			if (Pedido.class.equals(query.getResultType())) { //13.9. Desafio: implementando paginação e ordenação de pedidos - o if é para corrigir esse erro --> Caused by: org.hibernate.QueryException: query specified join fetching, but the owner of the fetched association was not present in the select list [FromElement{explicit,not a collection join,fetch join,fetch non-lazy properties,classAlias=generatedAlias1,role=com.algaworks.algafood.domain.model.Pedido.restaurante,tableName=restaurante,tableAlias=restaurant1_,origin=pedido pedido0_,columns={pedido0_.restaurante_id,className=com.algaworks.algafood.domain.model.Restaurante}}]
+				root.fetch("restaurante").fetch("cozinha");
+				root.fetch("cliente");				
+			}
 			
 			var predicates = new ArrayList<Predicate>();
 			
