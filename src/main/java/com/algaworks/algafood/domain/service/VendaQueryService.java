@@ -10,5 +10,5 @@ import com.algaworks.algafood.domain.filter.VendaDiariaFilter;
 public interface VendaQueryService {
 
 	//13.13. Discutindo sobre onde implementar as consultas com dados agregados - 8'30", 10'10", 10'45"
-	List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro);
+	List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, String timeOffset);
 }
