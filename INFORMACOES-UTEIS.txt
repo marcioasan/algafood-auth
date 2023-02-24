@@ -99,3 +99,7 @@ https://app.algaworks.com/forum/topicos/79366/mais-esclarecimentos
 https://www.jpa-buddy.com/blog/lombok-and-jpa-what-may-go-wrong/
 https://www.jetbrains.com/help/idea/increasing-memory-heap.html#toolbox
 https://app.algaworks.com/forum/topicos/87222/debuggar-demora-muito-intellij
+
+#14.3. Validando o tamanho máximo do arquivo
+https://app.algaworks.com/forum/topicos/88007/retorna-415
+***Explicação sobre o erro 415 - "Unsupported Media Type" quando não manda nenhum parâmetro em versões mais novas do Postman
