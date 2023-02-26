@@ -107,3 +107,6 @@ https://app.algaworks.com/forum/topicos/88007/retorna-415
 #14.5. Mapeando entidade FotoProduto e relacionamento um-para-um
 Lazy loading com mapeamento OneToOne
 https://blog.algaworks.com/lazy-loading-com-mapeamento-onetoone/
+
+***flux() - Explicação importante
+https://app.algaworks.com/forum/topicos/87990/diferenca-entre-flush-e-commit
