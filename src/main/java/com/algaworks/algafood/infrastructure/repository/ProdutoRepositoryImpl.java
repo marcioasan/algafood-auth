@@ -22,4 +22,10 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
 		return manager.merge(foto);
 	}
 	
+	//14.7. Excluindo e substituindo cadastro de foto de produto - 6'50"
+	@Transactional
+	@Override
+	public void delete(FotoProduto foto) {
+		manager.remove(foto);
+	}
 }

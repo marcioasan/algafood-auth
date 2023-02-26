@@ -29,4 +29,12 @@ public class FotoProduto {
 	private String contentType;
 	private Long tamanho;
 	
+	//14.7. Excluindo e substituindo cadastro de foto de produto - 4'20"
+	public Long getRestauranteId() {
+		if (getProduto() != null) {
+			return getProduto().getRestaurante().getId();
+		}
+		
+		return null;
+	}
 }
