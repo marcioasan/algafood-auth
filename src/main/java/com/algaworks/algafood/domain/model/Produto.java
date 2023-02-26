@@ -41,4 +41,10 @@ public class Produto {
 	@JoinColumn(nullable = false)
 	private Restaurante restaurante;
 	
+	//14.5. Mapeando entidade FotoProduto e relacionamento um-para-um - 7'30"
+	//*** Não é aconselhável fazer o mapeamento bidirecional quando é @OneToOne, ver o artigo abaixo
+	//https://blog.algaworks.com/lazy-loading-com-mapeamento-onetoone/
+//	@OneToOne(mappedBy = "produto")
+//	private FotoProduto foto;
+	
 }

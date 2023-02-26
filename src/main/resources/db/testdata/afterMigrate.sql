@@ -17,6 +17,7 @@ delete from usuario;
 delete from usuario_grupo;
 delete from pedido; #12.19. Desafio: Implementando os endpoints de consulta de pedidos
 delete from item_pedido;
+delete from foto_produto; #14.5. Mapeando entidade FotoProduto e relacionamento um-para-um - 3'
 
 set foreign_key_checks = 1;
 
