@@ -10,6 +10,8 @@ import lombok.Getter;
 //14.10. Implementando a remoção e substituição de arquivos de fotos no serviço de armazenagem - 1'
 public interface FotoStorageService {
 
+	InputStream recuperar(String nomeArquivo); //14.11. Desafio: Implementando recuperação de foto no serviço de armazenagem
+	
 	void armazenar(NovaFoto novaFoto);
 	
 	void remover(String nomeArquivo);
