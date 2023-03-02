@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -11,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +26,7 @@ import com.algaworks.algafood.api.assembler.FotoProdutoModelAssembler;
 import com.algaworks.algafood.api.model.FotoProdutoModel;
 import com.algaworks.algafood.api.model.input.FotoProdutoInput;
 import com.algaworks.algafood.api.model.input.MultipleFotoProdutoInput;
+import com.algaworks.algafood.api.model.input.PdfInput;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.FotoProduto;
 import com.algaworks.algafood.domain.model.Produto;
@@ -76,44 +81,41 @@ public class RestauranteProdutoFotoController {
 	}
 	
 	//14.13. Servindo arquivos de fotos pela API - 1'20"
-	@GetMapping(produces = MediaType.IMAGE_JPEG_VALUE)
-	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
+	//14.14. Checando media type ao servir arquivos de fotos - 1', 4'30"(accept), 7'40"
+	@GetMapping
+	public ResponseEntity<InputStreamResource> servirFoto(@PathVariable Long restauranteId, 
+			@PathVariable Long produtoId, @RequestHeader(name = "accept") String acceptHeader) 
+					throws HttpMediaTypeNotAcceptableException {
 		try {
 			FotoProduto fotoProduto = catalogoFotoProduto.buscarOuFalhar(restauranteId, produtoId);
+			
+			MediaType mediaTypeFoto = MediaType.parseMediaType(fotoProduto.getContentType());
+			List<MediaType> mediaTypesAceitas = MediaType.parseMediaTypes(acceptHeader);
+			
+			verificarCompatibilidadeMediaType(mediaTypeFoto, mediaTypesAceitas);
 			
 			InputStream inputStream = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
 			
 			return ResponseEntity.ok()
-					.contentType(MediaType.IMAGE_JPEG)
+					.contentType(mediaTypeFoto)
 					.body(new InputStreamResource(inputStream));
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	/*
-	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void atualizarFoto(@PathVariable Long restauranteId,
-			@PathVariable Long produtoId, @Valid FotoProdutoInput fotoProdutoInput) {
+	//14.14. Checando media type ao servir arquivos de fotos - 7'40"
+	private void verificarCompatibilidadeMediaType(MediaType mediaTypeFoto, 
+			List<MediaType> mediaTypesAceitas) throws HttpMediaTypeNotAcceptableException {
 		
-		var nomeArquivo = UUID.randomUUID().toString() 
-				+ "_" + fotoProdutoInput.getArquivo().getOriginalFilename();
+		boolean compativel = mediaTypesAceitas.stream()
+				.anyMatch(mediaTypeAceita -> mediaTypeAceita.isCompatibleWith(mediaTypeFoto));
 		
-		var arquivoFoto = Path.of("D:\\Marcio\\Algaworks\\ESPECIALISTA SPRING REST\\Fotos\\catalogo", nomeArquivo);
-		
-		System.out.println(fotoProdutoInput.getDescricao());
-		System.out.println(arquivoFoto);
-		System.out.println(fotoProdutoInput.getArquivo().getContentType());
-		
-		try {
-			fotoProdutoInput.getArquivo().transferTo(arquivoFoto);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		if (!compativel) {
+			throw new HttpMediaTypeNotAcceptableException(mediaTypesAceitas);
 		}
-		
 	}
-	*/
-	
+		
 	@PutMapping(value = "/batch-upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void atualizarMultiplasFotos(@PathVariable Long restauranteId, @PathVariable Long produtoId, 
 			MultipleFotoProdutoInput fotos) throws IOException {

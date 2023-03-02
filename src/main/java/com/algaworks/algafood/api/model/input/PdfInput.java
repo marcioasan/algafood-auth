@@ -12,15 +12,12 @@ import com.algaworks.algafood.core.validation.FileSize;
 import lombok.Getter;
 import lombok.Setter;
 
-//14.2. Implementando upload de arquivo com multipart/form-data - 1'30", 7'20", 8'40"
-
 @Getter
 @Setter
-public class FotoProdutoInput {
-	
+public class PdfInput {
 	@NotNull
 	@FileSize(max = "500KB")
-	@FileContentType(allowed = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_PDF_VALUE})
+	@FileContentType(allowed = {MediaType.APPLICATION_PDF_VALUE})
 	private MultipartFile arquivo;
 	
 	@NotBlank
