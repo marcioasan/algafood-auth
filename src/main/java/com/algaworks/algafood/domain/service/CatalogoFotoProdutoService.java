@@ -55,6 +55,17 @@ public class CatalogoFotoProdutoService {
 		return foto;
 	}
 
+	//14.15. Desafio: implementando endpoint de exclusão de foto de produto
+	@Transactional
+	public void excluir(Long restauranteId, Long produtoId) {
+	    FotoProduto foto = buscarOuFalhar(restauranteId, produtoId);
+	    
+	    produtoRepository.delete(foto);
+	    produtoRepository.flush();
+
+	    fotoStorage.remover(foto.getNomeArquivo());
+	}
+	
 	public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
 	    return produtoRepository.findFotoById(restauranteId, produtoId)
 	            .orElseThrow(() -> new FotoProdutoNaoEncontradaException(restauranteId, produtoId));
