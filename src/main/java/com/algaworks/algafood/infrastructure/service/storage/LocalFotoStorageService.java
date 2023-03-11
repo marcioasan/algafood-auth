@@ -4,10 +4,12 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import com.algaworks.algafood.core.storage.StorageProperties;
 import com.algaworks.algafood.domain.service.FotoStorageService;
 
 
@@ -16,8 +18,12 @@ import com.algaworks.algafood.domain.service.FotoStorageService;
 @Service
 public class LocalFotoStorageService implements FotoStorageService {
 
-	@Value("${algafood.storage.local.diretorio-fotos}") //#14.8. Implementando o serviço de armazenagem de fotos no disco local - 13'
-	private Path diretorioFotos;
+	//***Retirado na aula 14.20. Criando bean de propriedades de configuração dos serviços de storage - 14'
+	//@Value("${algafood.storage.local.diretorio-fotos}") //#14.8. Implementando o serviço de armazenagem de fotos no disco local - 13'
+	//private Path diretorioFotos;
+	
+	@Autowired
+	private StorageProperties storageProperties;
 	
 	@Override
 	public void armazenar(NovaFoto novaFoto) {
@@ -44,7 +50,8 @@ public class LocalFotoStorageService implements FotoStorageService {
 	}
 	
 	private Path getArquivoPath(String nomeArquivo) {
-		return diretorioFotos.resolve(Path.of(nomeArquivo));
+//		return diretorioFotos.resolve(Path.of(nomeArquivo));
+		return storageProperties.getLocal().getDiretorioFotos().resolve(Path.of(nomeArquivo)); //***Retirado na aula 14.20. Criando bean de propriedades de configuração dos serviços de storage - 14'
 	}
 
 	
