@@ -33,6 +33,7 @@ public interface FotoStorageService {
 	class NovaFoto {
 		
 		private String nomeAquivo;
+		private String contentType; //14.23. Implementando a inclusão de objetos no bucket da Amazon S3 - 11'30"
 		private InputStream inputStream;
 		
 	}

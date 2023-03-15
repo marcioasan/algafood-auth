@@ -47,6 +47,7 @@ public class CatalogoFotoProdutoService {
 		
 		NovaFoto novaFoto = NovaFoto.builder()
 				.nomeAquivo(foto.getNomeArquivo())
+				.contentType(foto.getContentType()) //14.23. Implementando a inclusão de objetos no bucket da Amazon S3 - 11'30", 12'20" 
 				.inputStream(dadosArquivo)
 				.build();
 

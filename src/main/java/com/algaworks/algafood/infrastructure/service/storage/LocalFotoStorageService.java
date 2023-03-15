@@ -15,7 +15,7 @@ import com.algaworks.algafood.domain.service.FotoStorageService;
 
 //14.8. Implementando o serviço de armazenagem de fotos no disco local - 7'30"
 
-@Service
+//@Service
 public class LocalFotoStorageService implements FotoStorageService {
 
 	//***Retirado na aula 14.20. Criando bean de propriedades de configuração dos serviços de storage - 14'
