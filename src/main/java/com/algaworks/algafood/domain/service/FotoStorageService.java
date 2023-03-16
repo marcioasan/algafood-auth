@@ -10,7 +10,8 @@ import lombok.Getter;
 //14.10. Implementando a remoção e substituição de arquivos de fotos no serviço de armazenagem - 1'
 public interface FotoStorageService {
 
-	InputStream recuperar(String nomeArquivo); //14.11. Desafio: Implementando recuperação de foto no serviço de armazenagem
+//	InputStream recuperar(String nomeArquivo); //14.11. Desafio: Implementando recuperação de foto no serviço de armazenagem
+	FotoRecuperada recuperar(String nomeArquivo); //14.25. Implementando a recuperação de foto no serviço de storage do S3 - 3'
 	
 	void armazenar(NovaFoto novaFoto);
 	
@@ -35,6 +36,24 @@ public interface FotoStorageService {
 		private String nomeAquivo;
 		private String contentType; //14.23. Implementando a inclusão de objetos no bucket da Amazon S3 - 11'30"
 		private InputStream inputStream;
+		
+	}
+	
+	//14.25. Implementando a recuperação de foto no serviço de storage do S3 - 2'30"
+	@Builder
+	@Getter
+	class FotoRecuperada {
+		
+		private InputStream inputStream;
+		private String url;
+		
+		public boolean temUrl() {
+			return url != null;
+		}
+		
+		public boolean temInputStream() {
+			return inputStream != null;
+		}
 		
 	}
 }

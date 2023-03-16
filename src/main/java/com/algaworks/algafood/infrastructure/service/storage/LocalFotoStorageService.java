@@ -1,11 +1,9 @@
 package com.algaworks.algafood.infrastructure.service.storage;
 
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
@@ -54,9 +52,25 @@ public class LocalFotoStorageService implements FotoStorageService {
 		return storageProperties.getLocal().getDiretorioFotos().resolve(Path.of(nomeArquivo)); //***Retirado na aula 14.20. Criando bean de propriedades de configuração dos serviços de storage - 14'
 	}
 
+	//14.25. Implementando a recuperação de foto no serviço de storage do S3 - 3'30"
+	@Override
+	public FotoRecuperada recuperar(String nomeArquivo) {
+		try {
+			Path arquivoPath = getArquivoPath(nomeArquivo);
+
+			FotoRecuperada fotoRecuperada = FotoRecuperada.builder()
+					.inputStream(Files.newInputStream(arquivoPath))
+					.build();
+			
+			return fotoRecuperada;
+		} catch (Exception e) {
+			throw new StorageException("Não foi possível recuperar arquivo.", e);
+		}
+	}
+	
 	
 	//14.11. Desafio: Implementando recuperação de foto no serviço de armazenagem
-	@Override
+	/*@Override
 	public InputStream recuperar(String nomeArquivo) {
 	    try {
 	        Path arquivoPath = getArquivoPath(nomeArquivo);
@@ -65,5 +79,6 @@ public class LocalFotoStorageService implements FotoStorageService {
 	    } catch (Exception e) {
 	        throw new StorageException("Não foi possível recuperar arquivo.", e);
 	    }
-	} 
+	}
+	*/
 }
