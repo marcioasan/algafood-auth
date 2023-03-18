@@ -14,8 +14,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 //14.21. Adicionando o SDK Java da Amazon S3 no projeto e criando classe do serviço de storage - 2'20"
+//14.26. Selecionando a implementação do serviço de storage de fotos - 1'
 
-@Service
 public class S3FotoStorageService implements FotoStorageService {
 
 	//14.22. Definindo bean do client da Amazon S3 e configurando credenciais

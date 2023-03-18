@@ -4,15 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.algaworks.algafood.core.storage.StorageProperties.TipoStorage;
+import com.algaworks.algafood.domain.service.FotoStorageService;
+import com.algaworks.algafood.infrastructure.service.storage.LocalFotoStorageService;
+import com.algaworks.algafood.infrastructure.service.storage.S3FotoStorageService;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 //14.22. Definindo bean do client da Amazon S3 e configurando credenciais - 1'30", 2'50"
+//14.26. Selecionando a implementação do serviço de storage de fotos - 1'30" - Classe renomeada de AmazonS3Config para StorageConfig
 
 @Configuration
-public class AmazonS3Config {
+public class StorageConfig {
 
 	@Autowired
 	private StorageProperties storageProperties;
@@ -27,5 +32,15 @@ public class AmazonS3Config {
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(storageProperties.getS3().getRegiao())
 				.build();
+	}
+	
+	//14.26. Selecionando a implementação do serviço de storage de fotos - 1'50"
+	@Bean
+	public FotoStorageService fotoStorageService() {
+		if (TipoStorage.S3.equals(storageProperties.getTipo())) {
+			return new S3FotoStorageService();
+		} else {
+			return new LocalFotoStorageService();
+		}
 	}
 }

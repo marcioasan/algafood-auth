@@ -21,6 +21,12 @@ public class StorageProperties {
 	private Local local = new Local();
 	private S3 s3 = new S3();
 	
+	private TipoStorage tipo = TipoStorage.LOCAL; //14.26. Selecionando a implementação do serviço de storage de fotos - 2'50", 4'51 - configura se é local ou se é no S3 no application.properties na propriedade algafood.storage.tipo
+	
+	public enum TipoStorage {
+		LOCAL, S3	
+	}
+	
 	@Getter
 	@Setter
 	public class Local {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.model.Pedido;
+import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
 
 
 @Service
@@ -14,11 +15,23 @@ public class FluxoPedidoService {
 	@Autowired
 	private EmissaoPedidoService emissaoPedido;
 	
+	@Autowired
+	private EnvioEmailService envioEmail;
 	
 	@Transactional
 	public void confirmar(String codigoPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
 		pedido.confirmar();
+		
+		//15.4. Usando o serviço de envio de e-mails na confirmação de pedidos - 3' //OBS: aqui, o builder pede um "Set<String> destinatarios",então, para não precisar criar um SET, foi anotado na classe Mensagem no atributo destinatarios com @Singular do lombok que singulariza e passa só um objeto ao invés de um SET
+		var mensagem = Mensagem.builder()
+				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
+				.corpo("O pedido de código <strong>" 
+						+ pedido.getCodigo() + "</strong> foi confirmado!")
+				.destinatario(pedido.getCliente().getEmail())
+				.build();
+		
+		envioEmail.enviar(mensagem);
 	}
 	
 	@Transactional
