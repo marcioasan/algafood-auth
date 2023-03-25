@@ -95,8 +95,8 @@ insert into usuario (id, nome, email, senha, data_cadastro) values
 
 #15.4. Usando o serviço de envio de e-mails na confirmação de pedidos - 2' - nos inserts na tabela pedido foram associados aos usuários de id 6 e 7
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(6, 'Débora Mendonça', 'marcioasan@gmail.com+debora@gmail.com', '123', utc_timestamp),
-(7, 'Carlos Lima', 'marcioasan@gmail.com+carlos@gmail.com', '123', utc_timestamp);
+(6, 'Débora Mendonça', 'marcioasan+debora@gmail.com', '123', utc_timestamp),
+(7, 'Carlos Lima', 'marcioasan+carlos@gmail.com', '123', utc_timestamp);
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);

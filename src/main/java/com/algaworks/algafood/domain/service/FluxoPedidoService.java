@@ -26,8 +26,8 @@ public class FluxoPedidoService {
 		//15.4. Usando o serviço de envio de e-mails na confirmação de pedidos - 3' //OBS: aqui, o builder pede um "Set<String> destinatarios",então, para não precisar criar um SET, foi anotado na classe Mensagem no atributo destinatarios com @Singular do lombok que singulariza e passa só um objeto ao invés de um SET
 		var mensagem = Mensagem.builder()
 				.assunto(pedido.getRestaurante().getNome() + " - Pedido confirmado")
-				.corpo("O pedido de código <strong>" 
-						+ pedido.getCodigo() + "</strong> foi confirmado!")
+				.corpo("pedido-confirmado.html")
+				.variavel("pedido", pedido) //15.5. Processando template do corpo de e-mails com Apache FreeMarker - 10'20"
 				.destinatario(pedido.getCliente().getEmail())
 				.build();
 		

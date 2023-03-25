@@ -24,7 +24,7 @@ public class CadastroUsuarioService {
     @Transactional
     public Usuario salvar(Usuario usuario) {
     	
-    	usuarioRepository.detach(usuario); //12.11. Implementando regra de negócio para evitar usuários com e-mails duplicados - 9'30"
+    	usuarioRepository.detach(usuario); //12.11. Implementando regra de negócio para evitar usuários com e-mails duplicados - 5'30", 9'30" - Retira a entidade usuário do contexto de persistência, pois o JPA sincroniza com o BD os dados do usuário que ele está gerenciando e faz um update com o novo e-mail antes de fazer o findByEmail, dessa forma fica com 2 e-mails iguais e lança o erro de registro duplicado. 
     	
 		Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail()); //12.11. Implementando regra de negócio para evitar usuários com e-mails duplicados - 2'
 		
