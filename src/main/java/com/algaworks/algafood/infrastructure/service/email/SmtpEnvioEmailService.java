@@ -16,7 +16,7 @@ import freemarker.template.Template;
 
 //15.3. Implementando o serviço de infraestrutura de envio de e-mails com Spring - 2'30"
 
-@Service
+//@Service  //15.8. Desafio: implementando serviço de envio de e-mail fake - retirar a anotação para usar o FakeEnvioEmailService
 public class SmtpEnvioEmailService implements EnvioEmailService {
 
 	@Autowired
@@ -48,7 +48,8 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
 	}
 	
 	//15.5. Processando template do corpo de e-mails com Apache FreeMarker - 5'
-	private String processarTemplate(Mensagem mensagem) {
+	//15.8. Desafio: implementando serviço de envio de e-mail fake
+	protected String processarTemplate(Mensagem mensagem) {
 		try {
 			Template template = freemarkerConfig.getTemplate(mensagem.getCorpo());
 			
