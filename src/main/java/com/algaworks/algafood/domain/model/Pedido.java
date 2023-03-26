@@ -21,7 +21,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
 import lombok.Data;
@@ -30,9 +32,9 @@ import lombok.EqualsAndHashCode;
 //7.12. Desafio: Criando migrações e mapeando as entidades Pedido e ItemPedido
 
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
-public class Pedido {
+public class Pedido extends AbstractAggregateRoot<Pedido>{ //15.11. Publicando Domain Events a partir do Aggregate Root - 2'10"
 
 	@EqualsAndHashCode.Include
 	@Id
@@ -89,6 +91,8 @@ public class Pedido {
 	public void confirmar() {
 		setStatus(StatusPedido.CONFIRMADO);
 		setDataConfirmacao(OffsetDateTime.now());
+		
+		registerEvent(new PedidoConfirmadoEvent(this)); //15.11. Publicando Domain Events a partir do Aggregate Root - 3'40", 5'40"
 	}
 	
 	public void entregar() {

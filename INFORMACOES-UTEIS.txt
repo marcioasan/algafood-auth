@@ -110,3 +110,15 @@ https://blog.algaworks.com/lazy-loading-com-mapeamento-onetoone/
 
 ***flux() - Explicação importante
 https://app.algaworks.com/forum/topicos/87990/diferenca-entre-flush-e-commit
+
+#15.12. Observando e reagindo a Domain Events
+*** Pergunta interessante de aluno sobre a execução dos eventos serem síncronas e link para execução assíncrona
+https://app.algaworks.com/forum/topicos/81628/duvidas-sobre-eventos
+3. Creating Asynchronous Events
+https://www.baeldung.com/spring-events#anonymous-events
+
+***Performance of Java Mapping Frameworks
+https://app.algaworks.com/forum/topicos/87459/criando-ddd-para-fotostorage
+https://www.baeldung.com/java-performance-mapping-frameworks
+
+

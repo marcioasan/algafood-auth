@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.algafood.domain.model.Pedido;
+import com.algaworks.algafood.domain.repository.PedidoRepository;
 import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
 
 
@@ -15,6 +16,31 @@ public class FluxoPedidoService {
 	@Autowired
 	private EmissaoPedidoService emissaoPedido;
 	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	//15.11. Publicando Domain Events a partir do Aggregate Root - 7'30", 7'40" 
+	@Transactional
+	public void confirmar(String codigoPedido) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
+		pedido.confirmar();
+		
+		pedidoRepository.save(pedido);  //Não precisaria do save aqui porque a instância do pedido que é gerenciada pelo Entity Manager do JPA já salva o pedido, mas para que evento seja chamado, precisa colocar o save. 7'40"
+	}
+	
+	@Transactional
+	public void cancelar(String codigoPedido) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
+		pedido.cancelar();
+	}
+	
+	@Transactional
+	public void entregar(String codigoPedido) {
+		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
+		pedido.entregar();
+	}
+	
+	/*//15.11. Publicando Domain Events a partir do Aggregate Root - modificado nessa aula
 	@Autowired
 	private EnvioEmailService envioEmail;
 	
@@ -32,21 +58,8 @@ public class FluxoPedidoService {
 				.build();
 		
 		envioEmail.enviar(mensagem);
-	}
-	
-	@Transactional
-	public void cancelar(String codigoPedido) {
-		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
-		pedido.cancelar();
-	}
-	
-	@Transactional
-	public void entregar(String codigoPedido) {
-		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
-		pedido.entregar();
-	}
-	
-	
+	}	 
+	 */
 	
 	/* //12.22. Implementando endpoint de transição de status de pedidos - 8'30", 17'20"
 	@Transactional
