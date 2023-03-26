@@ -32,6 +32,8 @@ public class FluxoPedidoService {
 	public void cancelar(String codigoPedido) {
 		Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
 		pedido.cancelar();
+		
+		pedidoRepository.save(pedido); //15.14. Desafio: enviando e-mails no cancelamento de pedidos
 	}
 	
 	@Transactional

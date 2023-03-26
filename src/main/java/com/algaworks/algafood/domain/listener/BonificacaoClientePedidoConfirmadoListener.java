@@ -11,8 +11,8 @@ import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 @Component
 public class BonificacaoClientePedidoConfirmadoListener {
 
-	//@Order(1) //indica que é o primeiro evento a ser disparado
-	//@EventListener
+	@Order(1) //indica que é o primeiro evento a ser disparado
+	@EventListener
 	public void aoConfirmarPedidoCalcularBonificacao(PedidoConfirmadoEvent event) {
 		System.out.println(">>> Calculando pontos para cliente " + event.getPedido().getCliente().getNome());
 	}

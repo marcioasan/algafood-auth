@@ -34,7 +34,7 @@ public class NotificacaoClientePedidoConfirmadoListener {
 				.destinatario(pedido.getCliente().getEmail())
 				.build();
 		
-		System.out.println(">>> Enviando e-mail para " + pedido.getCliente().getNome());
+		System.out.println(">>> Enviando e-mail de CONFIRMAÇÃO para " + pedido.getCliente().getNome());
 
 		envioEmail.enviar(mensagem);
 	}

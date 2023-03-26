@@ -23,6 +23,7 @@ import javax.persistence.PrePersist;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
+import com.algaworks.algafood.domain.event.PedidoCanceladoEvent;
 import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
@@ -103,6 +104,8 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{ //15.11. Publicando D
 	public void cancelar() {
 		setStatus(StatusPedido.CANCELADO);
 		setDataCancelamento(OffsetDateTime.now());
+		
+		registerEvent(new PedidoCanceladoEvent(this)); //15.14. Desafio: enviando e-mails no cancelamento de pedidos
 	}
 	
 	//12.25. Usando IDs vs UUIDs nas URIs de recursos - 18'
