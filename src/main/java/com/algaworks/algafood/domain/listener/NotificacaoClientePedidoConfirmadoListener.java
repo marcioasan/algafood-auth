@@ -3,6 +3,8 @@ package com.algaworks.algafood.domain.listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.algaworks.algafood.domain.event.PedidoConfirmadoEvent;
 import com.algaworks.algafood.domain.model.Pedido;
@@ -17,8 +19,12 @@ public class NotificacaoClientePedidoConfirmadoListener {
 	@Autowired
 	private EnvioEmailService envioEmail;
 	
-	@EventListener
+	
+	//15.13. Reagindo a Domain Events em fases específicas da transação - 2'30", 5'30"
+	//@EventListener
+	@TransactionalEventListener
 	public void aoConfirmarPedido(PedidoConfirmadoEvent event) {
+		
 		Pedido pedido = event.getPedido();
 		
 		var mensagem = Mensagem.builder()
