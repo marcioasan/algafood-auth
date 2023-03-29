@@ -9,14 +9,17 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -45,9 +48,11 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//@CrossOrigin(maxAge = 10) //16.4. Habilitando CORS em controladores e métodos com @CrossOrigin - 1' - Retirado na aula 16.6 e configurado no WebConfig.java
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController {
@@ -67,21 +72,21 @@ public class RestauranteController {
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
 
-//	@JsonView(RestauranteView.Resumo.class)
-//	@GetMapping
-//	public List<RestauranteModel> listar() {
-//		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
-//	}
-//	
-//	@JsonView(RestauranteView.ApenasNome.class)
-//	@GetMapping(params = "projecao=apenas-nome")
-//	public List<RestauranteModel> listarApenasNomes() {
-//		return listar();
-//	}
+	@JsonView(RestauranteView.Resumo.class)
+	@GetMapping
+	public List<RestauranteModel> listar() {
+		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
+	}
+	
+	@JsonView(RestauranteView.ApenasNome.class)
+	@GetMapping(params = "projecao=apenas-nome")
+	public List<RestauranteModel> listarApenasNomes() {
+		return listar();
+	}
 	
 	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 9'50", 13'20"(@RequestParam)
 	
-	@GetMapping
+	//@GetMapping
 	public MappingJacksonValue listar(@RequestParam(required = false) String projecao) { //MappingJacksonValue é um wrapper (envelopador) que vai envelopar o retorno da lista de RestauranteModel.
 		List<Restaurante> restaurantes = restauranteRepository.findAll();
 		List<RestauranteModel> restaurantesModel = restauranteModelAssembler.toCollectionModel(restaurantes);
@@ -99,6 +104,20 @@ public class RestauranteController {
 		return restaurantesWrapper;
 	}
 	
+	//INÍCIO AULA - 16.3. Entendendo o funcionamento básico de CORS e habilitando na API - 2'30"
+	/*
+	@JsonView(RestauranteView.Resumo.class)
+	@GetMapping
+	public ResponseEntity<List<RestauranteModel>> listar() {
+		List<RestauranteModel> restaurantesModel = restauranteModelAssembler
+				.toCollectionModel(restauranteRepository.findAll());
+		
+		return ResponseEntity.ok()
+				.header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+				.body(restaurantesModel);
+	}
+	*/
+	//FIM AULA - 16.3. Entendendo o funcionamento básico de CORS e habilitando na API
 	
 	/*
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
