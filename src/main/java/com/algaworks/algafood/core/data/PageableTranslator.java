@@ -1,4 +1,4 @@
-package com.algaworks.algafood.core;
+package com.algaworks.algafood.core.data;
 
 import java.util.Map;
 import java.util.stream.Collectors;
