@@ -43,6 +43,7 @@ public class FormaPagamentoController {
 	    @Autowired
 	    private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 	    
+	    //17.6. Adicionando outras diretivas de Cache-Control na resposta HTTP - 30", 2'20", 3'50" - cachePrivate e cachePublic
 	    //17.2. Habilitando o cache com o cabeçalho Cache-Control e a diretiva max-age - 2'40", 9'40" fala do Talend API Tester para testar cache em uma aplicação pelo browser, pois não dá pra testar cache pelo Postman
 	    @GetMapping
 	    public ResponseEntity<List<FormaPagamentoModel>> listar() {
@@ -51,7 +52,10 @@ public class FormaPagamentoController {
 	        List<FormaPagamentoModel> formasPagamentoModel = formaPagamentoModelAssembler.toCollectionModel(todasFormasPagamentos);
 	        
 	        return ResponseEntity.ok()
-	        		.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+//	        		.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePrivate())
+//	        		.cacheControl(CacheControl.noCache())
+//	        		.cacheControl(CacheControl.noStore())
+	        		.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
 	        		.body(formasPagamentoModel);
 	    }
 	    
