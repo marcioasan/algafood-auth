@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.algaworks.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.algaworks.algafood.api.assembler.FormaPagamentoModelAssembler;
@@ -43,6 +46,46 @@ public class FormaPagamentoController {
 	    @Autowired
 	    private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 	    
+	    
+	    
+	    //17.9. Implementando requisições condicionais com Deep ETags - 1'30", 7', 9'30"
+		@GetMapping
+		public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
+			ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+			
+			String eTag = "0";
+			
+			OffsetDateTime dataUltimaAtualizacao = formaPagamentoRepository.getDataUltimaAtualizacao();
+			
+			if (dataUltimaAtualizacao != null) {
+				eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+			}
+			
+			if (request.checkNotModified(eTag)) {
+				return null;
+			}
+
+			//Outra forma de retorno para não devolver nulo conforme é feito no trecho acima
+//			if (request.checkNotModified(eTag)) {
+//				return ResponseEntity.status(HttpStatus.NOT_MODIFIED)
+//			               .cacheControl(CacheControl.maxAge(0, TimeUnit.SECONDS).cachePublic())
+//			               .eTag(eTag)
+//			               .build();
+//			}
+			
+			List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.findAll();
+			
+			List<FormaPagamentoModel> formasPagamentosModel = formaPagamentoModelAssembler
+					.toCollectionModel(todasFormasPagamentos);
+			
+			return ResponseEntity.ok()
+					.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
+					.eTag(eTag)
+					.body(formasPagamentosModel);
+		}
+	    
+	    /*
+	    //17.8. Entendendo e preparando a implementação de Deep ETags - 4'
 	    //17.6. Adicionando outras diretivas de Cache-Control na resposta HTTP - 30", 2'20", 3'50" - cachePrivate e cachePublic
 	    //17.2. Habilitando o cache com o cabeçalho Cache-Control e a diretiva max-age - 2'40", 9'40" fala do Talend API Tester para testar cache em uma aplicação pelo browser, pois não dá pra testar cache pelo Postman
 	    @GetMapping
@@ -58,6 +101,7 @@ public class FormaPagamentoController {
 	        		.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS).cachePublic())
 	        		.body(formasPagamentoModel);
 	    }
+	    */
 	    
 //	    @GetMapping
 //	    public List<FormaPagamentoModel> listar() {
