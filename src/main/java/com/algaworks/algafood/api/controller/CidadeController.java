@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.ResourceUriHelper;
 import com.algaworks.algafood.api.assembler.CidadeInputDisassembler;
 import com.algaworks.algafood.api.assembler.CidadeModelAssembler;
 import com.algaworks.algafood.api.model.CidadeModel;
@@ -35,7 +35,7 @@ public class CidadeController {
 	private CidadeRepository cidadeRepository;
 	
 	@Autowired
-	private CadastroCidadeService cidadeService;
+	private CadastroCidadeService cadastroCidade;
 	
 	@Autowired
 	private CidadeModelAssembler cidadeModelAssembler;
@@ -57,7 +57,7 @@ public class CidadeController {
 	//8.6. Desafio: refatorando os serviços REST
 	@GetMapping("/{cidadeId}")
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
-	    Cidade cidade = cidadeService.buscarOuFalhar(cidadeId);
+	    Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 	    
 	    return cidadeModelAssembler.toModel(cidade);
 	}
@@ -76,7 +76,27 @@ public class CidadeController {
     */
 	
 	
+	//19.2. Adicionando a URI do recurso criado no header da resposta - 4'30", 14'
+	//@Override
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
+		try {
+			Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
+			
+			cidade = cadastroCidade.salvar(cidade);
+			
+			CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
+			
+			ResourceUriHelper.addUriInResponseHeader(cidadeModel.getId());
+			
+			return cidadeModel;
+		} catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
 	
+	/*
 	//11.20. Desafio: usando DTOs como representation model
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -84,13 +104,14 @@ public class CidadeController {
 	    try {
 	        Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
 	        
-	        cidade = cidadeService.salvar(cidade);
+	        cidade = cadastroCidade.salvar(cidade);
 	        
 	        return cidadeModelAssembler.toModel(cidade);
 	    } catch (EstadoNaoEncontradoException e) {
 	        throw new NegocioException(e.getMessage(), e);
 	    }
 	}
+	*/
 	
 	//8.6. Desafio: refatorando os serviços REST
 	/*
@@ -98,7 +119,7 @@ public class CidadeController {
     @ResponseStatus(HttpStatus.CREATED)
 	public Cidade adicionar(@RequestBody @Valid Cidade cidade) { //9.9. Desafio: adicionando constraints de validação no modelo - @Valid ver anotações na classe RestauranteController.java
     	try {
-    		Cidade cidadeSalva = cidadeService.salvar(cidade);
+    		Cidade cidadeSalva = cadastroCidade.salvar(cidade);
     		return cidadeSalva;
 		} catch (EstadoNaoEncontradoException e) { //8.8. Criando a exception NegocioException - 10'
 			throw new NegocioException(e.getMessage(), e);//8.10. Afinando a granularidade e definindo a hierarquia das exceptions de negócios - 16', 17'10"
@@ -110,7 +131,7 @@ public class CidadeController {
 //	@PostMapping
 //	@ResponseStatus(HttpStatus.CREATED)
 //	public Cidade adicionar(@RequestBody Cidade cidade) {		
-//		cidade = cidadeService.salvar(cidade);
+//		cidade = cadastroCidade.salvar(cidade);
 //		return cidade;
 //	}
 	
@@ -124,7 +145,7 @@ public class CidadeController {
     @PostMapping
 	public ResponseEntity<?> adicionar(@RequestBody Cidade cidade) {
 		try {
-			cidade = cidadeService.salvar(cidade);
+			cidade = cadastroCidade.salvar(cidade);
 			
 			return ResponseEntity.status(HttpStatus.CREATED).body(cidade);
 		} catch (EntidadeNaoEncontradaException e) {
@@ -140,11 +161,11 @@ public class CidadeController {
 	public CidadeModel atualizar(@PathVariable Long cidadeId,
 	        @RequestBody @Valid CidadeInput cidadeInput) {
 	    try {
-	        Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
+	        Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 	        
 	        cidadeInputDisassembler.copyToDomainObject(cidadeInput, cidadeAtual);
 	        
-	        cidadeAtual = cidadeService.salvar(cidadeAtual);
+	        cidadeAtual = cadastroCidade.salvar(cidadeAtual);
 	        
 	        return cidadeModelAssembler.toModel(cidadeAtual);
 	    } catch (EstadoNaoEncontradoException e) {
@@ -159,10 +180,10 @@ public class CidadeController {
     public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody @Valid Cidade cidade) {
     	
     	try {
-    		Cidade cidadeAtual = cidadeService.buscarOuFalhar(cidadeId);
+    		Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
     		BeanUtils.copyProperties(cidade, cidadeAtual, "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
     		
-    		return cidadeService.salvar(cidadeAtual);
+    		return cadastroCidade.salvar(cidadeAtual);
 		} catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(), e);
 		}
@@ -176,7 +197,7 @@ public class CidadeController {
 		
 		if (cidadeAtual.isPresent()) {
 			BeanUtils.copyProperties(cidade, cidadeAtual.get(), "id");//4.25. Modelando e implementando a atualização de recursos com PUT - 9' - O parâmetro "id" será ignorado no copyProperties
-			Cidade cidadeSalva = cidadeService.salvar(cidadeAtual.get());
+			Cidade cidadeSalva = cadastroCidade.salvar(cidadeAtual.get());
 			return ResponseEntity.ok(cidadeSalva);
 		}
 		return ResponseEntity.notFound().build();
@@ -192,14 +213,14 @@ public class CidadeController {
     @DeleteMapping("/{cidadeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void remover(@PathVariable Long cidadeId) {
-    	cidadeService.excluir(cidadeId);
+    	cadastroCidade.excluir(cidadeId);
     }    
     
     /*
 	@DeleteMapping("/{cidadeId}")
 	public ResponseEntity<?> remover(@PathVariable Long cidadeId) {		
 		try {
-			cidadeService.excluir(cidadeId);
+			cadastroCidade.excluir(cidadeId);
 			return ResponseEntity.noContent().build();
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
