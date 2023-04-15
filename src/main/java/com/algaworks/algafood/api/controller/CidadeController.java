@@ -1,10 +1,13 @@
 package com.algaworks.algafood.api.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,13 +56,32 @@ public class CidadeController {
 	
 	
 	
-	
+	//19.7. Adicionando hypermedia na representação de recurso único com HAL - 1'50", 10'
 	//8.6. Desafio: refatorando os serviços REST
 	@GetMapping("/{cidadeId}")
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 	    Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 	    
-	    return cidadeModelAssembler.toModel(cidade);
+	    CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
+	    
+	    //19.8. Construindo links dinâmicos com WebMvcLinkBuilder - 1'50"
+	    cidadeModel.add(linkTo(CidadeController.class)
+				.slash(cidadeModel.getId()).withSelfRel());
+//	    cidadeModel.add(Link.of("http://localhost:8080/cidades/1"));
+	    
+		cidadeModel.add(linkTo(CidadeController.class).withRel("cidades"));
+//		cidadeModel.add(Link.of("http://localhost:8080/cidades", "cidades"));
+		
+//		cidadeModel.add(Link.of("http://localhost:8080/cidades/1", IanaLinkRelations.SELF));
+
+//		cidadeModel.add(Link.of("http://localhost:8080/cidades", IanaLinkRelations.COLLECTION));
+
+		
+		cidadeModel.getEstado().add(linkTo(EstadoController.class)
+				.slash(cidadeModel.getEstado().getId()).withSelfRel());
+//		cidadeModel.getEstado().add(Link.of("http://localhost:8080/estados/1"));
+
+	    return cidadeModel;
 	}
 	
 	/*
