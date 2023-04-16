@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
@@ -64,21 +65,29 @@ public class CidadeController {
 	    
 	    CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
 	    
+	    //19.9. Construindo links que apontam para métodos - 1'
+		cidadeModel.add(linkTo(methodOn(CidadeController.class)
+				.buscar(cidadeModel.getId())).withSelfRel());
+	    
 	    //19.8. Construindo links dinâmicos com WebMvcLinkBuilder - 1'50"
-	    cidadeModel.add(linkTo(CidadeController.class)
-				.slash(cidadeModel.getId()).withSelfRel());
+//	    cidadeModel.add(linkTo(CidadeController.class).slash(cidadeModel.getId()).withSelfRel());
 //	    cidadeModel.add(Link.of("http://localhost:8080/cidades/1"));
 	    
-		cidadeModel.add(linkTo(CidadeController.class).withRel("cidades"));
+		
+	    //19.9. Construindo links que apontam para métodos - 6'20"
+		cidadeModel.add(linkTo(methodOn(CidadeController.class)
+				.listar()).withRel("cidades"));
+//		cidadeModel.add(linkTo(CidadeController.class).withRel("cidades"));
 //		cidadeModel.add(Link.of("http://localhost:8080/cidades", "cidades"));
 		
 //		cidadeModel.add(Link.of("http://localhost:8080/cidades/1", IanaLinkRelations.SELF));
 
 //		cidadeModel.add(Link.of("http://localhost:8080/cidades", IanaLinkRelations.COLLECTION));
 
-		
-		cidadeModel.getEstado().add(linkTo(EstadoController.class)
-				.slash(cidadeModel.getEstado().getId()).withSelfRel());
+		//19.9. Construindo links que apontam para métodos - 7'20"
+		cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
+				.buscar(cidadeModel.getEstado().getId())).withSelfRel());
+//		cidadeModel.getEstado().add(linkTo(EstadoController.class).slash(cidadeModel.getEstado().getId()).withSelfRel());
 //		cidadeModel.getEstado().add(Link.of("http://localhost:8080/estados/1"));
 
 	    return cidadeModel;
