@@ -48,6 +48,15 @@ public class CidadeController {
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
+	//19.11. Montando modelo de representação com RepresentationModelAssembler - 7'30"
+	@GetMapping
+	public CollectionModel<CidadeModel> listar() {
+		List<Cidade> todasCidades = cidadeRepository.findAll();
+		
+		return cidadeModelAssembler.toCollectionModel(todasCidades);
+	}
+	
+	/*
 	//19.10. Adicionando hypermedia na representação de recursos de coleção - 1', 7'
 //	@Override
 	@GetMapping
@@ -73,6 +82,8 @@ public class CidadeController {
 		
 		return cidadesCollectionModel;
 	}
+	*/
+	
 	/*
 	@GetMapping
 	public List<CidadeModel> listar() {
@@ -82,8 +93,14 @@ public class CidadeController {
 	}
 	*/
 	
+	@GetMapping("/{cidadeId}")
+	public CidadeModel buscar(@PathVariable Long cidadeId) {
+		Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
+		
+		return cidadeModelAssembler.toModel(cidade);
+	}
 	
-	
+	/*
 	//19.7. Adicionando hypermedia na representação de recurso único com HAL - 1'50", 10'
 	//8.6. Desafio: refatorando os serviços REST
 	@GetMapping("/{cidadeId}")
@@ -119,6 +136,7 @@ public class CidadeController {
 
 	    return cidadeModel;
 	}
+	*/
 	
 	/*
     @GetMapping("/{cidadeId}")
