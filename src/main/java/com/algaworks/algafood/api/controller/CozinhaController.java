@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,18 +49,20 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaInputDisassembler cozinhaInputDisassembler;
 	
+	@Autowired
+	private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler; //19.15. Adicionando hypermedia em recursos com paginação - 5'20"
+	
+	//19.15. Adicionando hypermedia em recursos com paginação - 3'50", 6'50"
 	//13.8. Implementando paginação e ordenação em recursos de coleção da API - 3'30"
 	@GetMapping
-	public Page<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
+	public PagedModel<CozinhaModel> listar(@PageableDefault(size = 10) Pageable pageable) {
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 		
-		List<CozinhaModel> cozinhasModel = cozinhaModelAssembler
-				.toCollectionModel(cozinhasPage.getContent());
+		PagedModel<CozinhaModel> cozinhasPagedModel = pagedResourcesAssembler
+				.toModel(cozinhasPage, cozinhaModelAssembler);
 		
-		Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel, pageable, 
-				cozinhasPage.getTotalElements());
+		return cozinhasPagedModel;
 		
-		return cozinhasModelPage;
 	}
 	
 	/*
