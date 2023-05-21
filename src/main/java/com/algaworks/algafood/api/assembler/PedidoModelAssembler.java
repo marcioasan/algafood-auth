@@ -43,9 +43,17 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
 				new TemplateVariable("size", VariableType.REQUEST_PARAM),
 				new TemplateVariable("sort", VariableType.REQUEST_PARAM));
 		
+		//19.19. Desafio: adicionando template variables do filtro de pedidos
+		TemplateVariables filtroVariables = new TemplateVariables(
+				new TemplateVariable("clienteId", VariableType.REQUEST_PARAM),
+				new TemplateVariable("restauranteId", VariableType.REQUEST_PARAM),
+				new TemplateVariable("dataCriacaoInicio", VariableType.REQUEST_PARAM),
+				new TemplateVariable("dataCriacaoFim", VariableType.REQUEST_PARAM));
+		
 		String pedidosUrl = linkTo(PedidoController.class).toUri().toString();
 		
-		pedidoModel.add(Link.of(UriTemplate.of(pedidosUrl, pageVariables), "pedidos"));//Para a versão do hateoas atualizada		
+		pedidoModel.add(Link.of(UriTemplate.of(pedidosUrl, pageVariables.concat(filtroVariables)), "pedidos"));
+		//pedidoModel.add(Link.of(UriTemplate.of(pedidosUrl, pageVariables), "pedidos"));//Para a versão do hateoas atualizada		
 //		pedidoModel.add(new Link(UriTemplate.of(pedidosUrl, pageVariables), "pedidos"));
 		
 //		pedidoModel.add(linkTo(PedidoController.class).withRel("pedidos"));
