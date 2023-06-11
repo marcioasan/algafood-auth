@@ -9,6 +9,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.CidadeController;
 import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.model.CidadeModel;
@@ -20,6 +21,9 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
     @Autowired
     private ModelMapper modelMapper;
     
+    @Autowired
+    private AlgaLinks algaLinks;  //19.21. Desafio: refatorando construção e inclusão de links
+    
     //19.11. Montando modelo de representação com RepresentationModelAssembler - 3'10"
     public CidadeModelAssembler() {
 	   super(CidadeController.class, CidadeModel.class);
@@ -27,17 +31,15 @@ public class CidadeModelAssembler extends RepresentationModelAssemblerSupport<Ci
     
     @Override
     public CidadeModel toModel(Cidade cidade) {
-        
         CidadeModel cidadeModel = createModelWithId(cidade.getId(), cidade);
-		modelMapper.map(cidade, cidadeModel);
-		
-		cidadeModel.add(linkTo(methodOn(CidadeController.class)
-				.listar()).withRel("cidades"));
-		
-		cidadeModel.getEstado().add(linkTo(methodOn(EstadoController.class)
-				.buscar(cidadeModel.getEstado().getId())).withSelfRel());
-		
-		return cidadeModel;
+        
+        modelMapper.map(cidade, cidadeModel);
+        
+        cidadeModel.add(algaLinks.linkToCidades("cidades"));
+        
+        cidadeModel.getEstado().add(algaLinks.linkToEstado(cidadeModel.getEstado().getId()));
+        
+        return cidadeModel;
     }
     
 	@Override

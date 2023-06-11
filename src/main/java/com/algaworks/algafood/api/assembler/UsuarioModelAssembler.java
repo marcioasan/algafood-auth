@@ -9,6 +9,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.UsuarioController;
 import com.algaworks.algafood.api.controller.UsuarioGrupoController;
 import com.algaworks.algafood.api.model.UsuarioModel;
@@ -20,6 +21,9 @@ public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<U
     @Autowired
     private ModelMapper modelMapper;
     
+    @Autowired
+    private AlgaLinks algaLinks; //19.21. Desafio: refatorando construção e inclusão de links
+    
     public UsuarioModelAssembler() {
         super(UsuarioController.class, UsuarioModel.class);
     }
@@ -29,12 +33,22 @@ public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<U
         UsuarioModel usuarioModel = createModelWithId(usuario.getId(), usuario);
         modelMapper.map(usuario, usuarioModel);
         
+        usuarioModel.add(algaLinks.linkToUsuarios("usuarios"));
+        
+        usuarioModel.add(algaLinks.linkToGruposUsuario(usuario.getId(), "grupos-usuario"));
+        
+        return usuarioModel;    	
+    	/*
+    	UsuarioModel usuarioModel = createModelWithId(usuario.getId(), usuario);
+        modelMapper.map(usuario, usuarioModel);
+        
         usuarioModel.add(linkTo(UsuarioController.class).withRel("usuarios"));
         
         usuarioModel.add(linkTo(methodOn(UsuarioGrupoController.class)
                 .listar(usuario.getId())).withRel("grupos-usuario"));
         
         return usuarioModel;
+        */
     }
     
     @Override
