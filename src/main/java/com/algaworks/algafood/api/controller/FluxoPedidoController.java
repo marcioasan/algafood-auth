@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,20 +22,24 @@ public class FluxoPedidoController {
 	
 	@PutMapping("/confirmacao")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void confirmar(@PathVariable String codigoPedido) {
+//	public void confirmar(@PathVariable String codigoPedido) {
+	public ResponseEntity<Void> confirmar(@PathVariable String codigoPedido) { ////19.22. Adicionando links de transições de status de pedidos - 3'40"
 		fluxoPedido.confirmar(codigoPedido);
+		return ResponseEntity.noContent().build();
 	}
 
 	//12.23. Desafio: implementando endpoints de transição de status de pedidos
 	@PutMapping("/cancelamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void cancelar(@PathVariable String codigoPedido) {
+	public ResponseEntity<Void> cancelar(@PathVariable String codigoPedido) {
 		fluxoPedido.cancelar(codigoPedido);
+		return ResponseEntity.noContent().build();
 	}
 	
 	@PutMapping("/entrega")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void entregar(@PathVariable String codigoPedido) {
+	public ResponseEntity<Void> entregar(@PathVariable String codigoPedido) {
 		fluxoPedido.entregar(codigoPedido);
+		return ResponseEntity.noContent().build();
 	}
 }
