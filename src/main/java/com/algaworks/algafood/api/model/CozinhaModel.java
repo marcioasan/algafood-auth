@@ -17,10 +17,11 @@ import lombok.Setter;
 @Getter
 public class CozinhaModel extends RepresentationModel<CozinhaModel>{
 
-	@JsonView(RestauranteView.Resumo.class) //13.1. Fazendo projeção de recursos com @JsonView do Jackson - 4'30"
+	//@JsonView retirado na aula - 19.24. Desafio: adicionando hypermedia nos recursos de restaurantes - foi comentado que tem uma issue
+//	@JsonView(RestauranteView.Resumo.class) //13.1. Fazendo projeção de recursos com @JsonView do Jackson - 4'30"
 	private Long id;
 	
-	@JsonView(RestauranteView.Resumo.class)
+//	@JsonView(RestauranteView.Resumo.class)
 	private String nome;
 	
 }

@@ -13,6 +13,9 @@ import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.model.EstadoModel;
 import com.algaworks.algafood.domain.model.Estado;
 
+//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes
+
+
 @Component
 public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Estado, EstadoModel>{
 
@@ -39,6 +42,7 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
     @Override
     public CollectionModel<EstadoModel> toCollectionModel(Iterable<? extends Estado> entities) {
         return super.toCollectionModel(entities)
-            .add(linkTo(EstadoController.class).withSelfRel());
+        	.add(algaLinks.linkToEstados()); //19.24. Desafio: adicionando hypermedia nos recursos de restaurantes	
+//            .add(linkTo(EstadoController.class).withSelfRel());
     } 
 }

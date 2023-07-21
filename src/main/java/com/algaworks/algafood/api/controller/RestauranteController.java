@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,6 @@ import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,8 +31,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.api.assembler.RestauranteApenasNomeModelAssembler;
+import com.algaworks.algafood.api.assembler.RestauranteBasicoModelAssembler;
 import com.algaworks.algafood.api.assembler.RestauranteInputDisassembler;
 import com.algaworks.algafood.api.assembler.RestauranteModelAssembler;
+import com.algaworks.algafood.api.model.RestauranteApenasNomeModel;
+import com.algaworks.algafood.api.model.RestauranteBasicoModel;
 import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.RestauranteXmlWrapper;
 import com.algaworks.algafood.api.model.input.CozinhaIdInput;
@@ -48,7 +51,6 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -71,7 +73,30 @@ public class RestauranteController {
 	
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
+	
+	@Autowired
+	private RestauranteBasicoModelAssembler restauranteBasicoModelAssembler; //19.24. Desafio: adicionando hypermedia nos recursos de restaurantes
 
+	@Autowired
+	private RestauranteApenasNomeModelAssembler restauranteApenasNomeModelAssembler; 
+
+//	@Override
+//	@JsonView(RestauranteView.Resumo.class)
+    @GetMapping
+    public CollectionModel<RestauranteBasicoModel> listar() {
+        return restauranteBasicoModelAssembler
+                .toCollectionModel(restauranteRepository.findAll());
+    }
+    
+//    @Override
+//	@JsonView(RestauranteView.ApenasNome.class)
+    @GetMapping(params = "projecao=apenas-nome")
+    public CollectionModel<RestauranteApenasNomeModel> listarApenasNomes() {
+        return restauranteApenasNomeModelAssembler
+                .toCollectionModel(restauranteRepository.findAll());
+    }
+	
+	/*
 	@JsonView(RestauranteView.Resumo.class)
 	@GetMapping
 	public List<RestauranteModel> listar() {
@@ -83,9 +108,10 @@ public class RestauranteController {
 	public List<RestauranteModel> listarApenasNomes() {
 		return listar();
 	}
+	*/
 	
 	//13.1. Fazendo projeção de recursos com @JsonView do Jackson - 9'50", 13'20"(@RequestParam)
-	
+	/*
 	//@GetMapping
 	public MappingJacksonValue listar(@RequestParam(required = false) String projecao) { //MappingJacksonValue é um wrapper (envelopador) que vai envelopar o retorno da lista de RestauranteModel.
 		List<Restaurante> restaurantes = restauranteRepository.findAll();
@@ -103,7 +129,8 @@ public class RestauranteController {
 		
 		return restaurantesWrapper;
 	}
-	
+	*/
+    
 	//INÍCIO AULA - 16.3. Entendendo o funcionamento básico de CORS e habilitando na API - 2'30"
 	/*
 	@JsonView(RestauranteView.Resumo.class)
@@ -349,6 +376,25 @@ public class RestauranteController {
 		return cozinhaIdInput;
 	}
 
+//	@Override
+	@PutMapping("/{restauranteId}/abertura")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> abrir(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.abrir(restauranteId);
+	    
+	    return ResponseEntity.noContent().build();
+	}
+
+//	@Override
+	@PutMapping("/{restauranteId}/fechamento")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> fechar(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.fechar(restauranteId);
+	    
+	    return ResponseEntity.noContent().build();
+	}
+	
+	/*
 	//12.14. Desafio: Implementando os endpoints de abertura e fechamento de restaurantes
 	@PutMapping("/{restauranteId}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -361,7 +407,28 @@ public class RestauranteController {
 	public void fechar(@PathVariable Long restauranteId) {
 	    cadastroRestaurante.fechar(restauranteId);
 	} 
+	*/
 	
+	//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes
+//	@Override
+	@PutMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> ativar(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.ativar(restauranteId);
+	    
+	    return ResponseEntity.noContent().build();
+	}
+
+//	@Override
+	@DeleteMapping("/{restauranteId}/ativo")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity<Void> inativar(@PathVariable Long restauranteId) {
+	    cadastroRestaurante.inativar(restauranteId);
+	    
+	    return ResponseEntity.noContent().build();
+	}
+	
+	/*
 	//12.4. Implementando os endpoints de ativação e inativação de restaurantes - 12'30"
 	@PutMapping("/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -374,6 +441,7 @@ public class RestauranteController {
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
 	}
+	*/
 	
 	//12.18. Implementando ativação e inativação em massa de restaurantes
 	@PutMapping("/ativacoes")

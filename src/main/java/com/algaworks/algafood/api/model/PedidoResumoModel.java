@@ -16,6 +16,7 @@ import lombok.Setter;
 @Getter
 public class PedidoResumoModel extends RepresentationModel<PedidoResumoModel> {
 
+	private RestauranteApenasNomeModel restaurante;
 //    private Long id;
     private String codigo; //12.25. Usando IDs vs UUIDs nas URIs de recursos - 13'20"
     private BigDecimal subtotal;
@@ -23,7 +24,7 @@ public class PedidoResumoModel extends RepresentationModel<PedidoResumoModel> {
     private BigDecimal valorTotal;
     private String status;
     private OffsetDateTime dataCriacao;
-    private RestauranteResumoModel restaurante;
+//    private RestauranteResumoModel restaurante;
     private UsuarioModel cliente;
 //    private String nomeCliente;
 }

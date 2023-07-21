@@ -10,6 +10,7 @@ import org.springframework.hateoas.server.core.Relation;
 import lombok.Getter;
 import lombok.Setter;
 
+//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes
 //12.19. Desafio: Implementando os endpoints de consulta de pedidos
 @Relation(collectionRelation = "pedidos")
 @Setter
@@ -26,9 +27,11 @@ public class PedidoModel extends RepresentationModel<PedidoModel> {
     private OffsetDateTime dataConfirmacao;
     private OffsetDateTime dataEntrega;
     private OffsetDateTime dataCancelamento;
-    private RestauranteResumoModel restaurante;
+//    private RestauranteResumoModel restaurante;
     private UsuarioModel cliente;
     private FormaPagamentoModel formaPagamento;
     private EnderecoModel enderecoEntrega;
     private List<ItemPedidoModel> itens; 
+    
+    private RestauranteApenasNomeModel restaurante;
 }

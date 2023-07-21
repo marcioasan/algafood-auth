@@ -4,9 +4,10 @@ package com.algaworks.algafood.api.model.view;
 
 public interface RestauranteView {
 
-	public interface Resumo {
-	}
-	
-	public interface ApenasNome {
-	}
+	//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes
+//	public interface Resumo {
+//	}
+//	
+//	public interface ApenasNome {
+//	}
 }
