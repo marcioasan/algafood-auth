@@ -45,6 +45,29 @@ public class RestauranteModelAssembler
         restauranteModel.add(algaLinks.linkToResponsaveisRestaurante(restaurante.getId(), 
                 "responsaveis"));
         
+        //19.25. Desafio: adicionando links condicionais no recurso de restaurante - INÍCIO
+        if (restaurante.ativacaoPermitida()) {
+        	restauranteModel.add(
+        			algaLinks.linkToRestauranteAtivacao(restaurante.getId(), "ativar"));
+        }
+
+        if (restaurante.inativacaoPermitida()) {
+        	restauranteModel.add(
+        			algaLinks.linkToRestauranteInativacao(restaurante.getId(), "inativar"));
+        }
+
+        if (restaurante.aberturaPermitida()) {
+        	restauranteModel.add(
+        			algaLinks.linkToRestauranteAbertura(restaurante.getId(), "abrir"));
+        }
+
+        if (restaurante.fechamentoPermitido()) {
+        	restauranteModel.add(
+        			algaLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
+        }
+      //19.25. Desafio: adicionando links condicionais no recurso de restaurante - FIM
+        
+        
         return restauranteModel;
     }
     

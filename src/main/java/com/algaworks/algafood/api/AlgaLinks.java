@@ -190,9 +190,29 @@ public class AlgaLinks {
 
 	public Link linkToCozinha(Long cozinhaId) {
 	    return linkToCozinha(cozinhaId, IanaLinkRelations.SELF.value());
-	} 	
-	
-	
+	} 			
 	//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes - FIM
+	
+	//19.25. Desafio: adicionando links condicionais no recurso de restaurante - INÍCIO
+	public Link linkToRestauranteAbertura(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .abrir(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteFechamento(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .fechar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteInativacao(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .inativar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteAtivacao(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .ativar(restauranteId)).withRel(rel);
+	}
+	//19.25. Desafio: adicionando links condicionais no recurso de restaurante - FIM
 	
 }
