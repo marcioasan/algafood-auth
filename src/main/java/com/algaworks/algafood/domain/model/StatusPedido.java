@@ -28,4 +28,8 @@ public enum StatusPedido {
 	public boolean naoPodeAlterarPara(StatusPedido novoStatus) {
 		return !novoStatus.statusAnteriores.contains(this); //12.24. Refatorando o código de regras para transição de status de pedidos - 9'15" - this é o status atual
 	}
+
+	public boolean podeAlterarPara(StatusPedido novoStatus) {
+		return !naoPodeAlterarPara(novoStatus); //19.23. Adicionando links condicionalmente
+	}
 }

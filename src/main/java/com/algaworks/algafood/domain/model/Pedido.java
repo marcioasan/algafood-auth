@@ -120,6 +120,19 @@ public class Pedido extends AbstractAggregateRoot<Pedido>{ //15.11. Publicando D
 		this.status = novoStatus;
 	}
 	
+	//19.23. Adicionando links condicionalmente
+	public boolean podeSerConfirmado() {
+		return getStatus().podeAlterarPara(StatusPedido.CONFIRMADO);
+	}
+	
+	public boolean podeSerEntregue() {
+		return getStatus().podeAlterarPara(StatusPedido.ENTREGUE);
+	}
+	
+	public boolean podeSerCancelado() {
+		return getStatus().podeAlterarPara(StatusPedido.CANCELADO);
+	}
+	
 	@PrePersist
 	private void gerarCodigo() {
 		setCodigo(UUID.randomUUID().toString());
