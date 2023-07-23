@@ -239,4 +239,12 @@ public class AlgaLinks {
 	    return linkToFormasPagamento(IanaLinkRelations.SELF.value());
 	} 
 	//19.27. Desafio: adicionando hypermedia nos recursos de formas de pagamento - FIM
+
+	//19.28. Adicionando links para desassociação de formas de pagamento com restaurante
+	public Link linkToRestauranteFormaPagamentoDesassociacao(
+			Long restauranteId, Long formaPagamentoId, String rel) {
+
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+				.desassociar(restauranteId, formaPagamentoId)).withRel(rel);
+	}
 }

@@ -3,6 +3,8 @@ package com.algaworks.algafood.api.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,15 +34,33 @@ public class RestauranteFormaPagamentoController {
 	@Autowired
 	private AlgaLinks algaLinks;
 	
-//	@Override
-	@GetMapping
+	//19.28. Adicionando links para desassociação de formas de pagamento com restaurante
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CollectionModel<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
-	    Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
-	    
-	    return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
-	            .removeLinks()
-	            .add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
+
+		CollectionModel<FormaPagamentoModel> formasPagamentoModel
+				= formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
+				.removeLinks()
+				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+
+		formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
+			formaPagamentoModel.add(algaLinks.linkToRestauranteFormaPagamentoDesassociacao(
+					restauranteId, formaPagamentoModel.getId(), "desassociar"));
+		});
+
+		return formasPagamentoModel;
 	}
+	
+//	@Override
+//	@GetMapping
+//	public CollectionModel<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
+//	    Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
+//	    
+//	    return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
+//	            .removeLinks()
+//	            .add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+//	}
 	
 //	@GetMapping
 //	public List<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
@@ -48,13 +68,24 @@ public class RestauranteFormaPagamentoController {
 //		
 //		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento());
 //	}
-	
-	//12.12. Implementando os endpoints de associação de formas de pagamento em restaurantes - 12'
+
+	//19.28. Adicionando links para desassociação de formas de pagamento com restaurante
 	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
+	public ResponseEntity<Void> desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
+
+		return ResponseEntity.noContent().build();
 	}
+	
+	
+	
+	//12.12. Implementando os endpoints de associação de formas de pagamento em restaurantes - 12'
+//	@DeleteMapping("/{formaPagamentoId}")
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
+//		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
+//	}
 	
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
