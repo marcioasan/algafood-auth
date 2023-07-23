@@ -247,4 +247,10 @@ public class AlgaLinks {
 		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
 				.desassociar(restauranteId, formaPagamentoId)).withRel(rel);
 	}
+	
+	//19.29. Adicionando links com template variable de caminho de formas de pagamento do restaurante
+	public Link linkToRestauranteFormaPagamentoAssociacao(Long restauranteId, String rel) {
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+				.associar(restauranteId, null)).withRel(rel);
+	}
 }

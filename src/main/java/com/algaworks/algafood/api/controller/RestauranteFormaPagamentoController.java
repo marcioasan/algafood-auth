@@ -42,7 +42,8 @@ public class RestauranteFormaPagamentoController {
 		CollectionModel<FormaPagamentoModel> formasPagamentoModel
 				= formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento())
 				.removeLinks()
-				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId));
+				.add(algaLinks.linkToRestauranteFormasPagamento(restauranteId))
+				.add(algaLinks.linkToRestauranteFormaPagamentoAssociacao(restauranteId, "associar"));
 
 		formasPagamentoModel.getContent().forEach(formaPagamentoModel -> {
 			formaPagamentoModel.add(algaLinks.linkToRestauranteFormaPagamentoDesassociacao(
@@ -86,10 +87,20 @@ public class RestauranteFormaPagamentoController {
 //	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 //		cadastroRestaurante.desassociarFormaPagamento(restauranteId, formaPagamentoId);
 //	}
-	
+
+	//19.29. Adicionando links com template variable de caminho de formas de pagamento do restaurante
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
+	public ResponseEntity<Void> associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
 		cadastroRestaurante.associarFormaPagamento(restauranteId, formaPagamentoId);
+
+		return ResponseEntity.noContent().build();
 	}
+	
+	
+//	@PutMapping("/{formaPagamentoId}")
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void associar(@PathVariable Long restauranteId, @PathVariable Long formaPagamentoId) {
+//		cadastroRestaurante.associarFormaPagamento(restauranteId, formaPagamentoId);
+//	}
 }
