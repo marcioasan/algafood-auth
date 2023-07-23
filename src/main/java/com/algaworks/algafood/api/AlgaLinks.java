@@ -224,5 +224,19 @@ public class AlgaLinks {
 	            .ativar(restauranteId)).withRel(rel);
 	}
 	//19.25. Desafio: adicionando links condicionais no recurso de restaurante - FIM
+
 	
+	//19.27. Desafio: adicionando hypermedia nos recursos de formas de pagamento - INÍCIO
+	public Link linkToRestauranteFormasPagamento(Long restauranteId) {
+	    return linkToRestauranteFormasPagamento(restauranteId, IanaLinkRelations.SELF.value());
+	}
+
+	public Link linkToFormasPagamento(String rel) {
+	    return linkTo(FormaPagamentoController.class).withRel(rel);
+	}
+
+	public Link linkToFormasPagamento() {
+	    return linkToFormasPagamento(IanaLinkRelations.SELF.value());
+	} 
+	//19.27. Desafio: adicionando hypermedia nos recursos de formas de pagamento - FIM
 }
