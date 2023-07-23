@@ -34,7 +34,10 @@ public class AlgaLinks {
 			new TemplateVariable("size", VariableType.REQUEST_PARAM),
 			new TemplateVariable("sort", VariableType.REQUEST_PARAM));
 
-	public Link linkToPedidos() {
+	public static final TemplateVariables PROJECAO_VARIABLES = new TemplateVariables(
+			new TemplateVariable("projecao", VariableType.REQUEST_PARAM));//19.26. Desafio: adicionando template variable de projeção de restaurantes
+	
+	public Link linkToPedidos(String rel) {
 		TemplateVariables filtroVariables = new TemplateVariables(
 				new TemplateVariable("clienteId", VariableType.REQUEST_PARAM),
 				new TemplateVariable("restauranteId", VariableType.REQUEST_PARAM),
@@ -44,7 +47,7 @@ public class AlgaLinks {
 		String pedidosUrl = linkTo(PedidoController.class).toUri().toString();
 
 		return Link.of(UriTemplate.of(pedidosUrl,
-				PAGINACAO_VARIABLES.concat(filtroVariables)), "pedidos");
+				PAGINACAO_VARIABLES.concat(filtroVariables)), rel);
 	}
 	
 	//19.22. Adicionando links de transições de status de pedidos - 2'
@@ -170,10 +173,17 @@ public class AlgaLinks {
 	
 	
 	//19.24. Desafio: adicionando hypermedia nos recursos de restaurantes - INÍCIO
-	public Link linkToRestaurantes(String rel) {
-	    return linkTo(RestauranteController.class).withRel(rel);
-	}
+//	public Link linkToRestaurantes(String rel) {
+//	    return linkTo(RestauranteController.class).withRel(rel);
+//	}
 
+	//19.26. Desafio: adicionando template variable de projeção de restaurantes
+	public Link linkToRestaurantes(String rel) {
+		String restaurantesUrl = linkTo(RestauranteController.class).toUri().toString();
+
+		return Link.of(UriTemplate.of(restaurantesUrl, PROJECAO_VARIABLES), rel);
+	}
+	
 	public Link linkToRestaurantes() {
 	    return linkToRestaurantes(IanaLinkRelations.SELF.value());
 	}
