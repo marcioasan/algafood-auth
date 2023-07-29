@@ -28,6 +28,22 @@ public class ProdutoModelAssembler extends RepresentationModelAssemblerSupport<P
         super(RestauranteProdutoController.class, ProdutoModel.class);
     }
     
+    //19.32. Desafio: adicionando links para recurso de foto de produto
+    public ProdutoModel toModel(Produto produto) {
+        ProdutoModel produtoModel = createModelWithId(
+                produto.getId(), produto, produto.getRestaurante().getId());
+        
+        modelMapper.map(produto, produtoModel);
+        
+        produtoModel.add(algaLinks.linkToProdutos(produto.getRestaurante().getId(), "produtos"));
+
+        produtoModel.add(algaLinks.linkToFotoProduto(
+                produto.getRestaurante().getId(), produto.getId(), "foto"));
+        
+        return produtoModel;
+    }
+    
+    /*
     public ProdutoModel toModel(Produto produto) {
         ProdutoModel produtoModel = createModelWithId(
                 produto.getId(), produto, produto.getRestaurante().getId());
@@ -38,6 +54,7 @@ public class ProdutoModelAssembler extends RepresentationModelAssemblerSupport<P
         
         return produtoModel;
     }
+    */
     
 //    public List<ProdutoModel> toCollectionModel(List<Produto> produtos) {
 //        return produtos.stream()
