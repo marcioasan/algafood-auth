@@ -1,22 +1,37 @@
 package com.algaworks.algafood.api.assembler;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.model.PermissaoModel;
 import com.algaworks.algafood.domain.model.Permissao;
 
 @Component
-public class PermissaoModelAssembler {
+public class PermissaoModelAssembler implements RepresentationModelAssembler<Permissao, PermissaoModel> {
 
     @Autowired
     private ModelMapper modelMapper;
     
+    @Autowired
+    private AlgaLinks algaLinks;//19.34. Desafio: adicionando links de associação de grupos com permissões
+
+    @Override
+    public PermissaoModel toModel(Permissao permissao) {
+        PermissaoModel permissaoModel = modelMapper.map(permissao, PermissaoModel.class);
+        return permissaoModel;
+    }
+    
+    @Override
+    public CollectionModel<PermissaoModel> toCollectionModel(Iterable<? extends Permissao> entities) {
+        return RepresentationModelAssembler.super.toCollectionModel(entities)
+                .add(algaLinks.linkToPermissoes());
+    }
+    
+    /*
     public PermissaoModel toModel(Permissao permissao) {
         return modelMapper.map(permissao, PermissaoModel.class);
     }
@@ -26,4 +41,5 @@ public class PermissaoModelAssembler {
                 .map(permissao -> toModel(permissao))
                 .collect(Collectors.toList());
     }
+    */
 }
