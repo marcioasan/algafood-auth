@@ -26,6 +26,54 @@ public class RestauranteModelAssembler
         super(RestauranteController.class, RestauranteModel.class);
     }
     
+    //19.31. Desafio: adicionando hypermedia nos recursos de produtos
+    public RestauranteModel toModel(Restaurante restaurante) {
+        RestauranteModel restauranteModel = createModelWithId(restaurante.getId(), restaurante);
+        modelMapper.map(restaurante, restauranteModel);
+        
+        restauranteModel.add(algaLinks.linkToRestaurantes("restaurantes"));
+        
+        if (restaurante.ativacaoPermitida()) {
+            restauranteModel.add(
+                    algaLinks.linkToRestauranteAtivacao(restaurante.getId(), "ativar"));
+        }
+
+        if (restaurante.inativacaoPermitida()) {
+            restauranteModel.add(
+                    algaLinks.linkToRestauranteInativacao(restaurante.getId(), "inativar"));
+        }
+
+        if (restaurante.aberturaPermitida()) {
+            restauranteModel.add(
+                    algaLinks.linkToRestauranteAbertura(restaurante.getId(), "abrir"));
+        }
+
+        if (restaurante.fechamentoPermitido()) {
+            restauranteModel.add(
+                    algaLinks.linkToRestauranteFechamento(restaurante.getId(), "fechar"));
+        }
+        
+        restauranteModel.add(algaLinks.linkToProdutos(restaurante.getId(), "produtos"));
+        
+        restauranteModel.getCozinha().add(
+                algaLinks.linkToCozinha(restaurante.getCozinha().getId()));
+        
+        if (restauranteModel.getEndereco() != null 
+                && restauranteModel.getEndereco().getCidade() != null) {
+            restauranteModel.getEndereco().getCidade().add(
+                    algaLinks.linkToCidade(restaurante.getEndereco().getCidade().getId()));
+        }
+        
+        restauranteModel.add(algaLinks.linkToRestauranteFormasPagamento(restaurante.getId(), 
+                "formas-pagamento"));
+        
+        restauranteModel.add(algaLinks.linkToResponsaveisRestaurante(restaurante.getId(), 
+                "responsaveis"));
+        
+        return restauranteModel;
+    }
+    
+    /*
     @Override
     public RestauranteModel toModel(Restaurante restaurante) {
         RestauranteModel restauranteModel = createModelWithId(restaurante.getId(), restaurante);
@@ -70,6 +118,7 @@ public class RestauranteModelAssembler
         
         return restauranteModel;
     }
+    */
     
     @Override
     public CollectionModel<RestauranteModel> toCollectionModel(Iterable<? extends Restaurante> entities) {
