@@ -253,4 +253,18 @@ public class AlgaLinks {
 		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
 				.associar(restauranteId, null)).withRel(rel);
 	}
+	
+	//19.30. Desafio: adicionando links de associação de restaurantes com responsáveis - INÍCIO
+	public Link linkToRestauranteResponsavelDesassociacao(
+			Long restauranteId, Long usuarioId, String rel) {
+
+		    return linkTo(methodOn(RestauranteUsuarioResponsavelController.class)
+		            .desassociar(restauranteId, usuarioId)).withRel(rel);
+		}
+
+		public Link linkToRestauranteResponsavelAssociacao(Long restauranteId, String rel) {
+		    return linkTo(methodOn(RestauranteUsuarioResponsavelController.class)
+		            .associar(restauranteId, null)).withRel(rel);
+		}
+	//19.30. Desafio: adicionando links de associação de restaurantes com responsáveis - FIM
 }
