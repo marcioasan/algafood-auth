@@ -1,0 +1,5 @@
+O módulo 18 começou com OpenApi (Swagger), mas como iriam retirar o SpringFox no módulo 19, eu  parei o módulo 18
+e iniciei o 19 a partir do 19.2 em uma nova branch sem nada do SpringFox para quando mudasse para o novo framework de documentação
+
+A pertir da aula "19.39. Corrigindo as propriedades de links na documentação" foram feitos ajustes ainda relativos ao SpringFox, mas como
+eu tinha iniciado a branch sem nada de SpringFox, então não fiz nada.
