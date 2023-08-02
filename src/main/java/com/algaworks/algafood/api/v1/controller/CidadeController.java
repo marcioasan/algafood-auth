@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,15 +27,17 @@ import com.algaworks.algafood.api.v1.assembler.CidadeInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.CidadeModelAssembler;
 import com.algaworks.algafood.api.v1.model.CidadeModel;
 import com.algaworks.algafood.api.v1.model.input.CidadeInput;
-import com.algaworks.algafood.core.web.AlgaMediaTypes;
+import com.algaworks.algafood.core.web.AlgaMediaTypes_NAO_USADO;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
+//20.10. Preparando o projeto para versionamento da API por Media Type - 6'30", 9'30", 12'50"
+
 @RestController
-@RequestMapping(path = "/cidades") //20.10. Preparando o projeto para versionamento da API por Media Type - 6'30", 9'30", 12'50"
+@RequestMapping(path = "/v1/cidades", produces = MediaType.APPLICATION_JSON_VALUE) //20.13. Implementando o versionamento da API por URI - 1' 
 public class CidadeController {
 
 	@Autowired
@@ -50,7 +53,7 @@ public class CidadeController {
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
 	//19.11. Montando modelo de representação com RepresentationModelAssembler - 7'30"
-	@GetMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CollectionModel<CidadeModel> listar() {
 		List<Cidade> todasCidades = cidadeRepository.findAll();
 		
@@ -94,7 +97,7 @@ public class CidadeController {
 	}
 	*/
 	
-	@GetMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 		
@@ -155,7 +158,7 @@ public class CidadeController {
 	
 	//19.2. Adicionando a URI do recurso criado no header da resposta - 4'30", 14'
 	//@Override
-	@PostMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+	@PostMapping(produces = AlgaMediaTypes_NAO_USADO.V1_APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
 		try {
@@ -234,7 +237,7 @@ public class CidadeController {
     
     
     
-	@PutMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
+	@PutMapping(path = "/{cidadeId}", produces = AlgaMediaTypes_NAO_USADO.V1_APPLICATION_JSON_VALUE)
 	public CidadeModel atualizar(@PathVariable Long cidadeId,
 	        @RequestBody @Valid CidadeInput cidadeInput) {
 	    try {
