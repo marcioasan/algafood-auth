@@ -14,7 +14,8 @@ public class AlgaHalConfiguration {
 	public HalConfiguration globalPolicy() {
 		return new HalConfiguration()
 				.withMediaType(MediaType.APPLICATION_JSON)
-				.withMediaType(AlgaMediaTypes.V1_APPLICATION_JSON);
+				.withMediaType(AlgaMediaTypes.V1_APPLICATION_JSON)
+				.withMediaType(AlgaMediaTypes.V2_APPLICATION_JSON); //20.11. Implementando o versionamento da API por Media Type - 16'30" - Está no conteúdo de apoio
 	}
 	
 }

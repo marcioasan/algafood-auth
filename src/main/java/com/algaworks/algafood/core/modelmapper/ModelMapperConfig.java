@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.algaworks.algafood.api.v1.model.EnderecoModel;
 import com.algaworks.algafood.api.v1.model.input.ItemPedidoInput;
+import com.algaworks.algafood.api.v2.model.input.CidadeInputV2;
+import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.model.Endereco;
 import com.algaworks.algafood.domain.model.ItemPedido;
 
@@ -19,6 +21,11 @@ public class ModelMapperConfig {
 		
 		//12.6. Adicionando endereço no modelo da representação do recurso de restaurante - 7'30"
 		var modelMapper = new ModelMapper();
+		
+		//20.11. Implementando o versionamento da API por Media Type - 20'20"
+		modelMapper.createTypeMap(CidadeInputV2.class, Cidade.class)
+			.addMappings(mapper -> mapper.skip(Cidade::setId));
+		
 		var enderecoToEnderecoModelTypeMap = modelMapper.createTypeMap(Endereco.class, EnderecoModel.class);
 		
 		enderecoToEnderecoModelTypeMap.<String>addMapping(
