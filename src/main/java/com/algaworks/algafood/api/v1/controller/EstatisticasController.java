@@ -21,7 +21,7 @@ import com.algaworks.algafood.domain.service.VendaReportService;
 //13.13. Discutindo sobre onde implementar as consultas com dados agregados - 14'
 
 @RestController
-@RequestMapping(path = "/estatisticas")
+@RequestMapping(path = "/v1/estatisticas")
 public class EstatisticasController {
 
 	@Autowired

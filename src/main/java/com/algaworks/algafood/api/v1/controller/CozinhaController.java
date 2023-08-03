@@ -33,7 +33,7 @@ import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
 @RestController
-@RequestMapping("/cozinhas") //quando passa só um parâmetro, não precisa da palavra 'value'
+@RequestMapping("/v1/cozinhas") //quando passa só um parâmetro, não precisa da palavra 'value'
 //@RequestMapping(value = "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CozinhaController {
 

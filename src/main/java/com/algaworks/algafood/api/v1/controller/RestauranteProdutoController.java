@@ -31,7 +31,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 //12.13. Desafio: implementando os endpoints de produtos
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/produtos")
+@RequestMapping("/v1/restaurantes/{restauranteId}/produtos")
 public class RestauranteProdutoController {
 
     @Autowired

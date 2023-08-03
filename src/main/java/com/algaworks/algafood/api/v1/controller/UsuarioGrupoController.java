@@ -21,7 +21,7 @@ import com.algaworks.algafood.domain.service.CadastroUsuarioService;
 //12.16. Desafio: implementando os endpoints de associação de usuários com grupos
 
 @RestController
-@RequestMapping(value = "/usuarios/{usuarioId}/grupos")
+@RequestMapping(value = "/v1/usuarios/{usuarioId}/grupos")
 public class UsuarioGrupoController {
 
     @Autowired

@@ -29,7 +29,7 @@ import com.algaworks.algafood.domain.service.CadastroEstadoService;
 //19.14. Desafio: adicionando hypermedia nos recursos de estados
 
 @RestController
-@RequestMapping("/estados")
+@RequestMapping("/v1/estados")
 public class EstadoController {
 
 	@Autowired

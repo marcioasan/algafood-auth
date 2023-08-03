@@ -21,7 +21,7 @@ import com.algaworks.algafood.domain.service.CadastroGrupoService;
 //12.15. Desafio: implementando os endpoints de associação de grupos com permissões
 
 @RestController
-@RequestMapping(value = "/grupos/{grupoId}/permissoes")
+@RequestMapping(value = "/v1/grupos/{grupoId}/permissoes")
 public class GrupoPermissaoController {
 
 	@Autowired

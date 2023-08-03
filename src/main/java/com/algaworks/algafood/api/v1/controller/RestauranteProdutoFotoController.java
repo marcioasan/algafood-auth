@@ -40,7 +40,7 @@ import com.algaworks.algafood.domain.service.FotoStorageService.FotoRecuperada;
 //14.6. Implementando serviço de cadastro de foto de produto - 6'50"
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
+@RequestMapping("/v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
 public class RestauranteProdutoFotoController {
 
 	@Autowired

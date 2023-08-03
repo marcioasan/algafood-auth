@@ -12,7 +12,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 //19.36. Implementando o Root Entry Point da API - 2'30"
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RootEntryPointController {
 
 	@Autowired

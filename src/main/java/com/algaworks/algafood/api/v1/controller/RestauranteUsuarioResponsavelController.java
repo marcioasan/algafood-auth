@@ -22,7 +22,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 //12.17. Desafio: implementando endpoints de associação de usuários responsáveis com restaurantes
 
 @RestController
-@RequestMapping(value = "/restaurantes/{restauranteId}/responsaveis")
+@RequestMapping(value = "/v1/restaurantes/{restauranteId}/responsaveis")
 public class RestauranteUsuarioResponsavelController {
 
     @Autowired

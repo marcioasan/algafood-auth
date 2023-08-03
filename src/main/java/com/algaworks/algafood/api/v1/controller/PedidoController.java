@@ -36,7 +36,7 @@ import com.algaworks.algafood.domain.service.EmissaoPedidoService;
 import com.google.common.collect.ImmutableMap;
 
 @RestController
-@RequestMapping(value = "/pedidos")
+@RequestMapping(value = "/v1/pedidos")
 public class PedidoController {
 
     @Autowired

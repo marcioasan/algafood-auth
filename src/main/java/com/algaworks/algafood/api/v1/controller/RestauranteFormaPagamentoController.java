@@ -22,7 +22,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 //12.12. Implementando os endpoints de associação de formas de pagamento em restaurantes - 2'30"
 
 @RestController
-@RequestMapping(value = "/restaurantes/{restauranteId}/formas-pagamento")
+@RequestMapping(value = "/v1/restaurantes/{restauranteId}/formas-pagamento")
 public class RestauranteFormaPagamentoController {
 
 	@Autowired

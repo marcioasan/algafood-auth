@@ -14,7 +14,7 @@ import com.algaworks.algafood.domain.service.FluxoPedidoService;
 //12.22. Implementando endpoint de transição de status de pedidos - 13'30"
 
 @RestController
-@RequestMapping(value = "/pedidos/{codigoPedido}") //12.25. Usando IDs vs UUIDs nas URIs de recursos - 17'
+@RequestMapping(value = "/v1/pedidos/{codigoPedido}") //12.25. Usando IDs vs UUIDs nas URIs de recursos - 17'
 public class FluxoPedidoController {
 
 	@Autowired

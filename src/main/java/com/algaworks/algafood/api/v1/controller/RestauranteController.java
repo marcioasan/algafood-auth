@@ -56,7 +56,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 //@CrossOrigin(maxAge = 10) //16.4. Habilitando CORS em controladores e métodos com @CrossOrigin - 1' - Retirado na aula 16.6 e configurado no WebConfig.java
 @RestController
-@RequestMapping("/restaurantes")
+@RequestMapping("/v1/restaurantes")
 public class RestauranteController {
 
 	@Autowired

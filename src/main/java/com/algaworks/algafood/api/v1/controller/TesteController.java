@@ -22,7 +22,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 //5.1. Implementando consultas JPQL em repositórios
 
 @RestController
-@RequestMapping("/teste")
+@RequestMapping("/v1/teste")
 public class TesteController {
 	
 	@Autowired
