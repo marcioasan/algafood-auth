@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
 	@Autowired
-	private ApiDeprecationHandler apiDeprecationHandler;
+	private ApiRetirementHandler apiRetirementHandler;
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
@@ -26,10 +26,11 @@ public class WebConfig implements WebMvcConfigurer {
 //			.maxAge(30);
 	}
 	
+	//20.19. Desligando uma versão da API
 	//20.18. Depreciando uma versão da API - 13'
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(apiDeprecationHandler);
+		registry.addInterceptor(apiRetirementHandler);
 	}
 	
 	//20.12. Definindo a versão padrão da API quando o Media Type não é informado - 2'30"
