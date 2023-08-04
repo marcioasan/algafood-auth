@@ -53,6 +53,7 @@ public class CidadeController {
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
 	//19.11. Montando modelo de representação com RepresentationModelAssembler - 7'30"
+	@Deprecated //20.18. Depreciando uma versão da API - 4'
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CollectionModel<CidadeModel> listar() {
 		List<Cidade> todasCidades = cidadeRepository.findAll();

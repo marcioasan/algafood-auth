@@ -3,3 +3,9 @@ e iniciei o 19 a partir do 19.2 em uma nova branch sem nada do SpringFox para qu
 
 A pertir da aula "19.39. Corrigindo as propriedades de links na documentação" foram feitos ajustes ainda relativos ao SpringFox, mas como
 eu tinha iniciado a branch sem nada de SpringFox, então não fiz nada.
+
+no módulo 20 foram feitas alterações no OpenApi (Swagger), mas não fiz nada nas seguintes aulas:
+20.16. Gerando documentação das versões da API com SpringFox e Swagger UI
+20.17. Desafio: revisando documentação da v2 da API
+*20.18. Depreciando uma versão da API - aos 9'20" foi criada a classe ApiDeprecationHandler
+20.19. Desligando uma versão da API
