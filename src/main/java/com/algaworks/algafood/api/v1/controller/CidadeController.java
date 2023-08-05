@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -53,9 +54,10 @@ public class CidadeController {
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
 	//19.11. Montando modelo de representação com RepresentationModelAssembler - 7'30"
-	@Deprecated //20.18. Depreciando uma versão da API - 4'
+//	@Deprecated //20.18. Depreciando uma versão da API - 4'
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CollectionModel<CidadeModel> listar() {
+		Log.info(">>>>>> Executando a busca de lista de cidades <<<<<<<<<<<");
 		List<Cidade> todasCidades = cidadeRepository.findAll();
 		
 		return cidadeModelAssembler.toCollectionModel(todasCidades);

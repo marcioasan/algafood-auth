@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
@@ -29,8 +30,11 @@ import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
+import lombok.extern.slf4j.Slf4j;
+
 //20.11. Implementando o versionamento da API por Media Type - 8'40", 13'
 
+@Slf4j
 @RestController
 @RequestMapping(path = "/v2/cidades", produces = MediaType.APPLICATION_JSON_VALUE) //20.13. Implementando o versionamento da API por URI - 1'
 public class CidadeControllerV2 {
@@ -49,6 +53,9 @@ public class CidadeControllerV2 {
 	
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CollectionModel<CidadeModelV2> listar() {
+		
+		log.info(">>>>>> Executando a busca de lista de cidades na API V2 <<<<<<<<<<<");
+		
 		List<Cidade> todasCidades = cidadeRepository.findAll();
 		
 		return cidadeModelAssembler.toCollectionModel(todasCidades);
