@@ -127,3 +127,6 @@ Wireshark
 https://1.na.dl.wireshark.org/win64/all-versions/
 "Content-Encoding: gzip"
 https://app.algaworks.com/forum/topicos/88954/cabecalho-de-resposta-content-encoding-gzip
+
+#22.2. Adicionando segurança na API com Spring Security - 3'50"
+https://www.base64decode.org/

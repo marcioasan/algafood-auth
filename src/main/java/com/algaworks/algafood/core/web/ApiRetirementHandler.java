@@ -16,10 +16,11 @@ public class ApiRetirementHandler implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, 
 	                         HttpServletResponse response, Object handler)
 			throws Exception {
-		if (request.getRequestURI().startsWith("/v1/")) {
-			response.setStatus(HttpStatus.GONE.value());
-			return false;
-		}
+		//Comentei esse trecho para continuar usando a v1
+//		if (request.getRequestURI().startsWith("/v1/")) {
+//			response.setStatus(HttpStatus.GONE.value());
+//			return false;
+//		}
 
 		return true;
 	}
