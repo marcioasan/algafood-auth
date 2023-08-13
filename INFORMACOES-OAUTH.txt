@@ -1,0 +1,7 @@
+#22.8. Criando o projeto do Authorization Server com Spring Security OAuth2
+
+https://app.algaworks.com/forum/topicos/83857/depreciados-enableauthorizationserver-enableresourceserver
+- Informações sobre as depreciações na versão
+- Uso do keycloak
+https://www.keycloak.org/
+https://github.com/paulosalonso/research/blob/master/.docker/docker-compose.yml#L29
