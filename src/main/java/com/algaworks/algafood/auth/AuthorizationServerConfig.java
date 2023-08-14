@@ -8,10 +8,12 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
 
 @Configuration
 @EnableAuthorizationServer
+@SuppressWarnings("deprecation")
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
@@ -30,6 +32,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.authorizedGrantTypes("password") //5'
 				.scopes("write", "read") //6'
 				.accessTokenValiditySeconds(60 * 60 * 6); // 6 horas (padrão é 12 horas) - 19'
+	}
+	
+	//22.10. Configurando o endpoint de introspecção de tokens no Authorization Server - 5'
+	@Override
+	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+		security.checkTokenAccess("isAuthenticated()");
+//		security.checkTokenAccess("permitAll()");
 	}
 	
 	@Override
