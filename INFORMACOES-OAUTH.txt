@@ -5,3 +5,5 @@ https://app.algaworks.com/forum/topicos/83857/depreciados-enableauthorizationser
 - Uso do keycloak
 https://www.keycloak.org/
 https://github.com/paulosalonso/research/blob/master/.docker/docker-compose.yml#L29
+
+#22.11. Configurando o Resource Server com a nova stack do Spring Security - 13' - Explica como usar o OAuth2 no Postman

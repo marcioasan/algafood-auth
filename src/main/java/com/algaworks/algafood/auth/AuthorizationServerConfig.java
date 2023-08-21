@@ -31,14 +31,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("web123")) //4'30"
 				.authorizedGrantTypes("password") //5'
 				.scopes("write", "read") //6'
-				.accessTokenValiditySeconds(60 * 60 * 6); // 6 horas (padrão é 12 horas) - 19'
+				.accessTokenValiditySeconds(60 * 60 * 6) // 6 horas (padrão é 12 horas) - 19'
+			.and()
+				.withClient("checktoken")
+					.secret(passwordEncoder.encode("check123")); //22.11. Configurando o Resource Server com a nova stack do Spring Security - 15'
 	}
 	
 	//22.10. Configurando o endpoint de introspecção de tokens no Authorization Server - 5'
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-		security.checkTokenAccess("isAuthenticated()");
-//		security.checkTokenAccess("permitAll()");
+//		security.checkTokenAccess("isAuthenticated()");
+		security.checkTokenAccess("permitAll()");
 	}
 	
 	@Override
