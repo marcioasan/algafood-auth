@@ -130,3 +130,8 @@ https://app.algaworks.com/forum/topicos/88954/cabecalho-de-resposta-content-enco
 
 #22.2. Adicionando segurança na API com Spring Security - 3'50"
 https://www.base64decode.org/
+
+OAuth2
+https://datatracker.ietf.org/doc/html/rfc6749
+https://www.gov.br/ans/pt-br/centrais-de-conteudo/manuais-do-portal-operadoras/area-do-desenvolvedor/oauth-2.0#:~:text=O%20OAuth%202%20%C3%A9%20um,um%20determinado%20servi%C3%A7o%20ou%20API.
+https://oauth.net/2/
