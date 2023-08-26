@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
-			.withUser("marcio") //14'30" mostra a configuração no Postman
+			.withUser("marcio") //Credenciais do usuário (Resource Owner) 14'30" mostra a configuração no Postman
 				.password(passwordEncoder().encode("123"))
 				.roles("ADMIN")
 			.and()
@@ -32,11 +33,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
-	//22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 11'20"
+	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 11'20"
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
+	}
+	
+	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 4'
+	@Bean
+	@Override
+	protected UserDetailsService userDetailsService() {
+		return super.userDetailsService();
 	}
 	
 }
