@@ -36,7 +36,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("web123")) //4'30"
 				.authorizedGrantTypes("password", "refresh_token") //22.9 - 5' , 22.13. Configurando o Refresh Token Grant Type no Authorization Server - 50"
 				.scopes("write", "read") //6'
-				.accessTokenValiditySeconds(60 * 60 * 6) // 6 horas (padrão é 12 horas) - 19'
+				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas) - 19'
+				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 1' - O defeult do tempo do access Token é de 30 dias 
 			.and()
 				.withClient("checktoken")
 					.secret(passwordEncoder.encode("check123")); //22.11. Configurando o Resource Server com a nova stack do Spring Security - 8', 15'
@@ -54,6 +55,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints
 			.authenticationManager(authenticationManager)
-			.userDetailsService(userDetailsService); //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
+			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
+			.reuseRefreshTokens(false); //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar. 
+			
 	}
 }
