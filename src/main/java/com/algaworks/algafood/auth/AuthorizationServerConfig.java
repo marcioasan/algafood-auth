@@ -38,6 +38,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes("write", "read") //6'
 				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas) - 19'
 				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 1' - O defeult do tempo do access Token é de 30 dias 
+			.and() //22.16. Configurando o Client Credentials Grant Type no Authorization Server - 1'
+				.withClient("faturamento")
+				.secret(passwordEncoder.encode("faturamento123"))
+				.authorizedGrantTypes("client_credentials")
+				.scopes("write", "read")
 			.and()
 				.withClient("checktoken")
 					.secret(passwordEncoder.encode("check123")); //22.11. Configurando o Resource Server com a nova stack do Spring Security - 8', 15'
