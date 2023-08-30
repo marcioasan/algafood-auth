@@ -38,6 +38,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes("write", "read") //6'
 				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas) - 19'
 				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 1' - O defeult do tempo do access Token é de 30 dias 
+			.and() //22.18. Configurando o Authorization Code Grant Type - 7' -> http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://aplicacao-cliente
+				.withClient("foodanalytics")
+				.secret(passwordEncoder.encode("food123"))
+				.authorizedGrantTypes("authorization_code")
+				.scopes("write", "read")
+				.redirectUris("http://aplicacao-cliente")
 			.and() //22.16. Configurando o Client Credentials Grant Type no Authorization Server - 1'
 				.withClient("faturamento")
 				.secret(passwordEncoder.encode("faturamento123"))
