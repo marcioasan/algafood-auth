@@ -18,6 +18,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.anyRequest().authenticated()
 			.and()
+			.cors().and() //22.19. Testando o fluxo Authorization Code com um client JavaScript - 12'
 			.oauth2ResourceServer() //configura um Resource Server do OAuth2 no projeto algafood-api
 			.opaqueToken(); //O Authorization Server emite tokens opacos, que não podem ser revertidos
 	}
