@@ -43,7 +43,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("food123"))
 				.authorizedGrantTypes("authorization_code")
 				.scopes("write", "read")
-				.redirectUris("http://aplicacao-cliente")
+				.redirectUris("http://localhost:8082") //22.19. Testando o fluxo Authorization Code com um client JavaScript - 3'
 			.and() //22.16. Configurando o Client Credentials Grant Type no Authorization Server - 1'
 				.withClient("faturamento")
 				.secret(passwordEncoder.encode("faturamento123"))
