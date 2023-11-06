@@ -49,6 +49,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.secret(passwordEncoder.encode("faturamento123"))
 				.authorizedGrantTypes("client_credentials")
 				.scopes("write", "read")
+			.and()//22.21. Configurando o fluxo Implicit Grant Type
+				.withClient("webadmin")
+				.authorizedGrantTypes("implicit")
+				.scopes("write", "read")
+				.redirectUris("http://aplicacao-cliente")				
 			.and()
 				.withClient("checktoken")
 					.secret(passwordEncoder.encode("check123")); //22.11. Configurando o Resource Server com a nova stack do Spring Security - 8', 15'
