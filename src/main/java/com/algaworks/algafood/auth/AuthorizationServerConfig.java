@@ -44,7 +44,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 1' - O defeult do tempo do access Token é de 30 dias 
 			.and() //22.18. Configurando o Authorization Code Grant Type - 7' -> http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://aplicacao-cliente
 				.withClient("foodanalytics")
-				.secret(passwordEncoder.encode("food123"))
+//				.secret(passwordEncoder.encode("food123"))
+				.secret(passwordEncoder.encode("")) //22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 				.authorizedGrantTypes("authorization_code")
 				.scopes("write", "read")
 				.redirectUris("http://localhost:8082") //22.19. Testando o fluxo Authorization Code com um client JavaScript - 3'
@@ -67,7 +68,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 //		security.checkTokenAccess("isAuthenticated()");
-		security.checkTokenAccess("permitAll()");
+		security.checkTokenAccess("permitAll()")
+		.allowFormAuthenticationForClients(); //22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 	}
 	
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 11'20"
@@ -91,4 +93,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		
 		return new CompositeTokenGranter(granters);
 	}
+	
+/*
+22.24. Testando o fluxo Authorization Code com PKCE com o método plain - 1', 4'
+
+Code Verifier: teste123
+Code Challenge: teste123
+
+http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://localhost:8082&code_challenge=teste123&code_challenge_method=plain
+ */
 }
