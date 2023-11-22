@@ -95,8 +95,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	}
 	
 /*
-22.24. Testando o fluxo Authorization Code com PKCE com o método plain - 1', 4'
-
+22.24. Testando o fluxo Authorization Code com PKCE com o método plain - 1', 4', 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 Code Verifier: teste123
 Code Challenge: teste123
 
