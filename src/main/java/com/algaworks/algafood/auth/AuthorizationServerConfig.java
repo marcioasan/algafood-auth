@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
 
 @Configuration
@@ -29,7 +32,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5' - essa injeção não existe no contexto do Spring, precisa configurar no WebSecurityConfig
 	@Autowired
-	UserDetailsService userDetailsService; 
+	UserDetailsService userDetailsService;
+	
+	@Autowired
+	private RedisConnectionFactory redisConnectionFactory; 
 	
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 40", 10'
 	@Override
@@ -79,9 +85,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
 			.reuseRefreshTokens(false) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar.
+			.tokenStore(redisTokenStore())//23.2. Configurando o RedisTokenStore - 3'
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
 
+	private TokenStore redisTokenStore() {
+		return new RedisTokenStore(redisConnectionFactory);
+	}
+	
 	//22.23. Implementando o suporte a PKCE com o fluxo Authorization Code - 3'50"
 	private TokenGranter tokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
 		var pkceAuthorizationCodeTokenGranter = new PkceAuthorizationCodeTokenGranter(endpoints.getTokenServices(),
