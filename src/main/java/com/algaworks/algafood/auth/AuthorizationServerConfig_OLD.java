@@ -1,13 +1,13 @@
 package com.algaworks.algafood.auth;
 
-//***Foi retirada a configuração do REDIS nessa aula, criei a classe AuthorizationServerConfig_OLD para manter a configuração para consulta.
+//***Foi retirada a configuração do REDIS nessa aula, deixei a classe como OLD para manter a configuração para consulta.
 //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 1'30"
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +18,14 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
 
-@Configuration
-@EnableAuthorizationServer //***Habilita o projeto para ser um Authorization Server
-@SuppressWarnings("deprecation")
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+//@Configuration
+//@EnableAuthorizationServer //***Habilita o projeto para ser um Authorization Server
+//@SuppressWarnings("deprecation")
+public class AuthorizationServerConfig_OLD extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -35,6 +36,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5' - essa injeção não existe no contexto do Spring, precisa configurar no WebSecurityConfig
 	@Autowired
 	UserDetailsService userDetailsService;
+	
+	@Autowired
+	private RedisConnectionFactory redisConnectionFactory; 
 	
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 40", 10'
 	@Override
@@ -84,17 +88,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
 			.reuseRefreshTokens(false) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar.
-			.accessTokenConverter(jwtAccessTokenConverter()) //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 6'30"
+			.tokenStore(redisTokenStore())//23.2. Configurando o RedisTokenStore - 3'
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
-	
-	//23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 3'30"
-	@Bean
-	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey("algaworks");//define um segredo para o token 
-		
-		return jwtAccessTokenConverter;
+
+	private TokenStore redisTokenStore() {
+		return new RedisTokenStore(redisConnectionFactory);
 	}
 	
 	//22.23. Implementando o suporte a PKCE com o fluxo Authorization Code - 3'50"
