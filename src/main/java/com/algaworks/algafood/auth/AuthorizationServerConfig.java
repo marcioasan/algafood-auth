@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
 
 @Configuration
@@ -88,7 +90,25 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
 	
+	//23.9. Assinando o JWT com RSA SHA-256 (chave assimétrica) - 2'10"
+	@Bean
+	public JwtAccessTokenConverter jwtAccessTokenConverter() {
+		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
+		
+		var jksResource = new ClassPathResource("keystores/algafood.jks");
+		var keyStorePass = "123456";
+		var keyPairAlias = "algafood";
+		
+		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass.toCharArray());
+		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
+		
+		jwtAccessTokenConverter.setKeyPair(keyPair);
+		
+		return jwtAccessTokenConverter;
+	}
+	
 	//23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 3'30", 12'
+	/*
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
@@ -96,6 +116,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		
 		return jwtAccessTokenConverter;
 	}
+	*/
 	
 	//22.23. Implementando o suporte a PKCE com o fluxo Authorization Code - 3'50"
 	private TokenGranter tokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
