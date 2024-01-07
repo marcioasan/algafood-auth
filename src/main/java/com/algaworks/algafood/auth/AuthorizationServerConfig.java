@@ -88,11 +88,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
 	
-	//23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 3'30"
+	//23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 3'30", 12'
 	@Bean
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey("algaworks");//define um segredo para o token 
+		jwtAccessTokenConverter.setSigningKey("89a7sd89f7as98f7dsa98fds7fd89sasd9898asdf98s");//define um segredo para o token 
 		
 		return jwtAccessTokenConverter;
 	}
