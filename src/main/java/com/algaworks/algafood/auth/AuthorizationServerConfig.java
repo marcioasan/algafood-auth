@@ -29,6 +29,9 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
 	@Autowired
+	private JwtKeyStoreProperties jwtKeyStoreProperties; //23.10. Desafio: criando bean de propriedades de configuração do KeyStore 
+	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
@@ -95,9 +98,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public JwtAccessTokenConverter jwtAccessTokenConverter() {
 		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
 		
-		var jksResource = new ClassPathResource("keystores/algafood.jks");
-		var keyStorePass = "123456";
-		var keyPairAlias = "algafood";
+		var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
+		var keyStorePass = jwtKeyStoreProperties.getPassword();
+		var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
 		
 		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass.toCharArray());
 		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
