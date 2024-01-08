@@ -1,0 +1,29 @@
+23.8. Gerando um par de chaves com keytool
+
+-keypass=senha para um único par de chaves
+-keyalg=nome do algorítmo de criptografia
+-keystore=nome do arquivo jks onde será armazenado o par de chaves público/privado
+-storepass=senha para o keystore
+
+#Gera um par de chaves criptográficas
+keytool -genkeypair -alias algafood -keyalg RSA -keypass 123456 -keystore algafood.jks -storepass 123456 -validity 3650
+
+#Após executar o comando, deu o warning
+Warning:
+O armazenamento de chaves JKS usa um formato proprietário. É recomendada a migração para PKCS12, que é um formato de padrão industrial que usa "keytool -importkeystore -srckeystore algafood.jks -destkeystore algafood.jks -deststoretype pkcs12".
+
+#lista as entradas dentro de algafood.jks
+keytool -list -keystore algafood.jks
+----------------------------------------------------------------------------------------
+23.11. Extraindo a chave pública no formato PEM
+
+***Rodar os comandos no gitbash reconhece o openssl
+
+Gerando o certificado
+keytool -export -rfc -alias algafood -keystore algafood.jks -file algafood-cert.pem
+
+Gerando a chave pública
+openssl x509 -pubkey -noout -in algafood-cert.pem > algafood-pkey.pem
+
+
+https://app.algaworks.com/forum/topicos/85043/como-extrair-a-cheve-privada

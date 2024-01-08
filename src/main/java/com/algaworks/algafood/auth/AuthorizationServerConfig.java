@@ -79,6 +79,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 //		security.checkTokenAccess("isAuthenticated()");
 		security.checkTokenAccess("permitAll()")
+		.tokenKeyAccess("permitAll()") //23.11. Extraindo a chave pública no formato PEM - 10'30"
 		.allowFormAuthenticationForClients(); //22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 	}
 	
