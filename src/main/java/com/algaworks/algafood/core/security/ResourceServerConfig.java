@@ -29,6 +29,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 			.jwt(); //O Authorization Server emite tokens opacos, que não podem ser revertidos
 	}
 	
+	/*** Removido na aula 23.12. Configurando a validação de JWT no Resource Server com a chave pública - 1'50"
 	//Modificado na aula 23.6. Configurando o Resource Server para JWT assinado com chave simétrica - 4'30"
 	@Bean
 	public JwtDecoder jwtDecoder() {
@@ -36,6 +37,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 		
 		return NimbusJwtDecoder.withSecretKey(secretKey).build();
 	}
+	*/
 	
 	/* Modificado na aula 23.6. Configurando o Resource Server para JWT assinado com chave simétrica - 4'
 	@Override
