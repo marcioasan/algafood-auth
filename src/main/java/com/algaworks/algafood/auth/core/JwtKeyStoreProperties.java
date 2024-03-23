@@ -1,7 +1,7 @@
 //23.10. Desafio: criando bean de propriedades de configuração do KeyStore
 //https://app.algaworks.com/forum/topicos/81729/hibernate-validator-nao-esta-mais-presente-na-2-3-1-versao-atual-do-springboot
 
-package com.algaworks.algafood.auth;
+package com.algaworks.algafood.auth.core;
 
 import javax.validation.constraints.NotBlank;
 

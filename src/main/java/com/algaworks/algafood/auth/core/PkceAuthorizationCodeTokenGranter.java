@@ -1,4 +1,4 @@
-package com.algaworks.algafood.auth;
+package com.algaworks.algafood.auth.core;
 
 //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code
 

@@ -1,14 +1,13 @@
-package com.algaworks.algafood.auth;
+package com.algaworks.algafood.auth.core;
 
-//***Foi retirada a configuração do REDIS nessa aula, criei a classe AuthorizationServerConfig_OLD para manter a configuração para consulta.
+//***Foi retirada a configuração do REDIS nessa aula, deixei a classe como OLD para manter a configuração para consulta.
 //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 1'30"
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,21 +18,15 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
 
-@Configuration
-@EnableAuthorizationServer //***Habilita o projeto para ser um Authorization Server
-@SuppressWarnings("deprecation")
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+//@Configuration
+//@EnableAuthorizationServer //***Habilita o projeto para ser um Authorization Server
+//@SuppressWarnings("deprecation")
+public class AuthorizationServerConfig_OLD extends AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private JwtKeyStoreProperties jwtKeyStoreProperties; //23.10. Desafio: criando bean de propriedades de configuração do KeyStore 
-	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
@@ -43,6 +36,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5' - essa injeção não existe no contexto do Spring, precisa configurar no WebSecurityConfig
 	@Autowired
 	UserDetailsService userDetailsService;
+	
+	@Autowired
+	private RedisConnectionFactory redisConnectionFactory; 
 	
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 40", 10'
 	@Override
@@ -82,7 +78,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 //		security.checkTokenAccess("isAuthenticated()");
 		security.checkTokenAccess("permitAll()")
-		.tokenKeyAccess("permitAll()") //23.11. Extraindo a chave pública no formato PEM - 10'30"
 		.allowFormAuthenticationForClients(); //22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 	}
 	
@@ -93,45 +88,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
 			.reuseRefreshTokens(false) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar.
-			.accessTokenConverter(jwtAccessTokenConverter()) //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 6'30"
-			.approvalStore(approvalStore(endpoints.getTokenStore())) //23.13. Revisando o fluxo de aprovação do Authorization Code com JWT - 1'50"
+			.tokenStore(redisTokenStore())//23.2. Configurando o RedisTokenStore - 3'
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
 
-	//23.13. Revisando o fluxo de aprovação do Authorization Code com JWT - 2'50"
-	private ApprovalStore approvalStore(TokenStore tokenStore) {
-		var approvalStore = new TokenApprovalStore();
-		approvalStore.setTokenStore(tokenStore);
-		return approvalStore;
+	private TokenStore redisTokenStore() {
+		return new RedisTokenStore(redisConnectionFactory);
 	}
-	
-	//23.9. Assinando o JWT com RSA SHA-256 (chave assimétrica) - 2'10"
-	@Bean
-	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		var jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		
-		var jksResource = new ClassPathResource(jwtKeyStoreProperties.getPath());
-		var keyStorePass = jwtKeyStoreProperties.getPassword();
-		var keyPairAlias = jwtKeyStoreProperties.getKeypairAlias();
-		
-		var keyStoreKeyFactory = new KeyStoreKeyFactory(jksResource, keyStorePass.toCharArray());
-		var keyPair = keyStoreKeyFactory.getKeyPair(keyPairAlias);
-		
-		jwtAccessTokenConverter.setKeyPair(keyPair);
-		
-		return jwtAccessTokenConverter;
-	}
-	
-	//23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 3'30", 12'
-	/*
-	@Bean
-	public JwtAccessTokenConverter jwtAccessTokenConverter() {
-		JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-		jwtAccessTokenConverter.setSigningKey("89a7sd89f7as98f7dsa98fds7fd89sasd9898asdf98s");//define um segredo para o token 
-		
-		return jwtAccessTokenConverter;
-	}
-	*/
 	
 	//22.23. Implementando o suporte a PKCE com o fluxo Authorization Code - 3'50"
 	private TokenGranter tokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {

@@ -1,4 +1,4 @@
-package com.algaworks.algafood.auth;
+package com.algaworks.algafood.auth.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	/* removido na aula 23.14. Autenticando usuario com dados do banco de dados - 14' pois passou a autenticar pelo BD
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
@@ -27,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.password(passwordEncoder().encode("123"))
 				.roles("ADMIN");
 	}
+	*/
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -41,10 +43,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 4'
+	/* removido na aula 23.14. Autenticando usuario com dados do banco de dados - 14'30" 
+	  pois passou a usar o JpaUserDetailsService que foi implementado e que já está exposto como um Bean do Spring	 
 	@Bean
 	@Override
 	protected UserDetailsService userDetailsService() {
 		return super.userDetailsService();
 	}
+	*/
 	
 }
