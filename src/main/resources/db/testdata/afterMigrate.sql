@@ -87,17 +87,18 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Esp
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
+#23.14. Autenticando usuário com dados do banco de dados - senhas criptografadas com bcrypt
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp),
-(3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp),
-(5, 'Manoel Lima', 'manoel.loja@gmail.com', '123', utc_timestamp);
+(1, 'João da Silva', 'joao.ger@algafood.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp),
+(5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp);
 
 #15.4. Usando o serviço de envio de e-mails na confirmação de pedidos - 2' - nos inserts na tabela pedido foram associados aos usuários de id 6 e 7
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(6, 'Débora Mendonça', 'marcioasan+debora@gmail.com', '123', utc_timestamp),
-(7, 'Carlos Lima', 'marcioasan+carlos@gmail.com', '123', utc_timestamp);
+(6, 'Débora Mendonça', 'marcioasan+debora@gmail.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp),
+(7, 'Carlos Lima', 'marcioasan+carlos@gmail.com', '$2a$12$jb59SRPy21tXdlU7qpO2NOUfBAEW.o68WQpQFfYeiCt5JgP5SEgKG', utc_timestamp);
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
