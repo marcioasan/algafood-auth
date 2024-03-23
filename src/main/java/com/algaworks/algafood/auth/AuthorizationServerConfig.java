@@ -19,6 +19,9 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.approval.ApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 //22.8. Criando o projeto do Authorization Server com Spring Security OAuth2 - 12'
@@ -91,7 +94,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
 			.reuseRefreshTokens(false) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar.
 			.accessTokenConverter(jwtAccessTokenConverter()) //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 6'30"
+			.approvalStore(approvalStore(endpoints.getTokenStore())) //23.13. Revisando o fluxo de aprovação do Authorization Code com JWT - 1'50"
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
+	}
+
+	//23.13. Revisando o fluxo de aprovação do Authorization Code com JWT - 2'50"
+	private ApprovalStore approvalStore(TokenStore tokenStore) {
+		var approvalStore = new TokenApprovalStore();
+		approvalStore.setTokenStore(tokenStore);
+		return approvalStore;
 	}
 	
 	//23.9. Assinando o JWT com RSA SHA-256 (chave assimétrica) - 2'10"
