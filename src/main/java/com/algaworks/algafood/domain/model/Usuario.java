@@ -51,7 +51,12 @@ public class Usuario {
 	//private List<Grupo> grupos = new ArrayList<>(); //6.9. Desafio: mapeando relacionamentos muitos-para-muitos
 	private Set<Grupo> grupos = new HashSet<>();//12.16. Desafio: implementando os endpoints de associação de usuários com grupos
 
+	public boolean isNovo() {
+	    return getId() == null;
+	}
+	
 	//12.9. Desafio: implementando os endpoints de usuarios
+	/* removido na aula 23.15. Desafio: refatorando serviços de usuários para usar BCrypt, criado o método isNovo()
 	public boolean senhaCoincideCom(String senha) {
 	    return getSenha().equals(senha);
 	}
@@ -59,6 +64,7 @@ public class Usuario {
 	public boolean senhaNaoCoincideCom(String senha) {
 	    return !senhaCoincideCom(senha);
 	}
+	*/
 	
 	//12.16. Desafio: implementando os endpoints de associação de usuários com grupos
 	public boolean removerGrupo(Grupo grupo) {

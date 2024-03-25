@@ -3,6 +3,7 @@ package com.algaworks.algafood.domain.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class CadastroUsuarioService {
     @Autowired
     private CadastroGrupoService cadastroGrupo;
     
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    
     @Transactional
     public Usuario salvar(Usuario usuario) {
     	
@@ -33,9 +37,26 @@ public class CadastroUsuarioService {
 					String.format("Já existe um usuário cadastrado com o e-mail %s", usuario.getEmail()));
 		}
     	
+		if (usuario.isNovo()) {
+			usuario.setSenha(passwordEncoder.encode(usuario.getSenha())); //23.15. Desafio: refatorando serviços de usuários para usar BCrypt
+		}
+		
         return usuarioRepository.save(usuario);
     }
     
+    //23.15. Desafio: refatorando serviços de usuários para usar BCrypt
+    @Transactional
+    public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
+        Usuario usuario = buscarOuFalhar(usuarioId);
+        
+        if (!passwordEncoder.matches(senhaAtual, usuario.getSenha())) {
+            throw new NegocioException("Senha atual informada não coincide com a senha do usuário.");
+        }
+        
+        usuario.setSenha(passwordEncoder.encode(novaSenha));
+    }
+    
+    /* alterado na aula - 23.15. Desafio: refatorando serviços de usuários para usar BCrypt
     @Transactional
     public void alterarSenha(Long usuarioId, String senhaAtual, String novaSenha) {
         Usuario usuario = buscarOuFalhar(usuarioId);
@@ -46,6 +67,7 @@ public class CadastroUsuarioService {
         
         usuario.setSenha(novaSenha);
     }
+    */
 
    //12.16. Desafio: implementando os endpoints de associação de usuários com grupos
     @Transactional
