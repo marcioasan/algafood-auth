@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
@@ -89,11 +90,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 11'20"
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		
+		var enhancerChain = new TokenEnhancerChain(); //23.16. Adicionando claims customizadas no payload do JWT - 10'20"
+		enhancerChain.setTokenEnhancers(
+				Arrays.asList(new JwtCustomClaimsTokenEnhancer(), jwtAccessTokenConverter()));
+		
+		
 		endpoints
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService) //22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5'
 			.reuseRefreshTokens(false) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 4' - O default é o uso do refresh token, deixando false, não vai reutilizar.
 			.accessTokenConverter(jwtAccessTokenConverter()) //23.5. Gerando JWT com chave simétrica (HMAC SHA-256) no Authorization Server - 6'30"
+			.tokenEnhancer(enhancerChain) //23.16. Adicionando claims customizadas no payload do JWT - 10'20"
 			.approvalStore(approvalStore(endpoints.getTokenStore())) //23.13. Revisando o fluxo de aprovação do Authorization Code com JWT - 1'50"
 			.tokenGranter(tokenGranter(endpoints)); //22.23. Implementando o suporte a PKCE com o fluxo Authorization Code 4'50"
 	}
