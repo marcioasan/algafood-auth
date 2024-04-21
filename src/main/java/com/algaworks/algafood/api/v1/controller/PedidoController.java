@@ -25,6 +25,7 @@ import com.algaworks.algafood.api.v1.model.PedidoResumoModel;
 import com.algaworks.algafood.api.v1.model.input.PedidoInput;
 import com.algaworks.algafood.core.data.PageWrapper;
 import com.algaworks.algafood.core.data.PageableTranslator;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.filter.PedidoFilter;
@@ -56,6 +57,9 @@ public class PedidoController {
     
     @Autowired
     private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
+    
+    @Autowired
+    private AlgaSecurity algaSecurity;
     
     //19.16. Desafio: adicionando hypermedia em recursos de pedidos (paginação)
     @GetMapping
@@ -138,7 +142,8 @@ public class PedidoController {
 
             // TODO pegar usuário autenticado
             novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L); //usando id fixo até chegar a parte de autenticação para pegar usuário autenticado 6'30"
+//            novoPedido.getCliente().setId(1L); //usando id fixo até chegar a parte de autenticação para pegar usuário autenticado 6'30" que será na aula '23.17. Obtendo usuário autenticado no Resource Server'
+            novoPedido.getCliente().setId(algaSecurity.getUsuarioId()); //23.17. Obtendo usuário autenticado no Resource Server - 2'30"
 
             novoPedido = emissaoPedido.emitir(novoPedido);
 
