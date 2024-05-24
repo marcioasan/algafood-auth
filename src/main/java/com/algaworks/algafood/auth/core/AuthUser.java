@@ -1,7 +1,8 @@
 package com.algaworks.algafood.auth.core;
 
-import java.util.Collections;
+import java.util.Collection;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import com.algaworks.algafood.auth.domain.Usuario;
@@ -18,8 +19,9 @@ public class AuthUser extends User {
 	private Long userId;
 	private String fullName;
 	
-	public AuthUser(Usuario usuario) {
-		super(usuario.getEmail(), usuario.getSenha(), Collections.emptyList());
+	//23.19. Carregando as permissões concedidas na autenticação - 2'20"
+	public AuthUser(Usuario usuario, Collection<? extends GrantedAuthority> authorities) {
+		super(usuario.getEmail(), usuario.getSenha(), authorities);
 		
 		this.userId = usuario.getId();
 		this.fullName = usuario.getNome();
