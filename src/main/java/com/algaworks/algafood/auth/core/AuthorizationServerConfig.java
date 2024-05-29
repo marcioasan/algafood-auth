@@ -53,7 +53,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.withClient("algafood-web") //identificação do Client (aplicação que irá acessar os recursos do Resource Server) no AuthorizationServer que poderão solicitar um access token, 14' mostra a configuração no Postman
 				.secret(passwordEncoder.encode("web123")) //4'30"
 				.authorizedGrantTypes("password", "refresh_token") //22.9 - 5' , 22.13. Configurando o Refresh Token Grant Type no Authorization Server - 50"
-				.scopes("write", "read") //6'
+				.scopes("WRITE", "READ") //6'
 				.accessTokenValiditySeconds(6 * 60 * 60) // 6 horas (padrão é 12 horas) - 19'
 				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //22.14. Configurando a validade e não reutilização de Refresh Tokens - 1' - O defeult do tempo do access Token é de 30 dias 
 			.and() //22.18. Configurando o Authorization Code Grant Type - 7' -> http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://aplicacao-cliente
@@ -61,17 +61,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //				.secret(passwordEncoder.encode("food123"))
 				.secret(passwordEncoder.encode("")) //22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10", 12'20" - Explicação sobre não usar secret quando usa PKCE
 				.authorizedGrantTypes("authorization_code")
-				.scopes("write", "read")
+				.scopes("WRITE", "READ")
 				.redirectUris("http://localhost:8082") //22.19. Testando o fluxo Authorization Code com um client JavaScript - 3'
 			.and() //22.16. Configurando o Client Credentials Grant Type no Authorization Server - 1'
 				.withClient("faturamento")
 				.secret(passwordEncoder.encode("faturamento123"))
 				.authorizedGrantTypes("client_credentials")
-				.scopes("write", "read")
+				.scopes("WRITE", "READ")
 			.and()//22.21. Configurando o fluxo Implicit Grant Type
 				.withClient("webadmin")
 				.authorizedGrantTypes("implicit")
-				.scopes("write", "read")
+				.scopes("WRITE", "READ")
 				.redirectUris("http://aplicacao-cliente")				
 			.and()
 				.withClient("checktoken")
