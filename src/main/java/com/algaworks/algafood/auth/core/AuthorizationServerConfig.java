@@ -159,5 +159,17 @@ Code Verifier: teste123
 Code Challenge: teste123
 
 http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://localhost:8082&code_challenge=teste123&code_challenge_method=plain
+
+
+
+22.25. Testando o fluxo Authorization Code com PKCE com o método SHA-256
+Code Verifier: teste123
+Code Challenge: KJFg2w2fOfmuF1TE7JwW-QtQ4y4JxftUga5kKz09GjY
+
+http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&redirect_uri=http://localhost:8082&code_challenge=KJFg2w2fOfmuF1TE7JwW-QtQ4y4JxftUga5kKz09GjY&code_challenge_method=s256
+
+
+https://tonyxu-io.github.io/pkce-generator/
+
  */
 }
