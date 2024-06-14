@@ -1,0 +1,4494 @@
+{
+	"info": {
+		"_postman_id": "e0fdf4f1-ed61-48a0-a766-4d5c1789b548",
+		"name": "Curso Especialista Spring Rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1346289"
+	},
+	"item": [
+		{
+			"name": "Cozinhas",
+			"item": [
+				{
+					"name": "Cozinhas - Listar - Exemplo para obter token no fluxo grant_type=password",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "localhost:8081/oauth/token",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenRequestParams",
+									"value": [],
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"value": "algafood-web",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "password_credentials",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "marcio",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Token Algafood",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer yd_go4ZtY-LFz3WvABOsVkJnpoo",
+								"description": "Ao invés de colocar manualmente aqui, usar na aba Authorization - 22.11. Configurando o Resource Server com a nova stack do Spring Security - 13'",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas?size=10&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "nome,asc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Listar - Exemplo para obter token no fluxo grant_type=client_credentials",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "clientSecret",
+									"value": "faturamento123",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "faturamento",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "localhost:8081/oauth/token",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "tokenRequestParams",
+									"value": [],
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "marcio",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Token Algafood",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer yd_go4ZtY-LFz3WvABOsVkJnpoo",
+								"description": "22.16. Configurando o Client Credentials Grant Type no Authorization Server - Ao invés de colocar manualmente aqui, usar na aba Authorization -",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas?size=10&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "nome,asc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Listar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvLmdlckBhbGdhZm9vZC5jb20iLCJzY29wZSI6WyJXUklURSIsIlJFQUQiXSwiZXhwIjoxNzE3MDE1NzE5LCJhdXRob3JpdGllcyI6WyJFRElUQVJfQ09aSU5IQVMiLCJDT05TVUxUQVJfUkVTVEFVUkFOVEVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiQ09OU1VMVEFSX1VTVUFSSU9TIiwiRURJVEFSX1VTVUFSSU9TIiwiQ09OU1VMVEFSX1BST0RVVE9TIiwiQ09OU1VMVEFSX0NPWklOSEFTIiwiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DSURBREVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJDT05TVUxUQVJfQ0lEQURFUyIsIkNPTlNVTFRBUl9FU1RBRE9TIiwiQ09OU1VMVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9QUk9EVVRPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6IkJnWk5PTWtUUWJUVFlxemF4Q010WXczLURZMCIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6ImFsZ2Fmb29kLXdlYiJ9.x8WmbeX1BppluhVgZB5fWhU_T5TAcNsybjkrNIz576C-DUHP5RN8THUCXhHjfRhWRxVs6-9wOonOPGgPSYzSpKWjExhvD7KnBJDc06O6K-BmQ941gPaaZWC_pvXLRLLKmJTdtnsPXRqv5h9InlA7iVYH2KQSPmrXXIUTgpHK670XrFQWzXaSni9QznxMADgnuRWT7IgpiIsYRUKdMcCu4wEadtjFf1n2fWOOS18Sm60O-ReSYhXs1FdlLl-zPmHeYLfQS1r6fyrouTmo6WMJVsdMvnglsiDhcltyp-BlQ21WoBLHLzb3jyWGZqQWkE08WGAy4GDDXTEDG_vLIXqpCQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer yd_go4ZtY-LFz3WvABOsVkJnpoo",
+								"description": "Ao invés de colocar manualmente aqui, usar na aba Authorization - 22.11. Configurando o Resource Server com a nova stack do Spring Security - 13'",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas?size=10&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas"
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "nome,asc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Buscar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoxLCJ1c2VyX25hbWUiOiJqb2FvLmdlckBhbGdhZm9vZC5jb20iLCJzY29wZSI6WyJXUklURSIsIlJFQUQiXSwiZXhwIjoxNzE3MTgyNjU1LCJhdXRob3JpdGllcyI6WyJFRElUQVJfQ09aSU5IQVMiLCJDT05TVUxUQVJfUkVTVEFVUkFOVEVTIiwiRURJVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJFRElUQVJfUkVTVEFVUkFOVEVTIiwiQ09OU1VMVEFSX1VTVUFSSU9TIiwiRURJVEFSX1VTVUFSSU9TIiwiQ09OU1VMVEFSX1BST0RVVE9TIiwiQ09OU1VMVEFSX0NPWklOSEFTIiwiR0VSQVJfUkVMQVRPUklPUyIsIkVESVRBUl9DSURBREVTIiwiR0VSRU5DSUFSX1BFRElET1MiLCJDT05TVUxUQVJfQ0lEQURFUyIsIkNPTlNVTFRBUl9FU1RBRE9TIiwiQ09OU1VMVEFSX0ZPUk1BU19QQUdBTUVOVE8iLCJDT05TVUxUQVJfUEVESURPUyIsIkVESVRBUl9QUk9EVVRPUyIsIkVESVRBUl9FU1RBRE9TIl0sImp0aSI6IjdsOFdTWklRN3ZFVk9aUkJJbDVTQV9BNXNURSIsIm5vbWVfY29tcGxldG8iOiJKb8OjbyBkYSBTaWx2YSIsImNsaWVudF9pZCI6ImFsZ2Fmb29kLXdlYiJ9.vAlGYHUPRynHOTOajHMSXZvjFIXtJu3DxRoJo-nrXaM_Fp3p8Qq0Wg-QbPAFu05M8qilmNeY-wVAq4PXujVPgVYZUG-rZdce77TNNSbskQ_LNh2LQGdhu1ySw_k5aQP0BG8Z9ocIX0PfcrTezYlX64Ke_eoSPLYFP-pAIXF9hMNcg7S7s-1-2Z7ekR6_95nBbKf-8mHbP4w8SlkmJBMd00HzvQtU93657LongMsg4QXUg5zlllK-B7aKsw61Jc7iIgjVRpfWXJGfODJP5Q9ChDhUbyzawfwuxf2s7GXRomWts6emKWAVHaktYdES7jG0wFg3-NbxbbvIX3cYse8lew",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Árabe\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/cozinhas/por-nome?nome=Tailandesa",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"cozinhas",
+								"por-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Tailandesa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar unica cozinha por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/cozinhas/unica-por-nome?nome=Tailandesa",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"cozinhas",
+								"unica-por-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "Tailandesa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar exists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/cozinhas/exists?nome=tailandesa",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"cozinhas",
+								"exists"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "tailandesa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar primeira",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/cozinhas/primeira",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"cozinhas",
+								"primeira"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"nome\": \"Americana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cozinhas - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cozinhas/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cozinhas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurantes",
+			"item": [
+				{
+					"name": "Restaurantes - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar  Resumido",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes?projecao=resumo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes"
+							],
+							"query": [
+								{
+									"key": "projecao",
+									"value": "resumo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar  Apenas Nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes?projecao=apenas-nome",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes"
+							],
+							"query": [
+								{
+									"key": "projecao",
+									"value": "apenas-nome"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar  Completo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes?projecao=completo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes"
+							],
+							"query": [
+								{
+									"key": "projecao",
+									"value": "completo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar responsáveis",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/responsaveis",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Listar Formas de Pagamento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/formas-pagamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Desassociar Forma de Pagamento",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/2/formas-pagamento/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"2",
+								"formas-pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Desativar em lote",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1, 3, 4]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/desativacoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"desativacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Ativar em lote",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[1, 3, 4]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/ativacoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"ativacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Desassociar responsáveis",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/responsaveis/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Associar responsáveis",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/responsaveis/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"responsaveis",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Associar Forma de Pagamento Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/2/formas-pagamento/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"2",
+								"formas-pagamento",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurante - Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Indiana\",\r\n        \"taxaFrete\": 25,\r\n        \"cozinha\": {\r\n            \"id\": 1\r\n        },\r\n        \"endereco\": {\r\n            \"cep\": \"38400-999\",\r\n            \"logradouro\": \"LALALALALA\",\r\n            \"numero\": \"8\",\r\n            \"complemento\": null,\r\n            \"bairro\": \"Centro\",\r\n            \"cidade\": {\r\n                \"id\": 2\r\n            }\r\n        }        \r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurante - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"nome\": \"Comida Amazonense\",\r\n        \"taxaFrete\": 10,\r\n        \"cozinha\": {\r\n            \"id\": 1\r\n        },\r\n        \"endereco\": {\r\n            \"cep\": \"38400-999\",\r\n            \"logradouro\": \"LALALALALA\",\r\n            \"numero\": \"8\",\r\n            \"complemento\": null,\r\n            \"bairro\": \"Centro\",\r\n            \"cidade\": {\r\n                \"id\": 4\r\n            }\r\n        }        \r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Atualizar Parcial",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Comida de cotia\",\r\n    \"taxaFrete\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Ativar ou Inativar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/ativo",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"ativo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Fechar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/fechamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"fechamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurantes - Abrir",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/1/abertura",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"1",
+								"abertura"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por taxa",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/por-taxa-frete?taxaInicial=9&taxaFinal=12",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"por-taxa-frete"
+							],
+							"query": [
+								{
+									"key": "taxaInicial",
+									"value": "9"
+								},
+								{
+									"key": "taxaFinal",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/por-nome?nome=a&cozinhaId=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"por-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "a"
+								},
+								{
+									"key": "cozinhaId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar primeiro por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/primeiro-por-nome?nome=A",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"primeiro-por-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar top2  por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/top2-por-nome?nome=h",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"top2-por-nome"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "h"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por nome e frete",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/por-nome-e-frete?nome=a&taxaFreteInicial=11&taxaFreteFinal=20",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"por-nome-e-frete"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "a"
+								},
+								{
+									"key": "taxaFreteInicial",
+									"value": "11"
+								},
+								{
+									"key": "taxaFreteFinal",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar count por cozinha",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/count-por-cozinha?cozinhaId=2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"count-por-cozinha"
+							],
+							"query": [
+								{
+									"key": "cozinhaId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar com frete grátis",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/com-frete-gratis?nome=a",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"com-frete-gratis"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar primeiro",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/teste/restaurantes/primeiro",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"teste",
+								"restaurantes",
+								"primeiro"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estados",
+			"item": [
+				{
+					"name": "Estados - Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/estados",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Sergipe\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/estados",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estados"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Alagoas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/estados/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/estados/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estados - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/estados/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estados",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Grupos",
+			"item": [
+				{
+					"name": "Grupos - Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/grupos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Listar permissões",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/grupos/1/permissoes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"1",
+								"permissoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Desassociar permissões",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/grupos/1/permissoes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"1",
+								"permissoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Desenvolvedores\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/grupos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"FrontEnd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/grupos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Associar permissões",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"FrontEnd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/grupos/1/permissoes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"1",
+								"permissoes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/grupos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Grupos - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/grupos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"grupos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Usuários - Listar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTEyMzAyNTksInVzZXJfbmFtZSI6ImpvYW8uZ2VyQGFsZ2Fmb29kLmNvbSIsImp0aSI6InNjcjROaVQ4NEVrT25ORjlqYTRNZS11RDdiOCIsImNsaWVudF9pZCI6ImFsZ2Fmb29kLXdlYiIsInNjb3BlIjpbIndyaXRlIiwicmVhZCJdfQ.DbN60KC5FBP0c20fmugXxzQ_gAig_ZE-Itgg39msfJilSqCw2-ClHj8W0ZcNjuZDQKqY4un1pyeJ1IiNd6a8vPea_GSf0wqc1vwngi18g5rRggRhUaxuRAwqkTuwuGfPw7L40e_fqEdcGrzfix-AD_szGYX8FQNx6T3pJSKWbPDkQNN18NF2qJY398n_fkJML4I-kWtQfL0aphixNajdSvgpKQLYz-GFyb-VBTUgk-kklNLfvBcybaTVzXYGRc620anETA5BxFEV8rrCdkJe86ARe7W5DX-Trl3tUI0FHinKzjJihZk_xNHw8ApcHYeJ3jKqh1KIB0Z4ZiurHcHZHQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Listar grupos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/usuarios/1/grupos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1",
+								"grupos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTEzMzAxNzQsInVzZXJfbmFtZSI6Im1hcmNpb2FzYW5AZ21haWwuY29tIiwianRpIjoiOUpaOHI0U3VzWDdNcThvN3R5Rnp1cFRNdG1NIiwiY2xpZW50X2lkIjoiYWxnYWZvb2Qtd2ViIiwic2NvcGUiOlsid3JpdGUiLCJyZWFkIl19.43PJVaS9DEUz4CMJDc9-uNttmANpRP42FtEKstYXiqAmzrqROzsKc4RNob2tYmEGy96OJHl8BkSa3zjel3KgnjzBC_lsalzjXt-lgKvBUIftv86jS8ZzJsqohb_TLNj7pZ7kr6SirXMtBjcvGrpHvj_x92hzSMgWPczp2eeLhRbtZFFvn_vPpHyVLvlF4kFYqIupj3Gkc-WbUW4Qq7itKsd5eEqqkR5YPsVULBfLGxDL2p-8o90Mg4WXhGFd-Uesfh1yOq5VgbQOjx2URS-Yz_hW_Ge2l7WybDifPiDDsNCCktF0aTAQpEs6wIQ7lW-xTEPOVQDvzup1tPjtobh4rA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Lenice Alves dos Santos\",\r\n    \"email\": \"leniceasan@gmail.com\",\r\n    \"senha\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/usuarios",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Lenice Alves do Nascimento\",\r\n    \"email\": \"leniceasan@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Desassociar grupo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Lenice Alves do Nascimento\",\r\n    \"email\": \"leniceasan@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios/1/grupos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Associar grupo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Lenice Alves do Nascimento\",\r\n    \"email\": \"leniceasan@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios/1/grupos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1",
+								"grupos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Alterar senha",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"senhaAtual\": \"123\",\r\n    \"novaSenha\": \"321\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/usuarios/1/senha",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1",
+								"senha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuários - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/usuarios/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"usuarios",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Produtos - Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos"
+							],
+							"query": [
+								{
+									"key": "incluirInativos",
+									"value": "false",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Adicionar",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Frango agridoce\",\r\n    \"descricao\": \"Delicioso frango agrigoce\",\r\n    \"preco\": \"58.95\",\r\n    \"ativo\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/restaurantes/3/produtos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"restaurantes",
+								"3",
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Frango agridoce\",\r\n    \"descricao\": \"Delicioso frango agrigoce\",\r\n    \"preco\": \"100.00\",\r\n    \"ativo\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Produtos - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cidades",
+			"item": [
+				{
+					"name": "Cidades - Listar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.algafood.v1+json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Basic YWxnYWZvb2Q6MTIzNDU2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cidades",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Adicionar",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Sorocaba\",\r\n    \"estado\": {\r\n        \"id\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/cidades",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidade - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Campinas\",\r\n    \"estado\": {\r\n        \"id\": 2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/cidades/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/cidades/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cidades - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.algafood.v1+json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/cidades/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"cidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Forma de Pagamento",
+			"item": [
+				{
+					"name": "Forma de Pagamento - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/formas-pagamento/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forma de Pagamento - Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/formas-pagamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forma de Pagamento - Adicionar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"descricao\": \"PIX\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/formas-pagamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forma de Pagamento - Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \r\n    \"descricao\": \"Cartão de débito\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/formas-pagamento/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forma de Pagamento - Remover",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/formas-pagamento/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"formas-pagamento",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Pedidos - Listar",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "username",
+									"value": "marcioasan+debora@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "algafood-web",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Token AlgaFood",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "password_credentials",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "localhost:8081/oauth/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/pedidos?clienteId=6&restauranteId=1&size=2&sort=codigo&page=0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "campos",
+									"value": "codigo,valorTotal,cliente[id,nome,email]",
+									"disabled": true
+								},
+								{
+									"key": "campos",
+									"value": "codigo,valorTotal,sub*",
+									"disabled": true
+								},
+								{
+									"key": "clienteId",
+									"value": "6"
+								},
+								{
+									"key": "restauranteId",
+									"value": "1"
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2019-10-30T10:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2019-11-01T10:00:00Z",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "2"
+								},
+								{
+									"key": "sort",
+									"value": "cliente.nome,desc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "nomeCliente,desc",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "codigo"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Buscar",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "username",
+									"value": "manoel.loja@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "algafood-web",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Token AlgaFood",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "password_credentials",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "localhost:8081/oauth/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/pedidos/674a2365-7d46-4de2-b666-adc0f2518e7a",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos",
+								"674a2365-7d46-4de2-b666-adc0f2518e7a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Confirmar",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "username",
+									"value": "manoel.loja@gmail.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "algafood-web",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "Token AlgaFood",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "password_credentials",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "localhost:8081/oauth/token",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/pedidos/b10a1f53-98b4-11ed-821a-641c67892cca/confirmacao",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos",
+								"b10a1f53-98b4-11ed-821a-641c67892cca",
+								"confirmacao"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Cancelar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/pedidos/674a2365-7d46-4de2-b666-adc0f2518e7a/cancelamento",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos",
+								"674a2365-7d46-4de2-b666-adc0f2518e7a",
+								"cancelamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Entrega",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/v1/pedidos/674a2365-7d46-4de2-b666-adc0f2518e7a/entrega",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos",
+								"674a2365-7d46-4de2-b666-adc0f2518e7a",
+								"entrega"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pedidos - Adicionar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjo2LCJ1c2VyX25hbWUiOiJtYXJjaW9hc2FuK2RlYm9yYUBnbWFpbC5jb20iLCJzY29wZSI6WyJ3cml0ZSIsInJlYWQiXSwiZXhwIjoxNzE2NDkxMzgxLCJqdGkiOiJWZWIya241Mnk0SGhTMHFrc2xrMDVvbFhVYlEiLCJub21lX2NvbXBsZXRvIjoiRMOpYm9yYSBNZW5kb27Dp2EiLCJjbGllbnRfaWQiOiJhbGdhZm9vZC13ZWIifQ.PsCIS7RIx_VfZpZOZsldiYbwZCRs8pAuoP5-9OQ8cx-lJCZ3JCfufOZeefjP8ahaW3goeUVle9Me-9dxzaeDzMo4hZozkkxlIOoMvAuLph8ikDpA9j7UDkphGftu3SLkJe_sUOM1rLuhc5-CU04qBdIh4R5FYFcyjGeW3CCX46yxoc2orfAYtq1GC3qHfwNDL9_KQdpzYw9696qF334ta7gAvxTuVKJDGxStopMCu24-JQZ5W9LpQHXf5-wc3n2DWaW1EuGt7haEqJtHeGJJI-6lVm3DY-K-7QfH7Df0XUDg_tQsGcqZWj8pAZadUMgEj6kwjOaO6wZLFl298DFxgw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"restaurante\": {\r\n        \"id\": 1\r\n    },\r\n    \"formaPagamento\": {\r\n        \"id\": 1\r\n    },\r\n    \"enderecoEntrega\": {\r\n        \"cep\": \"38400-000\",\r\n        \"logradouro\": \"Rua Floriano Peixoto\",\r\n        \"numero\": \"600\",\r\n        \"complemento\": \"Apto 704\",\r\n        \"bairro\": \"Brasil\",\r\n        \"cidade\": {\r\n            \"id\": 1\r\n        }\r\n    },\r\n    \"itens\": [\r\n        {\r\n            \"produtoId\": 1,\r\n            \"quantidade\": 3,\r\n            \"observacao\": \"Sem pimenta\"\r\n        },\r\n        {\r\n            \"produtoId\": 2,\r\n            \"quantidade\": 1\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/pedidos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estatísticas",
+			"item": [
+				{
+					"name": "Vendas Diárias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf,application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/estatisticas/vendas-diarias?dataCriacaoInicio=2019-10-30T00:00:00Z&dataCriacaoFim=2023-02-12T23:59:59Z",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"estatisticas",
+								"vendas-diarias"
+							],
+							"query": [
+								{
+									"key": "restauranteId",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "dataCriacaoInicio",
+									"value": "2019-10-30T00:00:00Z"
+								},
+								{
+									"key": "dataCriacaoFim",
+									"value": "2023-02-12T23:59:59Z"
+								},
+								{
+									"key": "timeOffset",
+									"value": "-03:00",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fotos de Produtos",
+			"item": [
+				{
+					"name": "Fotos de Produtos - Atualizar",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/Prime-rib.jpg"
+								},
+								{
+									"key": "descricao",
+									"value": "Prime Rib ao Ponto",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/T-BONE-STEAK.png",
+									"disabled": true
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/vendas-diarias.pdf",
+									"disabled": true
+								},
+								{
+									"key": "descricao",
+									"value": "Relatório de Vendas",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produtos - Remover",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/Prime-rib.jpg"
+								},
+								{
+									"key": "descricao",
+									"value": "Prime Rib ao Ponto",
+									"type": "text"
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/T-BONE-STEAK.png",
+									"disabled": true
+								},
+								{
+									"key": "arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/vendas-diarias.pdf",
+									"disabled": true
+								},
+								{
+									"key": "descricao",
+									"value": "Relatório de Vendas",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produtos - Buscar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "image/jpeg",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "image/png",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/pdf",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1/foto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fotos de Produtos - Atualizar Múltiplas fotos",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fotos[0].arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/Prime-rib.jpg"
+								},
+								{
+									"key": "fotos[0].descricao",
+									"value": "Prime Rib ao Ponto",
+									"type": "text"
+								},
+								{
+									"key": "fotos[1].arquivo",
+									"type": "file",
+									"src": "/D:/Marcio/Algaworks/ESPECIALISTA SPRING REST/Fotos/brahma-duplo-malte.jpg"
+								},
+								{
+									"key": "fotos[1].descricao",
+									"value": "Móu boa!!!",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/restaurantes/1/produtos/1/foto/batch-upload",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"restaurantes",
+								"1",
+								"produtos",
+								"1",
+								"foto",
+								"batch-upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OpenApi",
+			"item": [
+				{
+					"name": "OpenApi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v3/api-docs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v3",
+								"api-docs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Root",
+			"item": [
+				{
+					"name": "Root Entry Point",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080"
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "V2",
+			"item": [
+				{
+					"name": "Cozinhas",
+					"item": [
+						{
+							"name": "Cozinhas - Listar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/v2/cozinhas?size=10&page=0",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cozinhas"
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "nome,asc",
+											"disabled": true
+										},
+										{
+											"key": "sort",
+											"value": "id",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cozinhas - Buscar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/v2/cozinhas/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cozinhas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cozinhas - Adicionar",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\r\n        \"nomeCozinha\": \"Argentina\"\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v2/cozinhas",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cozinhas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cozinhas - Atualizar",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"nomeCozinha\": \"Americana\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v2/cozinhas/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cozinhas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cozinhas - Remover",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/v2/cozinhas/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cozinhas",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cidades",
+					"item": [
+						{
+							"name": "Cidades - Listar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/v2/cidades",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cidades"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cidades - Buscar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/xml",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:8080/v2/cidades/3",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cidades",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cidade - Atualizar",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nomeCidade\": \"Campinas\",\r\n    \"idEstado\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v2/cidades/1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cidades",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cidades - Adicionar",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/vnd.algafood.v2+json",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nomeCidade\": \"Mairinque\",\r\n    \"idEstado\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/v2/cidades",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v2",
+										"cidades"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "OAuth2",
+			"item": [
+				{
+					"name": "Password Flow - Solicitar Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood-web",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "joao.ger@algafood.com",
+									"description": "Essas são as credenciais do usuário (Resource Owner)",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"description": "23.14. Autenticando usuario com dados do banco de dados - 16' criptografar senha com bcrypt, a senha criptografada é 123",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code - Solicitar Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "food123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "foodanalytics",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "8K7M5v",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://aplicacao-cliente",
+									"description": "22.18. Configurando o Authorization Code Grant Type - 12'",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082",
+									"description": "23.37. Cadastrando clientes OAuth2 no banco de dados e testando a emissão de tokens",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code - Solicitar Token PKCE 1",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "food123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "foodanalytics",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "l423wf",
+									"description": "22.24. Testando o fluxo Authorization Code com PKCE com o método plain - 6'20\"",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082",
+									"type": "text"
+								},
+								{
+									"key": "code_verifier",
+									"value": "teste123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authorization Code - Solicitar Token PKCE 2",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "code",
+									"value": "bRO15A",
+									"description": "22.24. Testando o fluxo Authorization Code com PKCE com o método plain - 6'20\"",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082",
+									"type": "text"
+								},
+								{
+									"key": "code_verifier",
+									"value": "teste123",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "foodanalytics",
+									"description": "22.24. Testando o fluxo Authorization Code com PKCE com o método plain 11'10\", 12'20\" - Explicação sobre não usar secret quando usa PKCE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Client Credentials - Solicitar Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "faturamento123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "faturamento",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"description": "22.16. Configurando o Client Credentials Grant Type no Authorization Server - 4'40\"",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"description": "23.37. Cadastrando clientes OAuth2 no banco de dados e testando a emissão de tokens - 11'40\"",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token - Solicitar Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood-web",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refresh_token",
+									"value": "rqoFrBITv3my-o4WRG5VWq7sMJU",
+									"description": "22.13. Configurando o Refresh Token Grant Type no Authorization Server - 3', 4'",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "Essas são as credenciais do usuário (Resource Owner)",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "web123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "algafood-web",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDQ3NDA4MTcsInVzZXJfbmFtZSI6Im1hcmNpbyIsImF1dGhvcml0aWVzIjpbIlJPTEVfQURNSU4iXSwianRpIjoiVkJBcl9jN3ZuSVdYdW5JOXd0MHRKNzhNNjRBIiwiY2xpZW50X2lkIjoiYWxnYWZvb2Qtd2ViIiwic2NvcGUiOlsid3JpdGUiLCJyZWFkIl19.2QwqGsZ4cSoIPEqvPS6IL_Rx7pblJ55Jwe1yBjeECJ1EisDq6fuG6OKbXSsiLtY05OxQYdqkWzl3ecpgejhlEgnO7kY0fqYWZ1VocSKtvW-t0584mCaXJZzs1JaRtOTZGyjhuO8ev2AgFTblXIimr5tm0FhRnsFmXYBXJRp5EwR-3OKIhKrzeTIxS4UmoFJ0yIlqLYHpPtXO3SIIU42iyqUbx9JQiq-Koz7JiTOONr6ks4GbM3rXyjOIhk-QuYXJNczLznH6SOePVkZincEa1mzlzy9pRwosPQUtFzZD4D0wVHg81z141n9WxdGdlBivGxQdpM75XNGyRDS76ulP9Q",
+									"description": "22.10. Configurando o endpoint de introspecção de tokens no Authorization Server - 4', 6'",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"description": "22.16. Configurando o Client Credentials Grant Type no Authorization Server - 6'30\"",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/check_token",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"check_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token Key",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:8081/oauth/token_key",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"oauth",
+								"token_key"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Github Repos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/users/marcioasan/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"users",
+						"marcioasan",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://servicodados.ibge.gov.br/api/v1/localidades/distritos?view=nivelado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://servicodados.ibge.gov.br/api/v1/localidades/distritos?view=nivelado",
+					"protocol": "https",
+					"host": [
+						"servicodados",
+						"ibge",
+						"gov",
+						"br"
+					],
+					"path": [
+						"api",
+						"v1",
+						"localidades",
+						"distritos"
+					],
+					"query": [
+						{
+							"key": "view",
+							"value": "nivelado"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar CEP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nome\":\"Thai Gourmet\",\r\n   \"taxaFrete\":10,\r\n   \"endereco\":{\r\n      \"cep\":\"38400748\"\r\n   }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/restaurantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"restaurantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auditoria",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nome\":\"Márcio Antonio dos Santos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gravar CSV",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/workspaces/ESPECIALISTA_SPRING_REST/PROJETOS/GRAVAR-ARQUIVO-CSV/usuarios-para-gravar-no-bd.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/usuarios/upload-csv-file",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"upload-csv-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar CSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/usuarios",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Carregar arquivo CSV",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/usuarios/generate-csv-file",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"generate-csv-file"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

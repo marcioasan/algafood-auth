@@ -50,7 +50,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private DataSource dataSource;
 	
-	//23.36. Configurando os clientes OAuth2 em um banco de dados SQL - 2'40"
+	//23.36. Configurando os clientes OAuth2 em um banco de dados SQL - 2'40"; 23.37. Cadastrando clientes OAuth2 no banco de dados e testando a emissão de tokens - 5'
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.jdbc(dataSource);
@@ -183,6 +183,12 @@ http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics
 
 
 https://tonyxu-io.github.io/pkce-generator/
+
+
+
+23.37. Cadastrando clientes OAuth2 no banco de dados e testando a emissão de tokens
+Para testar a aula
+http://localhost:8081/oauth/authorize?response_type=code&client_id=foodanalytics&state=abc&redirect_uri=http://localhost:8082
 
  */
 }
