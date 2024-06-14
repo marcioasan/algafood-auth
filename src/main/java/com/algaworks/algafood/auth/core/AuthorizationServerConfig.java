@@ -5,6 +5,8 @@ package com.algaworks.algafood.auth.core;
 
 import java.util.Arrays;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +37,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private JwtKeyStoreProperties jwtKeyStoreProperties; //23.10. Desafio: criando bean de propriedades de configuração do KeyStore 
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private PasswordEncoder passwordEncoder; //23.36. Configurando os clientes OAuth2 em um banco de dados SQL - retirado nessa aula - 9'
 	
 	@Autowired
 	private AuthenticationManager authenticationManager; //essa injeção não existe no contexto do Spring, precisa configurar no WebSecurityConfig - 11'20" 
@@ -44,7 +46,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	//22.13. Configurando o Refresh Token Grant Type no Authorization Server - 5' - essa injeção não existe no contexto do Spring, precisa configurar no WebSecurityConfig
 	@Autowired
 	UserDetailsService userDetailsService;
+
+	@Autowired
+	private DataSource dataSource;
 	
+	//23.36. Configurando os clientes OAuth2 em um banco de dados SQL - 2'40"
+	@Override
+	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		clients.jdbc(dataSource);
+	}
+	
+	/* Modificado na aula '23.36. Configurando os clientes OAuth2 em um banco de dados SQL' 2'40"
 	//22.9. Configurando o fluxo Authorization Server com Password Credentials e Opaque Tokens - 40", 10'
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -77,6 +89,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.withClient("checktoken")
 					.secret(passwordEncoder.encode("check123")); //22.11. Configurando o Resource Server com a nova stack do Spring Security - 8', 15'
 	}
+	*/
 	
 	//22.10. Configurando o endpoint de introspecção de tokens no Authorization Server - 5'
 	@Override
