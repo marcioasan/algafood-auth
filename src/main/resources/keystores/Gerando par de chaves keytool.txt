@@ -19,7 +19,7 @@ keytool -list -keystore algafood.jks
 
 ***Rodar os comandos no gitbash reconhece o openssl
 
-Gerando o certificado
+Extraindo o certificado do par de chaves (público/privado) que está dentro do keystore algafood.jks
 keytool -export -rfc -alias algafood -keystore algafood.jks -file algafood-cert.pem
 
 Gerando a chave pública
